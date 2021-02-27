@@ -1,6 +1,6 @@
-// TODO: Put public facing types in this file.
+/// Metar model to parse the code for every station
+class Metar {
+  String _code, _body, _trend, _rmk;
 
-/// Checks if you are awesome. Spoiler: you are.
-class Awesome {
-  bool get isAwesome => true;
+  Metar(String code, {int utcMonth, int utcYear}) {}
 }

@@ -2,9 +2,9 @@
 
 A library for Dart developers.
 
-Inspired from python-metar, a library writed in Python language for parse Meteorological Aviation Weather Reports (METAR and SPECI).
+Inspired from python-metar, a library writed in Python language to parse Meteorological Aviation Weather Reports (METAR and SPECI).
 
-Current METAR reports
+## Current METAR reports
 
 The current report for a station is available at the URL
 
@@ -49,7 +49,7 @@ commando on your terminal:
 
 ## Authors
 
-The `python-metar` library was originaly authored by [@TomPollard][Tom Pollard] in january 2005. This package `metar-dart` for Dart Language is inspired from his work in 2020 by [@DiegoGarro][Diego Garro].
+The `python-metar` library was originaly authored by [Tom Pollard][TomPollard] in january 2005. This package `metar-dart` for Dart Language is inspired from his work in 2020 by [Diego Garro][DiegoGarro].
 
 [TomPollard]: https://github.com/tomp
 [DiegoGarro]: https://github.com/diego-garro

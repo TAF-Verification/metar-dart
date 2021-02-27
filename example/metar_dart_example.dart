@@ -1,4 +1,4 @@
-import 'package:metar_dart/metar_dart.dart';
+import 'package:metar_dart/src/metar/metar_base.dart';
 
 void main() {
   var awesome = Awesome();

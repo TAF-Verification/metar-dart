@@ -53,3 +53,17 @@ The `python-metar` library was originaly authored by [Tom Pollard][TomPollard] i
 
 [TomPollard]: https://github.com/tomp
 [DiegoGarro]: https://github.com/diego-garro
+
+## Special mentions
+
+Thanks to the work made by [@yeradis][yeradis], who create the package
+`units` for starting point of measurements in Dart. I took the files directly because they
+have an issue in angle.dart that not resolved. Hope they do it soon.
+
+[yeradis]: https://github.com/yeradis
+
+The files are in lib/src/units/ folder:
+  * angle.dart
+  * length.dart
+  * speed.dart
+  * temperature.dart

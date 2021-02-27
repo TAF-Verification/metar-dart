@@ -41,12 +41,10 @@ class Position {
   Angle get longitude => _longitude;
   Angle get latitude => _latitude;
 
+  /// Calculate the great-circle distance to another location using the Haversine
+  /// formula.  See <http://www.movable-type.co.uk/scripts/LatLong.html>
+  /// and <http://mathforum.org/library/drmath/sets/select/dm_lat_long.html>
   Length getDistanceFrom(Position position) {
-    /*
-    Calculate the great-circle distance to another location using the Haversine
-    formula.  See <http://www.movable-type.co.uk/scripts/LatLong.html>
-    and <http://mathforum.org/library/drmath/sets/select/dm_lat_long.html>
-     */
     var earthRadius = 637100.0;
     var lat1 = _latitude.inRadians;
     var long1 = _longitude.inRadians;
@@ -58,12 +56,10 @@ class Position {
     return Length.fromMeters(value: earthRadius * c);
   }
 
+  /// Calculate the initial direction to another location.  (The direction
+  /// typically changes as you trace the great circle path to that location.)
+  /// See <http://www.movable-type.co.uk/scripts/LatLong.html>.
   Angle getDirectionFrom(Position position) {
-    /*
-    Calculate the initial direction to another location.  (The direction
-    typically changes as you trace the great circle path to that location.)
-    See <http://www.movable-type.co.uk/scripts/LatLong.html>.
-    */
     var s = -sin(_longitude.inRadians - position.longitude.inRadians) *
         cos(position.latitude.inRadians);
     var c = cos(_latitude.inRadians) * sin(position.latitude.inRadians) -

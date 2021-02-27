@@ -28,14 +28,9 @@ class Angle implements Comparable<Angle> {
 
   double _returnValue(num value) => double.parse(value.toStringAsFixed(6));
 
-  /**
-     * Compares this Angle to [other], returning zero if the values are equal.
-     *
-     * Returns a negative integer if this `Angle` is shorter than
-     * [other], or a positive integer if it is longer.
-     *
-     * A negative `Angle` is always considered shorter than a positive one.
-     *
-     */
+  /// Compares this Angle to [other], returning zero if the values are equal.
+  /// Returns a negative integer if this `Angle` is shorter than
+  /// [other], or a positive integer if it is longer.
+  /// A negative `Angle` is always considered shorter than a positive one.
   int compareTo(Angle other) => _angle.compareTo(other._angle);
 }

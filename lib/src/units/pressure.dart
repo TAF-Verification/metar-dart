@@ -27,12 +27,8 @@ class Pressure implements Comparable<Pressure> {
 
   double _returnValue(num value) => double.parse(value.toStringAsFixed(2));
 
-  /**
-     * Compares this Pressure to [other], returning zero if the values are equal.
-     *
-     * Returns a negative integer if this `Pressure` is shorter than
-     * [other], or a positive integer if it is longer.
-     *
-     */
+  /// Compares this Pressure to [other], returning zero if the values are equal.
+  /// Returns a negative integer if this `Pressure` is shorter than
+  /// [other], or a positive integer if it is longer.
   int compareTo(Pressure other) => _pressure.compareTo(other._pressure);
 }

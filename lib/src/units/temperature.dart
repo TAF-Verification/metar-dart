@@ -47,15 +47,10 @@ class Temperature implements Comparable<Temperature> {
 
   double _returnValue(num value) => double.parse(value.toStringAsFixed(2));
 
-  /**
-     * Compares this Temperature to [other], returning zero if the values are equal.
-     *
-     * Returns a negative integer if this `Temperature` is shorter than
-     * [other], or a positive integer if it is longer.
-     *
-     * A negative `Temperature` is always considered shorter than a positive one.
-     *
-     */
+  /// Compares this Temperature to [other], returning zero if the values are equal.
+  /// Returns a negative integer if this `Temperature` is shorter than
+  /// [other], or a positive integer if it is longer.
+  /// A negative `Temperature` is always considered shorter than a positive one.
   int compareTo(Temperature other) =>
       _temperature.compareTo(other._temperature);
 }

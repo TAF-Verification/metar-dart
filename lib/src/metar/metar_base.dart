@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+
 import 'package:metar_dart/src/metar/regexp.dart';
 import 'package:metar_dart/src/utils/parser_error.dart';
 
@@ -73,6 +75,18 @@ class Metar {
     } else {
       _year = now.year;
     }
+  }
+
+  static Future<Metar> current(String icaoCode) async {
+    final url =
+        'http://tgftp.nws.noaa.gov/data/observations/metar/stations/${icaoCode.toUpperCase()}.TXT';
+    final response = await http.get(url);
+    final data = response.body.split('\n');
+
+    final dateString = data[0].replaceAll('/', '-') + ':00';
+    final date = DateTime.parse(dateString);
+
+    return Metar(data[1], utcMonth: date.month, utcYear: date.year);
   }
 
   String get body => _body;

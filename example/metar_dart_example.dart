@@ -1,6 +1,8 @@
-import 'package:metar_dart/src/metar/metar_base.dart';
+import 'package:metar_dart/metar.dart';
 
-void main() {
-  var awesome = Awesome();
-  print('awesome: ${awesome.isAwesome}');
+void main() async {
+  final metar = await Metar.current('MROC');
+  print(metar.body);
+  print(metar.trend);
+  print(metar.remark);
 }

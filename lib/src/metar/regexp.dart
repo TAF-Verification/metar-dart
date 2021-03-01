@@ -3,7 +3,7 @@
 class METAR_REGEX {
   RegExp MISSING_RE = RegExp(r'^[M/]+$');
 
-  RegExp TYPE_RE = RegExp(r'^(METAR|SPECI)$');
+  RegExp TYPE_RE = RegExp(r'^(?<type>METAR|SPECI)$');
 
   RegExp COR_RE = RegExp(r'^(COR)$');
 

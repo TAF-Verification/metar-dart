@@ -29,12 +29,12 @@ void main() {
 
   group('Test the date of METAR', () {
     test('Test the month', () {
-      final value = metar.month;
+      final value = metar.time.month;
       expect(value, 2);
     });
 
     test('Test the year', () {
-      final value = metar.year;
+      final value = metar.time.year;
       expect(value, 2021);
     });
   });

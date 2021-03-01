@@ -46,6 +46,8 @@ List<String> _divideCode(String code) {
 /// Metar model to parse the code for every station
 class Metar {
   String _body, _trend, _rmk;
+  String _string = '### BODY ###\n';
+  String _type = 'METAR';
   String _code, _errorMessage;
   int _month, _year;
   DateTime _time;
@@ -93,12 +95,25 @@ class Metar {
     return Metar(data[1], utcMonth: date.month, utcYear: date.year);
   }
 
+  /// Here begins the body group handlers
+  void _handleType(RegExpMatch match) {
+    _type = match.namedGroup('type');
+    _string += '--- Type ---\n'
+        ' * $_type';
+  }
+
   void _handleTime(RegExpMatch match) {
     final day = int.parse(match.namedGroup('day'));
     final hour = int.parse(match.namedGroup('hour'));
     final minute = int.parse(match.namedGroup('minute'));
 
+    if (minute != 0) {
+      _type = 'SPECI';
+    }
+
     _time = DateTime(_year, _month, day, hour, minute);
+    _string += '--- Time ---\n'
+        ' * $_time\n';
   }
 
   /// Method to parse the groups
@@ -133,6 +148,7 @@ class Metar {
 
   void _bodyParser() {
     final handlers = [
+      [METAR_REGEX().TYPE_RE, _handleType, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
     ];
 

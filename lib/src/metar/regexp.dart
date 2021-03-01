@@ -9,7 +9,7 @@ class METAR_REGEX {
 
   RegExp STATION_RE = RegExp(r'^([A-Z][A-Z0-9]{3})$');
 
-  RegExp TIME_RE = RegExp(r'^\d{6}Z$');
+  RegExp TIME_RE = RegExp(r'^(?<day>\d{2})(?<hour>\d{2})(?<minute>\d{2})Z$');
 
   RegExp MODIFIER_RE = RegExp(r'^(AUTO|FINO|NIL|TEST|CORR?|RTD|CC[A-G])$');
 

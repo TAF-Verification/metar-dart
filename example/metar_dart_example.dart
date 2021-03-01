@@ -5,4 +5,5 @@ void main() async {
   print(metar.body);
   print(metar.trend);
   print(metar.remark);
+  print(metar.time);
 }

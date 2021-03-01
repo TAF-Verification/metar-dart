@@ -48,6 +48,7 @@ class Metar {
   String _body, _trend, _rmk;
   String _code, _errorMessage;
   int _month, _year;
+  DateTime _time;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -75,8 +76,11 @@ class Metar {
     } else {
       _year = now.year;
     }
+
+    _bodyParser();
   }
 
+  /// Static method to get the current METAR report for a given station
   static Future<Metar> current(String icaoCode) async {
     final url =
         'http://tgftp.nws.noaa.gov/data/observations/metar/stations/${icaoCode.toUpperCase()}.TXT';
@@ -89,9 +93,54 @@ class Metar {
     return Metar(data[1], utcMonth: date.month, utcYear: date.year);
   }
 
+  void _handleTime(RegExpMatch match) {
+    final day = int.parse(match.namedGroup('day'));
+    final hour = int.parse(match.namedGroup('hour'));
+    final minute = int.parse(match.namedGroup('minute'));
+
+    _time = DateTime(_year, _month, day, hour, minute);
+  }
+
+  /// Method to parse the groups
+  void _parseGroups(
+    List<String> groups,
+    List<List> handlers, {
+    String section = 'body',
+  }) {
+    Iterable<RegExpMatch> matches;
+
+    groups.forEach((group) {
+      for (final handler in handlers) {
+        if (handler[0].hasMatch(group) && !handler[2]) {
+          matches = handler[0].allMatches(group);
+          if (section == 'body') {
+            handler[1](matches.elementAt(0));
+          } else {
+            handler[1](matches.elementAt(0), section: section);
+          }
+
+          handler[2] = true;
+          break;
+        }
+
+        if (handlers.indexOf(handler) == handlers.length - 1) {
+          _errorMessage = 'failed while processing "$group". Code: $_code';
+          throw ParserError(_errorMessage);
+        }
+      }
+    });
+  }
+
+  void _bodyParser() {
+    final handlers = [
+      [METAR_REGEX().TIME_RE, _handleTime, false],
+    ];
+
+    _parseGroups(_body.split(' '), handlers);
+  }
+
   String get body => _body;
   String get trend => _trend;
   String get remark => _rmk;
-  int get month => _month;
-  int get year => _year;
+  DateTime get time => _time;
 }

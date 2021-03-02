@@ -8,11 +8,15 @@ Inspired from python-metar, a library writed in Python language to parse Meteoro
 
 The current report for a station is available at the URL
 
-  http://tgftp.nws.noaa.gov/data/observations/metar/stations/<station>.TXT
+```
+http://tgftp.nws.noaa.gov/data/observations/metar/stations/<station>.TXT
+```
 
 where `station` is the ICAO station code of the airport. This is a four-letter code. For all stations at any cycle (i.e., hour) in the last  hours the reports are available at the URL
 
-  http://tgftp.nws.noaa.gov/data/observations/metar/cycles/<cycle>Z.TXT
+```
+http://tgftp.nws.noaa.gov/data/observations/metar/cycles/<cycle>Z.TXT
+```
 
 where `cycle` is the 2-digit cycle number (`00` to `23`).
 
@@ -45,7 +49,9 @@ Please file feature requests and bugs at the [issue tracker][tracker].
 The most recent version of this package is always available via git, only run the following
 commando on your terminal:
 
-  git clone https://github.com/diego-garro/metar-dart
+```
+git clone https://github.com/diego-garro/metar-dart
+```
 
 ## Authors
 
@@ -53,6 +59,17 @@ The `python-metar` library was originaly authored by [Tom Pollard][TomPollard] i
 
 [TomPollard]: https://github.com/tomp
 [DiegoGarro]: https://github.com/diego-garro
+
+## Versioning
+
+This project uses [Cider][cider] tool for versioning, so, if you fork this repository remember run
+the following command in your terminal to activate it
+
+[cider]: https://pub.dev/packages/cider
+
+```
+pub global activate cider
+```
 
 ## Special mentions
 
@@ -62,7 +79,7 @@ have an issue in angle.dart that not resolved. Hope they do it soon.
 
 [yeradis]: https://github.com/yeradis
 
-The files are in lib/src/units/ folder:
+The files are in `lib/src/units/` folder:
   * angle.dart
   * length.dart
   * speed.dart

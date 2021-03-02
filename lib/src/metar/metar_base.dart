@@ -1,7 +1,9 @@
 import 'package:http/http.dart' as http;
 
+import 'package:metar_dart/src/database/stations_db.dart';
 import 'package:metar_dart/src/metar/regexp.dart';
 import 'package:metar_dart/src/utils/parser_error.dart';
+import 'package:metar_dart/src/utils/station.dart';
 
 /// Divide the METAR in three parts (if possible):
 /// * `body`
@@ -47,8 +49,9 @@ List<String> _divideCode(String code) {
 class Metar {
   String _body, _trend, _rmk;
   String _string = '### BODY ###\n';
-  String _type = 'METAR';
   String _code, _errorMessage;
+  String _type = 'METAR';
+  Station _station;
   int _month, _year;
   DateTime _time;
 
@@ -102,6 +105,33 @@ class Metar {
         ' * $_type';
   }
 
+  void _handleStation(RegExpMatch match) {
+    final stationID = match.namedGroup('station');
+    final station = getStation(stationID);
+
+    _station = Station(
+      station[0],
+      station[1],
+      station[2],
+      station[3],
+      station[4],
+      station[5],
+      station[6],
+      station[7],
+    );
+
+    final stationAsMap = _station.toMap();
+    _string += '--- Station ---\n'
+        ' * Name: ${stationAsMap['name']}\n'
+        ' * ICAO: ${stationAsMap['icao']}\n'
+        ' * IATA: ${stationAsMap['iata']}\n'
+        ' * SYNOP: ${stationAsMap['synop']}\n'
+        ' * Longitude: ${stationAsMap['longitude']}\n'
+        ' * Latitude: ${stationAsMap['latitude']}\n'
+        ' * Elevation: ${stationAsMap['elevation']}\n'
+        ' * Country: ${stationAsMap['country']}\n';
+  }
+
   void _handleTime(RegExpMatch match) {
     final day = int.parse(match.namedGroup('day'));
     final hour = int.parse(match.namedGroup('hour'));
@@ -138,10 +168,10 @@ class Metar {
           break;
         }
 
-        if (handlers.indexOf(handler) == handlers.length - 1) {
-          _errorMessage = 'failed while processing "$group". Code: $_code';
-          throw ParserError(_errorMessage);
-        }
+        // if (handlers.indexOf(handler) == handlers.length - 1) {
+        //   _errorMessage = 'failed while processing "$group". Code: $_code';
+        //   throw ParserError(_errorMessage);
+        // }
       }
     });
   }
@@ -149,6 +179,7 @@ class Metar {
   void _bodyParser() {
     final handlers = [
       [METAR_REGEX().TYPE_RE, _handleType, false],
+      [METAR_REGEX().STATION_RE, _handleStation, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
     ];
 
@@ -158,5 +189,7 @@ class Metar {
   String get body => _body;
   String get trend => _trend;
   String get remark => _rmk;
+  String get type => _type;
+  Station get station => _station;
   DateTime get time => _time;
 }

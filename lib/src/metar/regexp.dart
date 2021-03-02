@@ -7,7 +7,7 @@ class METAR_REGEX {
 
   RegExp COR_RE = RegExp(r'^(COR)$');
 
-  RegExp STATION_RE = RegExp(r'^([A-Z][A-Z0-9]{3})$');
+  RegExp STATION_RE = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
 
   RegExp TIME_RE = RegExp(r'^(?<day>\d{2})(?<hour>\d{2})(?<minute>\d{2})Z$');
 

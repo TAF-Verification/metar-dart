@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:metar_dart/src/database/stations_db.dart';
 import 'package:metar_dart/src/metar/regexp.dart';
+import 'package:metar_dart/src/utils/capitalize_string.dart';
 import 'package:metar_dart/src/utils/parser_error.dart';
 import 'package:metar_dart/src/utils/station.dart';
 
@@ -51,6 +52,7 @@ class Metar {
   String _string = '### BODY ###\n';
   String _code, _errorMessage;
   bool _correction = false;
+  String _modifier;
   String _type = 'METAR';
   Station _station;
   int _month, _year;
@@ -151,6 +153,14 @@ class Metar {
     _time = DateTime(_year, _month, day, hour, minute);
     _string += '--- Time ---\n'
         ' * $_time\n';
+  }
+
+  void _handleModifier(RegExpMatch match) {
+    _modifier = match.namedGroup('mod');
+
+    final mod = capitalize(_modifier);
+
+    _string += '--- $mod ---\n';
   }
 
   /// Method to parse the groups

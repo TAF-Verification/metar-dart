@@ -8,4 +8,8 @@ void main() async {
   print(metar.type);
   print(metar.station.name);
   print(metar.time);
+  print(metar.windDirection?.directionInDegrees);
+  print(metar.windDirection?.cardinalPoint);
+  print(metar.windSpeed?.inMeterPerSecond);
+  print(metar.windGust?.inMilePerHour);
 }

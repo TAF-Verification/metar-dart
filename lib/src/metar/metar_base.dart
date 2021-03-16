@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:metar_dart/src/database/stations_db.dart';
 import 'package:metar_dart/src/metar/regexp.dart';
+import 'package:metar_dart/src/units/units.dart';
 import 'package:metar_dart/src/utils/capitalize_string.dart';
 import 'package:metar_dart/src/utils/parser_error.dart';
 import 'package:metar_dart/src/utils/station.dart';
@@ -57,6 +58,8 @@ class Metar {
   Station _station;
   int _month, _year;
   DateTime _time;
+  Direction _windDirection, _trendWindDirection;
+  Speed _windSpeed, _windGust, _trendWindSpeed, _trendWindGust;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -163,6 +166,55 @@ class Metar {
     _string += '--- $mod ---\n';
   }
 
+  void _handleWind(RegExpMatch match, {String section = 'body'}) {
+    final windDirection = match.namedGroup('dir');
+    final windSpeed = match.namedGroup('speed');
+    final windGust = match.namedGroup('gust');
+    final units = match.namedGroup('units');
+
+    Direction dirValue;
+    Speed speedValue, gustValue;
+
+    if (windDirection != null && RegExp(r'^\d{3}$').hasMatch(windDirection)) {
+      dirValue = Direction.fromDegrees(value: windDirection);
+    } else {
+      dirValue = Direction.fromUndefined(value: windDirection);
+    }
+
+    if (windSpeed != null && RegExp(r'^\d{2}$').hasMatch(windSpeed)) {
+      if (units == 'KT' || units == 'KTS') {
+        speedValue = Speed.fromKnot(value: double.parse(windSpeed));
+      } else {
+        speedValue = Speed.fromMeterPerSecond(value: double.parse(windSpeed));
+      }
+    }
+
+    if (windGust != null && RegExp(r'^\d{2}').hasMatch(windGust)) {
+      if (units == 'KT' || units == 'KTS') {
+        gustValue = Speed.fromKnot(value: double.parse(windGust));
+      } else {
+        gustValue = Speed.fromMeterPerSecond(value: double.parse(windGust));
+      }
+    }
+
+    if (section == 'body') {
+      _windDirection = dirValue;
+      _windSpeed = speedValue;
+      _windGust = gustValue;
+    } else {
+      _trendWindDirection = dirValue;
+      _trendWindSpeed = speedValue;
+      _trendWindGust = gustValue;
+    }
+
+    _string += '--- Wind ---\n'
+        ' * Direction:\n'
+        '   - Degrees: ${dirValue.variable ? 'Varibale' : '${dirValue.directionInDegrees}°'}\n'
+        '   - Cardinal point: ${dirValue.variable ? 'Variable' : dirValue.cardinalPoint}\n'
+        ' * Speed: ${speedValue != null ? speedValue.inKnot : 0.0} knots\n'
+        ' * Gust: ${gustValue != null ? gustValue.inKnot : 0.0} knots\n';
+  }
+
   /// Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -206,6 +258,7 @@ class Metar {
       [METAR_REGEX().COR_RE, _handleCorrection, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
       [METAR_REGEX().MODIFIER_RE, _handleModifier, false],
+      [METAR_REGEX().WIND_RE, _handleWind, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -219,4 +272,7 @@ class Metar {
   bool get correction => _correction;
   DateTime get time => _time;
   String get modifier => _modifier;
+  Direction get windDirection => _windDirection;
+  Speed get windSpeed => _windSpeed;
+  Speed get windGust => _windGust;
 }

@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:metar_dart/metar.dart';
+import 'package:metar_dart/metar_dart.dart';
 
 void main() {
   final code =

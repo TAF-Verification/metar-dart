@@ -53,7 +53,7 @@ Please file feature requests and bugs at the [issue tracker][tracker].
 ## Current Sources
 
 The most recent version of this package is always available via git, only run the following
-commando on your terminal:
+command on your terminal:
 
 ```
 git clone https://github.com/diego-garro/metar-dart

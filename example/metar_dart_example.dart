@@ -1,4 +1,4 @@
-import 'package:metar_dart/metar.dart';
+import 'package:metar_dart/metar_dart.dart';
 
 void main() async {
   final metar = await Metar.current('MROC');

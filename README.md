@@ -32,9 +32,15 @@ main() {
   final metar = Metar(metarCode);
 
   print('Type: ${metar.type}');
-  print('Wind speed: ${metar.windSpeed}');
-  print('Pressure: ${metar.pressure}');
-  print('Temperature: ${metar.temperature}');
+
+  // Get the wind speed in knots
+  print('Wind speed: ${metar.windSpeed?.inKnot}');
+
+  // Get the pressure in hecto pascals
+  print('Pressure: ${metar.pressure?.inHPa}');
+
+  // Get the temperature in fahrenheit
+  print('Temperature: ${metar.temperature?.inFahrenheit}');
 }
 ```
 

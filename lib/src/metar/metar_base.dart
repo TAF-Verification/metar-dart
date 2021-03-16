@@ -104,6 +104,11 @@ class Metar {
     return Metar(data[1], utcMonth: date.month, utcYear: date.year);
   }
 
+  @override
+  String toString() {
+    return _string;
+  }
+
   /// Here begins the body group handlers
   void _handleType(RegExpMatch match) {
     _type = match.namedGroup('type');

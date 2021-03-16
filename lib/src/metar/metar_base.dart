@@ -58,7 +58,10 @@ class Metar {
   Station _station;
   int _month, _year;
   DateTime _time;
-  Direction _windDirection, _trendWindDirection;
+  Direction _windDirection,
+      _trendWindDirection,
+      _windVariationFrom,
+      _windVariationTo;
   Speed _windSpeed, _windGust, _trendWindSpeed, _trendWindGust;
 
   Metar(String code, {int utcMonth, int utcYear}) {
@@ -220,6 +223,22 @@ class Metar {
         ' * Gust: ${gustValue != null ? gustValue.inKnot : 0.0} knots\n';
   }
 
+  void _handleWindVariation(RegExpMatch match) {
+    final from = match.namedGroup('from');
+    final to = match.namedGroup('to');
+
+    _windVariationFrom = Direction.fromDegrees(value: from);
+    _windVariationTo = Direction.fromDegrees(value: to);
+
+    _string += ' * Wind direction variation:\n'
+        '   - From:\n'
+        '     > Degrees: ${_windVariationFrom.directionInDegrees}\n'
+        '     > Cardinal point: ${_windVariationTo.cardinalPoint}\n'
+        '   - To:\n'
+        '     > Degrees: ${_windVariationTo.directionInDegrees}\n'
+        '     > Cardinal point: ${_windVariationTo.cardinalPoint}\n';
+  }
+
   /// Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -242,28 +261,30 @@ class Metar {
           }
 
           handler[2] = true;
+          index = i + 1;
           break;
         }
 
-        // TODO: Descomentar esta línea para activar los errore de parseo
+        // TODO: Descomentar esta línea para activar los errores de parseo
         // if (handlers.indexOf(handler) == handlers.length - 1) {
         //   _errorMessage = 'failed while processing "$group". Code: $_code';
         //   throw ParserError(_errorMessage);
         // }
 
-        index = i;
       }
     });
   }
 
   void _bodyParser() {
     final handlers = [
+      // [regex, handlerMethod, featureFound]
       [METAR_REGEX().TYPE_RE, _handleType, false],
       [METAR_REGEX().STATION_RE, _handleStation, false],
       [METAR_REGEX().COR_RE, _handleCorrection, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
       [METAR_REGEX().MODIFIER_RE, _handleModifier, false],
       [METAR_REGEX().WIND_RE, _handleWind, false],
+      [METAR_REGEX().WINDVARIATION_RE, _handleWindVariation, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -280,4 +301,6 @@ class Metar {
   Direction get windDirection => _windDirection;
   Speed get windSpeed => _windSpeed;
   Speed get windGust => _windGust;
+  Direction get windVariationFrom => _windVariationFrom;
+  Direction get windVariationTo => _windVariationTo;
 }

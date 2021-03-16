@@ -17,7 +17,7 @@ class METAR_REGEX {
   RegExp WIND_RE = RegExp(
       r'^(?<dir>[\d]{3}|///|MMM|VRB|P)(?<speed>[\d]{2}|[/M]{2})(G(?<gust>\d{2}|[/M{2}]))?(?<units>KT|MPS)$');
 
-  RegExp WINDVARIATION_RE = RegExp(r'^((?<from>\d{3})V(?<to>\d{3}))$');
+  RegExp WINDVARIATION_RE = RegExp(r'^(?<from>\d{3})V(?<to>\d{3})$');
 
   RegExp OPTIONALVIS_RE = RegExp(r'^\d$');
 

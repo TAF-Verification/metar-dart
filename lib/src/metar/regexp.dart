@@ -5,7 +5,7 @@ class METAR_REGEX {
 
   RegExp TYPE_RE = RegExp(r'^(?<type>METAR|SPECI)$');
 
-  RegExp COR_RE = RegExp(r'^(COR)$');
+  RegExp COR_RE = RegExp(r'^(?<cor>COR)$');
 
   RegExp STATION_RE = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
 

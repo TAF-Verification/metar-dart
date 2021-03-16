@@ -50,6 +50,7 @@ class Metar {
   String _body, _trend, _rmk;
   String _string = '### BODY ###\n';
   String _code, _errorMessage;
+  bool _correction = false;
   String _type = 'METAR';
   Station _station;
   int _month, _year;
@@ -132,6 +133,12 @@ class Metar {
         ' * Country: ${stationAsMap['country']}\n';
   }
 
+  void _handleCorrection(RegExpMatch match) {
+    _correction = true;
+
+    _string += '--- Correction ---\n';
+  }
+
   void _handleTime(RegExpMatch match) {
     final day = int.parse(match.namedGroup('day'));
     final hour = int.parse(match.namedGroup('hour'));
@@ -168,6 +175,7 @@ class Metar {
           break;
         }
 
+        // TODO: Descomentar esta línea para activar los errore de parseo
         // if (handlers.indexOf(handler) == handlers.length - 1) {
         //   _errorMessage = 'failed while processing "$group". Code: $_code';
         //   throw ParserError(_errorMessage);
@@ -180,6 +188,7 @@ class Metar {
     final handlers = [
       [METAR_REGEX().TYPE_RE, _handleType, false],
       [METAR_REGEX().STATION_RE, _handleStation, false],
+      [METAR_REGEX().COR_RE, _handleCorrection, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
     ];
 

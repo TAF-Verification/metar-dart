@@ -170,9 +170,12 @@ class Metar {
     String section = 'body',
   }) {
     Iterable<RegExpMatch> matches;
+    var index = 0;
 
     groups.forEach((group) {
-      for (final handler in handlers) {
+      for (var i = index; i < handlers.length; i++) {
+        final handler = handlers[i];
+
         if (handler[0].hasMatch(group) && !handler[2]) {
           matches = handler[0].allMatches(group);
           if (section == 'body') {
@@ -190,6 +193,8 @@ class Metar {
         //   _errorMessage = 'failed while processing "$group". Code: $_code';
         //   throw ParserError(_errorMessage);
         // }
+
+        index = i;
       }
     });
   }
@@ -200,6 +205,7 @@ class Metar {
       [METAR_REGEX().STATION_RE, _handleStation, false],
       [METAR_REGEX().COR_RE, _handleCorrection, false],
       [METAR_REGEX().TIME_RE, _handleTime, false],
+      [METAR_REGEX().MODIFIER_RE, _handleModifier, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -210,5 +216,7 @@ class Metar {
   String get remark => _rmk;
   String get type => _type;
   Station get station => _station;
+  bool get correction => _correction;
   DateTime get time => _time;
+  String get modifier => _modifier;
 }

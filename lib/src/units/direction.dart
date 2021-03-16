@@ -46,12 +46,7 @@ class Direction {
   double get directionInRadians => _returnValue('radians');
   double get directionInGradians => _returnValue('gradians');
   String get cardinalPoint => _directionStr;
-  String get variable {
-    if (_variable) {
-      return 'variable';
-    }
-    return 'not variable';
-  }
+  bool get variable => _variable;
 
   String _cardinalPoint(String value) {
     String point;

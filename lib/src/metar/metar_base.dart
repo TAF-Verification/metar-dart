@@ -262,6 +262,12 @@ class Metar {
     visExtreme = match.namedGroup('visextreme');
     cavok = match.namedGroup('cavok');
 
+    if (section == 'body') {
+      (cavok == null) ? _cavok = false : _cavok = true;
+    } else {
+      (cavok == null) ? _trendCavok = false : _trendCavok = true;
+    }
+
     if (visExtreme != null && visExtreme.contains('/')) {
       var items = visExtreme.split('/');
       visExtreme = '${int.parse(items[0]) / int.parse(items[1])}';
@@ -299,10 +305,8 @@ class Metar {
 
     if (section == 'body') {
       _visibility = value;
-      (cavok == null) ? _cavok = false : _cavok = true;
     } else {
       _trendVisibility = value;
-      (cavok == null) ? _trendCavok = false : _trendCavok = true;
     }
 
     _string += '--- Visibility ---\n'

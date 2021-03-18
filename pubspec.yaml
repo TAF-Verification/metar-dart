@@ -1,6 +1,7 @@
 name: metar_dart
 description: A starting point for Dart libraries or applications.
 version: 0.0.0
+repository: https://github.com/diego-garro/metar-dart
 # homepage: https://www.example.com
 
 environment:

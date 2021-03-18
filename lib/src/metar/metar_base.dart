@@ -63,7 +63,8 @@ class Metar {
       _windVariationFrom,
       _windVariationTo;
   Speed _windSpeed, _windGust, _trendWindSpeed, _trendWindGust;
-  Length _visibility, _trendVisibility;
+  Length _visibility, _trendVisibility, _minimumVisibility;
+  Direction _minimumVisibilityDirection;
   Length _optionalVisibility, _trendOptionalVisibility;
   bool _cavok, _trendCavok;
 
@@ -314,7 +315,18 @@ class Metar {
         ' * ${(cavok != null) ? 'CAVOK' : 'No CAVOK'}\n';
   }
 
-  /// Method to parse the groups
+  void _handleMinimunVisibility(RegExpMatch match) {
+    final minVis = match.namedGroup('vis');
+    final dir = match.namedGroup('dir');
+
+    _minimumVisibility = Length.fromMeters(value: double.parse(minVis));
+    _minimumVisibilityDirection = Direction.fromUndefined(value: dir);
+
+    _string +=
+        ' * Minimum visibility: ${_minimumVisibility.inMeters} meters to $dir\n';
+  }
+
+  // Method to parse the groups
   void _parseGroups(
     List<String> groups,
     List<List> handlers, {
@@ -362,6 +374,7 @@ class Metar {
       [METAR_REGEX().WINDVARIATION_RE, _handleWindVariation, false],
       [METAR_REGEX().OPTIONALVIS_RE, _handleOptionalVisibility, false],
       [METAR_REGEX().VISIBILITY_RE, _handleVisibility, false],
+      [METAR_REGEX().SECVISIBILITY_RE, _handleMinimunVisibility, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -382,4 +395,6 @@ class Metar {
   Direction get windVariationTo => _windVariationTo;
   Length get visibility => _visibility;
   bool get cavok => _cavok;
+  Length get minimumVisibility => _minimumVisibility;
+  Direction get minimumVisibilityDirection => _minimumVisibilityDirection;
 }

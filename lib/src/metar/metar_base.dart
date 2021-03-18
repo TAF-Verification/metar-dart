@@ -63,6 +63,9 @@ class Metar {
       _windVariationFrom,
       _windVariationTo;
   Speed _windSpeed, _windGust, _trendWindSpeed, _trendWindGust;
+  Length _visibility, _trendVisibility;
+  Length _optionalVisibility, _trendOptionalVisibility;
+  bool _cavok, _trendCavok;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -239,6 +242,74 @@ class Metar {
         '     > Cardinal point: ${_windVariationTo.cardinalPoint}\n';
   }
 
+  void _handleOptionalVisibility(RegExpMatch match, {String section = 'body'}) {
+    final optVis = match.namedGroup('opt');
+
+    if (section == 'body') {
+      _optionalVisibility = Length.fromMiles(value: double.parse(optVis));
+    } else {
+      _trendOptionalVisibility = Length.fromMiles(value: double.parse(optVis));
+    }
+  }
+
+  void _handleVisibility(RegExpMatch match, {String section = 'body'}) {
+    String units, vis, extreme, visExtreme, cavok;
+    Length value;
+
+    units = match.namedGroup('units');
+    vis = match.namedGroup('vis');
+    extreme = match.namedGroup('extreme');
+    visExtreme = match.namedGroup('visextreme');
+    cavok = match.namedGroup('cavok');
+
+    if (visExtreme != null && visExtreme.contains('/')) {
+      var items = visExtreme.split('/');
+      visExtreme = '${int.parse(items[0]) / int.parse(items[1])}';
+    }
+
+    units ??= units = 'M';
+
+    Length visFromMiles(Length optionalVis) {
+      Length value;
+
+      if (optionalVis != null) {
+        value = Length.fromMiles(
+          value: optionalVis.inMiles + double.parse(visExtreme),
+        );
+      } else {
+        value = Length.fromMiles(value: double.parse(visExtreme));
+      }
+
+      return value;
+    }
+
+    if (units == 'SM' && section == 'body') {
+      value = visFromMiles(_optionalVisibility);
+    } else if (units == 'SM') {
+      value = visFromMiles(_trendOptionalVisibility);
+    } else if (units == 'KM') {
+      value = Length.fromKilometers(value: double.parse(visExtreme));
+    } else {
+      if (vis == '9999' || _cavok) {
+        value = Length.fromMeters(value: double.parse('10000'));
+      } else {
+        value = Length.fromMeters(value: double.parse(vis));
+      }
+    }
+
+    if (section == 'body') {
+      _visibility = value;
+      (cavok == null) ? _cavok = false : _cavok = true;
+    } else {
+      _trendVisibility = value;
+      (cavok == null) ? _trendCavok = false : _trendCavok = true;
+    }
+
+    _string += '--- Visibility ---\n'
+        ' * Prevailing: ${value.inMeters} meters\n'
+        ' * ${(cavok != null) ? 'CAVOK' : 'No CAVOK'}\n';
+  }
+
   /// Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -285,6 +356,8 @@ class Metar {
       [METAR_REGEX().MODIFIER_RE, _handleModifier, false],
       [METAR_REGEX().WIND_RE, _handleWind, false],
       [METAR_REGEX().WINDVARIATION_RE, _handleWindVariation, false],
+      [METAR_REGEX().OPTIONALVIS_RE, _handleOptionalVisibility, false],
+      [METAR_REGEX().VISIBILITY_RE, _handleVisibility, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -303,4 +376,6 @@ class Metar {
   Speed get windGust => _windGust;
   Direction get windVariationFrom => _windVariationFrom;
   Direction get windVariationTo => _windVariationTo;
+  Length get visibility => _visibility;
+  bool get cavok => _cavok;
 }

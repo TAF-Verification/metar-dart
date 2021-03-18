@@ -19,7 +19,7 @@ class METAR_REGEX {
 
   RegExp WINDVARIATION_RE = RegExp(r'^(?<from>\d{3})V(?<to>\d{3})$');
 
-  RegExp OPTIONALVIS_RE = RegExp(r'^\d$');
+  RegExp OPTIONALVIS_RE = RegExp(r'^(?<opt>\d)$');
 
   RegExp VISIBILITY_RE = RegExp(
       r'^(?<vis>\d{4}|\//\//)|(?<extreme>M|P)?(?<visextreme>\d{1,2}|\d/\d)(?<units>SM|KM|M|U)|(?<cavok>CAVOK)$');

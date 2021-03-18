@@ -27,7 +27,7 @@ class METAR_REGEX {
   RegExp SECVISIBILITY_RE = RegExp(r'^(?<vis>\d{4})(?<dir>[NSEW]([EW])?)$');
 
   RegExp RUNWAY_RE = RegExp(
-      r'^(?<name>R(\d{2}(R|L|C)?))/((?<low>(M|P)?\d{4})(V(?<high>(M|P)?\d{4}))?(?<units>FT)?(?<trend>[NDU])?)$');
+      r'^(?<name>R\d{2}([RLC])?)/(?<rvrlow>[MP])?(?<low>\d{2,4})(V(?<rvrhigh>[MP])?(?<high>\d{2,4}))?(?<units>FT)?(?<trend>[NDU])?$');
 
   RegExp WEATHER_RE = RegExp(
       r'^((?<intensity>(-|\+|VC))?(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?((?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');

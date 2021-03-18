@@ -121,4 +121,45 @@ void main() {
       expect(value, 5.497787);
     });
   });
+
+  group('Test the runway range', () {
+    final code =
+        'METAR SCFA 121300Z 21008KT 9999 3000W R07L/M0150V0600U TSRA FEW020 20/13 Q1014 NOSIG';
+    final metar = Metar(code);
+
+    test('Test the name of runway', () {
+      final value = metar.runwayRanges[0].item1;
+      expect(value, '07 left');
+    });
+
+    test('Test the units of runway', () {
+      final value = metar.runwayRanges[0].item2;
+      expect(value, 'meters');
+    });
+
+    test('Test the low rvr of runway', () {
+      final value = metar.runwayRanges[0].item3;
+      expect(value, 'less than');
+    });
+
+    test('Test the low range of runway', () {
+      final value = metar.runwayRanges[0].item4.inMeters;
+      expect(value, 150.0);
+    });
+
+    test('Test the high rvr of runway', () {
+      final value = metar.runwayRanges[0].item5;
+      expect(value, '');
+    });
+
+    test('Test the high range of runway', () {
+      final value = metar.runwayRanges[0].item6.inMeters;
+      expect(value, 600.0);
+    });
+
+    test('Test the trend of runway', () {
+      final value = metar.runwayRanges[0].item7;
+      expect(value, 'increasing');
+    });
+  });
 }

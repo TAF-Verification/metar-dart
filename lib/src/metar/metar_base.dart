@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:tuple/tuple.dart';
 
 import 'package:metar_dart/src/database/stations_db.dart';
 import 'package:metar_dart/src/metar/regexp.dart';
@@ -67,6 +68,8 @@ class Metar {
   Direction _minimumVisibilityDirection;
   Length _optionalVisibility, _trendOptionalVisibility;
   bool _cavok, _trendCavok;
+  List<Tuple7<String, String, String, Length, String, Length, String>> _runway =
+      [];
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -326,6 +329,88 @@ class Metar {
         ' * Minimum visibility: ${_minimumVisibility.inMeters} meters to $dir\n';
   }
 
+  void _handleRunway(RegExpMatch match) {
+    Tuple7<String, String, String, Length, String, Length, String> runway;
+
+    var name = match.namedGroup('name');
+    var rvrLow = match.namedGroup('rvrlow');
+    final lowRange = match.namedGroup('low');
+    var rvrHigh = match.namedGroup('rvrhigh');
+    final highRange = match.namedGroup('high');
+    var units = match.namedGroup('units');
+    var trend = match.namedGroup('trend');
+
+    // setting the range units
+    if (units == 'FT') {
+      units = 'feet';
+    } else {
+      units = 'meters';
+    }
+
+    // setting the trend
+    if (trend == 'N') {
+      trend = 'no change';
+    } else if (trend == 'U') {
+      trend = 'increasing';
+    } else if (trend == 'D') {
+      trend = 'decreasing';
+    } else {
+      trend = '';
+    }
+
+    // setting the name of runway
+    name = name
+        .substring(1)
+        .replaceFirst('L', ' left')
+        .replaceFirst('R', ' right')
+        .replaceFirst('C', ' center');
+
+    Length _extractRange(String range) {
+      if (range == null) {
+        return Length.fromMeters(value: 0.0);
+      }
+
+      final rangeValue = double.parse(range);
+
+      if (units == 'feet') {
+        return Length.fromFeet(value: rangeValue);
+      } else {
+        return Length.fromMeters(value: rangeValue);
+      }
+    }
+
+    String _translateRVR(String rvr) {
+      if (rvr == 'P') {
+        return 'greater than';
+      } else if (rvr == 'M') {
+        return 'less than';
+      } else {
+        return '';
+      }
+    }
+
+    runway = Tuple7(
+      name,
+      units,
+      _translateRVR(rvrLow),
+      _extractRange(lowRange),
+      _translateRVR(rvrHigh),
+      _extractRange(highRange),
+      trend,
+    );
+
+    // adding the runway
+    _runway.add(runway);
+
+    if (_runway.last == _runway[0]) {
+      _string += ' * Runway:\n';
+    }
+    _string += '   - Name: ${runway.item1}\n'
+        '     > Low range: ${runway.item3} ${runway.item4.inMeters} meters\n'
+        '     > High range: ${runway.item5} ${runway.item6.inMeters} meters\n'
+        '     > Trend: ${runway.item7}';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -375,6 +460,7 @@ class Metar {
       [METAR_REGEX().OPTIONALVIS_RE, _handleOptionalVisibility, false],
       [METAR_REGEX().VISIBILITY_RE, _handleVisibility, false],
       [METAR_REGEX().SECVISIBILITY_RE, _handleMinimunVisibility, false],
+      [METAR_REGEX().RUNWAY_RE, _handleRunway, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -397,4 +483,6 @@ class Metar {
   bool get cavok => _cavok;
   Length get minimumVisibility => _minimumVisibility;
   Direction get minimumVisibilityDirection => _minimumVisibilityDirection;
+  List<Tuple7<String, String, String, Length, String, Length, String>>
+      get runwayRanges => _runway;
 }

@@ -76,6 +76,7 @@ class Metar {
   final _translations = SKY_TRANSLATIONS();
   final _sky = <Tuple3<String, Length, String>>[];
   final _trendSky = <Tuple3<String, Length, String>>[];
+  Temperature _temperature, _dewpoint;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -485,6 +486,35 @@ class Metar {
         ' ${layer.item3 != null ? " of ${_translations.CLOUD_TYPE[layer.item3]}" : ""}';
   }
 
+  void _handleTemperatures(RegExpMatch match) {
+    final regex = RegExp(r'^\d{2}$');
+
+    final tempSign = match.namedGroup('tsign');
+    final temperature = match.namedGroup('temp');
+    final dewptSign = match.namedGroup('dsign');
+    final dewpoint = match.namedGroup('dewpt');
+
+    Temperature defineTemperature(String sign, String temp) {
+      if (sign == 'M' || sign == '-') {
+        return Temperature.fromCelsius(value: double.parse('-$temp'));
+      }
+
+      return Temperature.fromCelsius(value: double.parse(temp));
+    }
+
+    if (regex.hasMatch(temperature)) {
+      _temperature = defineTemperature(tempSign, temperature);
+    }
+
+    if (regex.hasMatch(dewpoint)) {
+      _dewpoint = defineTemperature(dewptSign, dewpoint);
+    }
+
+    _string += '--- Temperatures ---\n'
+        ' * Absolute: ${_temperature ?? "unknown"}\n'
+        ' * Dewpoint: ${_dewpoint ?? "unknown"}\n';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -542,6 +572,7 @@ class Metar {
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().TEMP_RE, _handleTemperatures, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -569,4 +600,6 @@ class Metar {
       get runwayRanges => _runway;
   List<Map<String, String>> get weather => _weather;
   List<Tuple3<String, Length, String>> get sky => _sky;
+  Temperature get temperature => _temperature;
+  Temperature get dewpoint => _dewpoint;
 }

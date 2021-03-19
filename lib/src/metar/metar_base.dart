@@ -69,11 +69,13 @@ class Metar {
   Direction _minimumVisibilityDirection;
   Length _optionalVisibility, _trendOptionalVisibility;
   bool _cavok, _trendCavok;
-  List<Tuple7<String, String, String, Length, String, Length, String>> _runway =
-      [];
+  final _runway =
+      <Tuple7<String, String, String, Length, String, Length, String>>[];
   final _weather = <Map<String, String>>[];
   final _trendWeather = <Map<String, String>>[];
   final _translations = SKY_TRANSLATIONS();
+  final _sky = <Tuple3<String, Length, String>>[];
+  final _trendSky = <Tuple3<String, Length, String>>[];
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -451,6 +453,38 @@ class Metar {
         '   Other: ${weather["other"] == "" ? "" : _translations.WEATHER_OTHER[weather["other"]]}\n';
   }
 
+  void _handleSky(RegExpMatch match, {String section = 'body'}) {
+    Tuple3<String, Length, String> layer;
+    Length heightValue;
+
+    final cover = match.namedGroup('cover');
+    final height = match.namedGroup('height');
+    final cloud = match.namedGroup('cloud');
+
+    if (height == '///' || height == null) {
+      heightValue = Length.fromFeet();
+    } else {
+      heightValue = Length.fromFeet(value: double.parse(height) * 100.0);
+    }
+
+    layer = Tuple3(cover, heightValue, cloud ?? '');
+
+    if (section == 'body') {
+      _sky.add(layer);
+    } else {
+      _trendSky.add(layer);
+    }
+
+    if ((_sky.isNotEmpty && layer == _sky[0]) ||
+        (_trendSky.isNotEmpty && layer == _trendSky[0])) {
+      _string += '--- Sky ---\n';
+    }
+
+    _string += ' * ${capitalize(_translations.SKY_COVER[layer.item1])} at'
+        ' ${layer.item2 != null ? layer.item2.inFeet : "No height"} feet'
+        ' ${layer.item3 != null ? " of ${_translations.CLOUD_TYPE[layer.item3]}" : ""}';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -504,6 +538,10 @@ class Metar {
       [METAR_REGEX().WEATHER_RE, _handleWeather, false],
       [METAR_REGEX().WEATHER_RE, _handleWeather, false],
       [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -530,4 +568,5 @@ class Metar {
   List<Tuple7<String, String, String, Length, String, Length, String>>
       get runwayRanges => _runway;
   List<Map<String, String>> get weather => _weather;
+  List<Tuple3<String, Length, String>> get sky => _sky;
 }

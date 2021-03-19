@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:metar_dart/src/database/translations.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:metar_dart/src/database/stations_db.dart';
@@ -70,6 +71,9 @@ class Metar {
   bool _cavok, _trendCavok;
   List<Tuple7<String, String, String, Length, String, Length, String>> _runway =
       [];
+  final _weather = <Map<String, String>>[];
+  final _trendWeather = <Map<String, String>>[];
+  final _translations = SKY_TRANSLATIONS();
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -411,6 +415,42 @@ class Metar {
         '     > Trend: ${runway.item7}';
   }
 
+  void _handleWeather(RegExpMatch match, {String section = 'body'}) {
+    Map<String, String> weather;
+
+    final intensity = match.namedGroup('intensity');
+    final description = match.namedGroup('descrip');
+    final precipitation = match.namedGroup('precip');
+    final obscuration = match.namedGroup('obsc');
+    final other = match.namedGroup('other');
+
+    weather = {
+      'intensity': intensity ?? '',
+      'description': description ?? '',
+      'precipitation': precipitation ?? '',
+      'obscuration': obscuration ?? '',
+      'other': other ?? '',
+    };
+
+    if (section == 'body') {
+      _weather.add(weather);
+    } else {
+      _trendWeather.add(weather);
+    }
+
+    if ((_weather.isNotEmpty && weather == _weather[0]) ||
+        (_trendWeather.isNotEmpty && weather == _trendWeather[0])) {
+      _string += '--- Weather ---\n';
+    }
+
+    _string +=
+        ' * Intensity: ${weather["intensity"] == "" ? "" : _translations.WEATHER_INT[weather["intensity"]]}\n'
+        '   Description: ${weather["description"] == "" ? "" : _translations.WEATHER_DESC[weather["description"]]}\n'
+        '   Precipitation: ${weather["precipitation"] == "" ? "" : _translations.WEATHER_PREC[weather["precipitation"]]}\n'
+        '   Obscuration: ${weather["obscuration"] == "" ? "" : _translations.WEATHER_OBSC[weather["obscuration"]]}\n'
+        '   Other: ${weather["other"] == "" ? "" : _translations.WEATHER_OTHER[weather["other"]]}\n';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -461,11 +501,15 @@ class Metar {
       [METAR_REGEX().VISIBILITY_RE, _handleVisibility, false],
       [METAR_REGEX().SECVISIBILITY_RE, _handleMinimunVisibility, false],
       [METAR_REGEX().RUNWAY_RE, _handleRunway, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
   }
 
+  // Getters
   String get body => _body;
   String get trend => _trend;
   String get remark => _rmk;
@@ -485,4 +529,5 @@ class Metar {
   Direction get minimumVisibilityDirection => _minimumVisibilityDirection;
   List<Tuple7<String, String, String, Length, String, Length, String>>
       get runwayRanges => _runway;
+  List<Map<String, String>> get weather => _weather;
 }

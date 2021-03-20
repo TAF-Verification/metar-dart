@@ -49,6 +49,24 @@ List<String> _divideCode(String code) {
   return <String>[body, trend, rmk];
 }
 
+String _sanitizeWindshear(String code) {
+  code = code.replaceFirst(RegExp(r'WS\sALL\sRWY'), 'WSALLRWY');
+
+  final regex = RegExp(r'WS\sR(?<num>\d{2})(?<rwy>[CLR])?');
+  for (var i = 1; i <= 3; i++) {
+    if (regex.hasMatch(code)) {
+      final match = regex.allMatches(code);
+      final matches = match.elementAt(0);
+      code = code.replaceFirst(
+        regex,
+        'WSR${matches.namedGroup("num")}${matches.namedGroup("rwy") ?? ""}',
+      );
+    }
+  }
+
+  return code;
+}
+
 /// Metar model to parse the code for every station
 class Metar {
   String _body, _trend, _rmk;
@@ -86,6 +104,7 @@ class Metar {
       throw ParserError(_errorMessage);
     }
 
+    code = _sanitizeWindshear(code);
     _code = code.trim().replaceAll(RegExp(r'\s+'), ' ').replaceAll('=', '');
     final dividedCodeList = _divideCode(_code);
 

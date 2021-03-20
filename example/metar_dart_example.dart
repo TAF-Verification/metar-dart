@@ -12,4 +12,6 @@ void main() async {
   print(metar.windDirection?.cardinalPoint);
   print(metar.windSpeed?.inMeterPerSecond);
   print(metar.windGust?.inMilePerHour);
+
+  print(metar.toString());
 }

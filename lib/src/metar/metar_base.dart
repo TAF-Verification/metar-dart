@@ -78,6 +78,7 @@ class Metar {
   final _trendSky = <Tuple3<String, Length, String>>[];
   Temperature _temperature, _dewpoint;
   Pressure _pressure;
+  Map<String, String> _recentWeather;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -546,6 +547,26 @@ class Metar {
         ' * ${_pressure.inHPa} hPa\n';
   }
 
+  void _handleRecentWeather(RegExpMatch match) {
+    final description = match.namedGroup('descrip');
+    final precipitation = match.namedGroup('precip');
+    final obscuration = match.namedGroup('obsc');
+    final other = match.namedGroup('other');
+
+    _recentWeather = {
+      'description': description ?? '',
+      'precipitation': precipitation ?? '',
+      'obscuration': obscuration ?? '',
+      'other': other ?? '',
+    };
+
+    _string += '--- Recent Weather ---\n'
+        ' * Description: ${description != null ? _translations.WEATHER_DESC[description] : ""}\n'
+        ' * Precipitation: ${precipitation != null ? _translations.WEATHER_PREC[precipitation] : ""}\n'
+        ' * Precipitation: ${obscuration != null ? _translations.WEATHER_PREC[obscuration] : ""}\n'
+        ' * Precipitation: ${other != null ? _translations.WEATHER_PREC[other] : ""}\n';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -605,6 +626,7 @@ class Metar {
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().TEMP_RE, _handleTemperatures, false],
       [METAR_REGEX().PRESS_RE, _handlePressure, false],
+      [METAR_REGEX().RECENT_RE, _handleRecentWeather, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -635,4 +657,5 @@ class Metar {
   Temperature get temperature => _temperature;
   Temperature get dewpoint => _dewpoint;
   Pressure get pressure => _pressure;
+  Map<String, String> get recentWeather => _recentWeather;
 }

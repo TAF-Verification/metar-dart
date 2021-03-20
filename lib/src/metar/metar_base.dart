@@ -77,6 +77,7 @@ class Metar {
   final _sky = <Tuple3<String, Length, String>>[];
   final _trendSky = <Tuple3<String, Length, String>>[];
   Temperature _temperature, _dewpoint;
+  Pressure _pressure;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -515,6 +516,36 @@ class Metar {
         ' * Dewpoint: ${_dewpoint ?? "unknown"}\n';
   }
 
+  void _handlePressure(RegExpMatch match) {
+    final units = match.namedGroup('units');
+    final press = match.namedGroup('press');
+    final units2 = match.namedGroup('units2');
+
+    if (press != '\//\//') {
+      var pressAsDouble = double.parse(press);
+
+      if (units == 'A' || units2 == 'INS') {
+        _pressure = Pressure.fromInHg(value: pressAsDouble / 100.0);
+      } else if (units == 'Q' || units == 'QNH') {
+        _pressure = Pressure.fromHPa(value: pressAsDouble);
+      } else if (units == 'SLP') {
+        if (pressAsDouble < 500) {
+          pressAsDouble = pressAsDouble / 10 + 1000;
+        } else {
+          pressAsDouble = pressAsDouble / 10 + 900;
+        }
+        _pressure = Pressure.fromMb(value: pressAsDouble);
+      } else if (pressAsDouble > 2500.0) {
+        _pressure = Pressure.fromInHg(value: pressAsDouble / 100);
+      } else {
+        _pressure = Pressure.fromMb(value: pressAsDouble);
+      }
+    }
+
+    _string += '--- Pressure ---\n'
+        ' * ${_pressure.inHPa} hPa\n';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -573,6 +604,7 @@ class Metar {
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().TEMP_RE, _handleTemperatures, false],
+      [METAR_REGEX().PRESS_RE, _handlePressure, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -602,4 +634,5 @@ class Metar {
   List<Tuple3<String, Length, String>> get sky => _sky;
   Temperature get temperature => _temperature;
   Temperature get dewpoint => _dewpoint;
+  Pressure get pressure => _pressure;
 }

@@ -15,13 +15,15 @@ class Pressure implements Comparable<Pressure> {
 
   ///hPa to inHg
   static const double _hPa_to_inHg = 1 / 33.86398;
-  //static const double _hPa_to_mb = 1 / 33.86398;
+
+  ///mb to inHg
+  static const double _mb_to_inHg = 33.86398;
 
   Pressure.fromInHg({double value = 0.0}) : _pressure = value;
-  Pressure.fromMb({double value = 0.0}) : _pressure = value;
+  Pressure.fromMb({double value = 0.0}) : _pressure = _mb_to_inHg * value;
   Pressure.fromHPa({double value = 0.0}) : _pressure = _hPa_to_inHg * value;
 
-  double get inMb => _returnValue(_pressure);
+  double get inMb => _returnValue(_mb_to_inHg * _pressure);
   double get inInHg => _returnValue(_pressure);
   double get inHPa => _returnValue(_inHg_to_hPa * _pressure);
 

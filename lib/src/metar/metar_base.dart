@@ -449,11 +449,11 @@ class Metar {
     }
 
     _string +=
-        ' * Intensity: ${weather["intensity"] == "" ? "" : _translations.WEATHER_INT[weather["intensity"]]}\n'
-        '   Description: ${weather["description"] == "" ? "" : _translations.WEATHER_DESC[weather["description"]]}\n'
-        '   Precipitation: ${weather["precipitation"] == "" ? "" : _translations.WEATHER_PREC[weather["precipitation"]]}\n'
-        '   Obscuration: ${weather["obscuration"] == "" ? "" : _translations.WEATHER_OBSC[weather["obscuration"]]}\n'
-        '   Other: ${weather["other"] == "" ? "" : _translations.WEATHER_OTHER[weather["other"]]}\n';
+        ' * ${weather["intensity"] == "" ? "" : capitalize(_translations.WEATHER_INT[weather["intensity"]])}'
+        ' ${weather["description"] == "" ? "" : _translations.WEATHER_DESC[weather["description"]]}'
+        ' ${weather["precipitation"] == "" ? "" : _translations.WEATHER_PREC[weather["precipitation"]]}'
+        ' ${weather["obscuration"] == "" ? "" : _translations.WEATHER_OBSC[weather["obscuration"]]}'
+        ' ${weather["other"] == "" ? "" : _translations.WEATHER_OTHER[weather["other"]]}\n';
   }
 
   void _handleSky(RegExpMatch match, {String section = 'body'}) {
@@ -483,9 +483,9 @@ class Metar {
       _string += '--- Sky ---\n';
     }
 
-    _string += ' * ${capitalize(_translations.SKY_COVER[layer.item1])} at'
-        ' ${layer.item2 != null ? layer.item2.inFeet : "No height"} feet'
-        ' ${layer.item3 != null ? " of ${_translations.CLOUD_TYPE[layer.item3]}" : ""}';
+    _string += ' * ${capitalize(_translations.SKY_COVER[layer.item1])}'
+        ' ${layer.item2.inFeet != 0.0 ? "at ${layer.item2.inFeet} feet" : ""}'
+        ' ${layer.item3 != "" ? "of ${_translations.CLOUD_TYPE[layer.item3]}" : ""}\n';
   }
 
   void _handleTemperatures(RegExpMatch match) {
@@ -513,8 +513,8 @@ class Metar {
     }
 
     _string += '--- Temperatures ---\n'
-        ' * Absolute: ${_temperature ?? "unknown"}\n'
-        ' * Dewpoint: ${_dewpoint ?? "unknown"}\n';
+        ' * Absolute: ${_temperature.inCelsius ?? "unknown"}\n'
+        ' * Dewpoint: ${_dewpoint.inCelsius ?? "unknown"}\n';
   }
 
   void _handlePressure(RegExpMatch match) {
@@ -560,11 +560,15 @@ class Metar {
       'other': other ?? '',
     };
 
-    _string += '--- Recent Weather ---\n'
-        ' * Description: ${description != null ? _translations.WEATHER_DESC[description] : ""}\n'
-        ' * Precipitation: ${precipitation != null ? _translations.WEATHER_PREC[precipitation] : ""}\n'
-        ' * Precipitation: ${obscuration != null ? _translations.WEATHER_PREC[obscuration] : ""}\n'
-        ' * Precipitation: ${other != null ? _translations.WEATHER_PREC[other] : ""}\n';
+    _string += '--- Recent Weather ---\n * ';
+
+    final s =
+        '${description != null ? _translations.WEATHER_DESC[description] : ""}'
+        ' ${precipitation != null ? _translations.WEATHER_PREC[precipitation] : ""}'
+        ' ${obscuration != null ? _translations.WEATHER_PREC[obscuration] : ""}'
+        ' ${other != null ? _translations.WEATHER_PREC[other] : ""}\n';
+
+    _string += capitalize(s.trimLeft());
   }
 
   // Method to parse the groups

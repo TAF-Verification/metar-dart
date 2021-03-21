@@ -14,15 +14,12 @@ endif
 
 patch: check_no_main
 	$(CIDER_BUMP) patch
-	git push --follow-tags
 
 minor: check_no_main
 	$(CIDER_BUMP) minor
-	git push --follow-tags
 
 major:
 	$(CIDER_BUMP) major
-	git push --follow-tags
 
 tests:
 	$(PUB_RUN) test

@@ -492,7 +492,11 @@ class Metar {
       heightValue = Length.fromFeet(value: double.parse(height) * 100.0);
     }
 
-    layer = Tuple3(cover, heightValue, cloud ?? '');
+    layer = Tuple3(
+      _translations.SKY_COVER[cover],
+      heightValue,
+      cloud != null ? _translations.CLOUD_TYPE[cloud] : '',
+    );
 
     if (section == 'body') {
       _sky.add(layer);
@@ -505,9 +509,9 @@ class Metar {
       _string += '--- Sky ---\n';
     }
 
-    _string += ' * ${capitalize(_translations.SKY_COVER[layer.item1])}'
+    _string += ' * ${capitalize(layer.item1)}'
         ' ${layer.item2.inFeet != 0.0 ? "at ${layer.item2.inFeet} feet" : ""}'
-        ' ${layer.item3 != "" ? "of ${_translations.CLOUD_TYPE[layer.item3]}" : ""}\n';
+        ' ${layer.item3 != "" ? "of ${layer.item3}" : ""}\n';
   }
 
   void _handleTemperatures(RegExpMatch match) {

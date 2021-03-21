@@ -12,8 +12,8 @@ void main() {
     test('Test the cover of sky layers', () {
       final value_1 = layer_1.item1;
       final value_2 = layer_2.item1;
-      expect(value_1, 'FEW');
-      expect(value_2, 'BKN');
+      expect(value_1, 'a few');
+      expect(value_2, 'broken');
     });
 
     test('Test the length in feet of sky layers', () {
@@ -57,9 +57,9 @@ void main() {
       final value_1 = layer_1.item1;
       final value_2 = layer_2.item1;
       final value_3 = layer_3.item1;
-      expect(value_1, 'FEW');
-      expect(value_2, 'BKN');
-      expect(value_3, 'OVC');
+      expect(value_1, 'a few');
+      expect(value_2, 'broken');
+      expect(value_3, 'overcast');
     });
 
     test('Test the length in feet of sky layers', () {
@@ -94,7 +94,7 @@ void main() {
       final value_2 = layer_2.item3;
       final value_3 = layer_3.item3;
       expect(value_1, '');
-      expect(value_2, 'CB');
+      expect(value_2, 'cumulonimbus');
       expect(value_3, '');
     });
   });

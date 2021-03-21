@@ -98,6 +98,7 @@ class Metar {
   Pressure _pressure;
   Map<String, String> _recentWeather;
   final _windshear = <String>[];
+  Tuple2<Temperature, String> _seaState;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -615,6 +616,26 @@ class Metar {
     _string += ' * ${capitalize(_windshear.last)}';
   }
 
+  void _handleSeaState(RegExpMatch match) {
+    Temperature temp;
+
+    final sign = match.namedGroup('sign');
+    final temperature = match.namedGroup('temp');
+    final state = match.namedGroup('state');
+
+    if (sign == 'M') {
+      temp = Temperature.fromCelsius(value: double.parse('-' + temperature));
+    } else {
+      temp = Temperature.fromCelsius(value: double.parse(temperature));
+    }
+
+    _seaState = Tuple2(temp, capitalize(_translations.SEA_STATE[state]));
+
+    _string += '--- Sea State ---\n'
+        ' * Temperature: ${temp.inCelsius}°\n'
+        ' * State: ${_seaState.item2}\n';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -678,6 +699,7 @@ class Metar {
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
+      [METAR_REGEX().SEASTATE_RE, _handleSeaState, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -710,4 +732,5 @@ class Metar {
   Pressure get pressure => _pressure;
   Map<String, String> get recentWeather => _recentWeather;
   List<String> get windshear => _windshear;
+  Tuple2<Temperature, String> get seaState => _seaState;
 }

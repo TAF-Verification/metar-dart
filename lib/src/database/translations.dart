@@ -96,6 +96,19 @@ class SKY_TRANSLATIONS {
     'WHT': 'white',
   };
 
+  Map<String, String> SEA_STATE = {
+    '0': 'calm (glassy)',
+    '1': 'calm (rippled)',
+    '2': 'smooth (wavelets)',
+    '3': 'slight',
+    '4': 'moderate',
+    '5': 'rough',
+    '6': 'very rough',
+    '7': 'high',
+    '8': 'very high',
+    '9': 'phenomenal',
+  };
+
 // Translation of various remark codes into english
 
   Map<String, String> PRESSURE_TENDENCY = {

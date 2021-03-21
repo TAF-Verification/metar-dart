@@ -47,6 +47,8 @@ class METAR_REGEX {
   RegExp WINDSHEAR_RUNWAY_RE =
       RegExp(r'^WS(?<all>ALL)?(RWY|R(?<num>\d{2})(?<name>[RCL])?)$');
 
+  RegExp SEASTATE_RE = RegExp(r'^W(?<sign>M)?(?<temp>\d{2})/S(?<state>\d)$');
+
   RegExp COLOR_RE =
       RegExp(r'^(BLACK)?(BLU|GRN|WHT|RED)\+?(/?(BLACK)?(BLU|GRN|WHT|RED)\+?)*');
 

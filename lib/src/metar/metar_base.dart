@@ -452,11 +452,16 @@ class Metar {
     final other = match.namedGroup('other');
 
     weather = {
-      'intensity': intensity ?? '',
-      'description': description ?? '',
-      'precipitation': precipitation ?? '',
-      'obscuration': obscuration ?? '',
-      'other': other ?? '',
+      'intensity':
+          intensity != null ? _translations.WEATHER_INT[intensity] : '',
+      'description':
+          description != null ? _translations.WEATHER_DESC[description] : '',
+      'precipitation': precipitation != null
+          ? _translations.WEATHER_PREC[precipitation]
+          : '',
+      'obscuration':
+          obscuration != null ? _translations.WEATHER_OBSC[obscuration] : '',
+      'other': other != null ? _translations.WEATHER_OTHER[other] : '',
     };
 
     if (section == 'body') {
@@ -470,12 +475,15 @@ class Metar {
       _string += '--- Weather ---\n';
     }
 
-    _string +=
-        ' * ${weather["intensity"] == "" ? "" : capitalize(_translations.WEATHER_INT[weather["intensity"]])}'
-        ' ${weather["description"] == "" ? "" : _translations.WEATHER_DESC[weather["description"]]}'
-        ' ${weather["precipitation"] == "" ? "" : _translations.WEATHER_PREC[weather["precipitation"]]}'
-        ' ${weather["obscuration"] == "" ? "" : _translations.WEATHER_OBSC[weather["obscuration"]]}'
-        ' ${weather["other"] == "" ? "" : _translations.WEATHER_OTHER[weather["other"]]}\n';
+    final s = '${weather["intensity"]}'
+        ' ${weather["description"]}'
+        ' ${weather["precipitation"]}'
+        ' ${weather["obscuration"]}'
+        ' ${weather["other"]}';
+
+    _string += ' * ' +
+        capitalize(s.replaceAll(RegExp(r'\s{2,}'), ' ').trimLeft()) +
+        '\n';
   }
 
   void _handleSky(RegExpMatch match, {String section = 'body'}) {
@@ -590,14 +598,16 @@ class Metar {
       'other': other != null ? _translations.WEATHER_OTHER[other] : '',
     };
 
-    _string += '--- Recent Weather ---\n * ';
+    _string += '--- Recent Weather ---\n';
 
     final s = '${_recentWeather["description"]}'
         ' ${_recentWeather["precipitation"]}'
         ' ${_recentWeather["obscuration"]}'
-        ' ${_recentWeather["other"]}\n';
+        ' ${_recentWeather["other"]}';
 
-    _string += capitalize(s.trimLeft());
+    _string += ' * ' +
+        capitalize(s.replaceAll(RegExp(r'\s{2,}'), ' ').trimLeft()) +
+        '\n';
   }
 
   void _handleWindshear(RegExpMatch match) {

@@ -782,6 +782,23 @@ class Metar {
     _parseGroups(_body.split(' '), handlers);
   }
 
+  void _trendParser() {
+    final handlers = [
+      // [regex, handlerMethod, featureFound]
+      [METAR_REGEX().WIND_RE, _handleWind, false],
+      [METAR_REGEX().OPTIONALVIS_RE, _handleOptionalVisibility, false],
+      [METAR_REGEX().VISIBILITY_RE, _handleVisibility, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().WEATHER_RE, _handleWeather, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+      [METAR_REGEX().SKY_RE, _handleSky, false],
+    ];
+
+    _parseGroups(_trend.split(' '), handlers, section: 'trend');
+  }
+
   // Getters
 
   /// Get the body section of the report
@@ -856,4 +873,34 @@ class Metar {
   List<String> get windshear => _windshear;
   Tuple2<Temperature, String> get seaState => _seaState;
   Map<String, String> get runwayState => _runwayState;
+
+  // Trend getters
+
+  /// Get the wind direction of the report
+  /// * inDegrees
+  /// * inRadians
+  /// * inGradians
+  /// * cardinalPoint
+  /// Some times it can be null depending of station, be nullsafety
+  Direction get trendWindDirection => _trendWindDirection;
+
+  /// Get the medium wind speed of the report
+  /// * inKnot
+  /// * inKm/h
+  /// * inM/s
+  /// * inMiles/h
+  /// Some times it can be null depending of station, be nullsafety
+  Speed get trendWindSpeed => _trendWindSpeed;
+
+  /// Get the medium gust wind speed of the report
+  /// * inKnot
+  /// * inKm/h
+  /// * inM/s
+  /// * inMiles/h
+  /// Some times it can be null depending of station, be nullsafety
+  Speed get trendWindGust => _trendWindGust;
+
+  Length get trendVisibility => _trendVisibility;
+  List<Map<String, String>> get trendWeather => _trendWeather;
+  List<Tuple3<String, Length, String>> get trendSky => _trendSky;
 }

@@ -739,12 +739,10 @@ class Metar {
           break;
         }
 
-        // TODO: Descomentar esta línea para activar los errores de parseo
-        // if (handlers.indexOf(handler) == handlers.length - 1) {
-        //   _errorMessage = 'failed while processing "$group". Code: $_code';
-        //   throw ParserError(_errorMessage);
-        // }
-
+        if (handlers.indexOf(handler) == handlers.length - 1) {
+          _errorMessage = 'failed while processing "$group". Code: $_code';
+          throw ParserError(_errorMessage);
+        }
       }
     });
   }
@@ -772,6 +770,7 @@ class Metar {
       [METAR_REGEX().SKY_RE, _handleSky, false],
       [METAR_REGEX().TEMP_RE, _handleTemperatures, false],
       [METAR_REGEX().PRESS_RE, _handlePressure, false],
+      [METAR_REGEX().PRESS_RE, _handlePressure, false],
       [METAR_REGEX().RECENT_RE, _handleRecentWeather, false],
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
@@ -784,16 +783,61 @@ class Metar {
   }
 
   // Getters
+
+  /// Get the body section of the report
   String get body => _body;
+
+  /// Get the trend section of the report
   String get trend => _trend;
+
+  /// Get the remark section of the report
   String get remark => _rmk;
+
+  /// Get the type of the report
   String get type => _type;
+
+  /// Get the station metadata
+  /// * Name
+  /// * ICAO
+  /// * IATA
+  /// * SYNOP
+  /// * Longitude
+  /// * Latitude
+  /// * Elevation
+  /// * Country
   Station get station => _station;
+
+  /// Get if the report is a correction
   bool get correction => _correction;
+
+  /// Get the datetime of the report
   DateTime get time => _time;
+
+  /// Get the modifier of the report
   String get modifier => _modifier;
+
+  /// Get the wind direction of the report
+  /// * inDegrees
+  /// * inRadians
+  /// * inGradians
+  /// * cardinalPoint
+  /// Some times it can be null depending of station, be nullsafety
   Direction get windDirection => _windDirection;
+
+  /// Get the medium wind speed of the report
+  /// * inKnot
+  /// * inKm/h
+  /// * inM/s
+  /// * inMiles/h
+  /// Some times it can be null depending of station, be nullsafety
   Speed get windSpeed => _windSpeed;
+
+  /// Get the medium gust wind speed of the report
+  /// * inKnot
+  /// * inKm/h
+  /// * inM/s
+  /// * inMiles/h
+  /// Some times it can be null depending of station, be nullsafety
   Speed get windGust => _windGust;
   Direction get windVariationFrom => _windVariationFrom;
   Direction get windVariationTo => _windVariationTo;

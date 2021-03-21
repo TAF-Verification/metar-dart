@@ -1,5 +1,5 @@
 name: metar_dart
-description: A starting point for Dart libraries or applications.
+description: Parse Meteorological Weather reports emited from aeronautical land stations (METAR). Coming soon TAF and SYNOP.
 version: 0.1.0
 repository: https://github.com/diego-garro/metar-dart
 # homepage: https://www.example.com

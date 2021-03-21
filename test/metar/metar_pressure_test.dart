@@ -25,7 +25,7 @@ void main() {
   });
 
   group('Test the pressure of METAR from inHg', () {
-    final code = 'METAR MMGL 201721Z 00000KT 7SM SKC 26/M07 A3025 RMK HZY CI';
+    final code = 'METAR MMGL 201721Z 00000KT 7SM NSC 26/M07 A3025 RMK HZY CI';
     final metar = Metar(code);
     final pressure = metar.pressure;
 

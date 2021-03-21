@@ -97,6 +97,7 @@ class Metar {
   Temperature _temperature, _dewpoint;
   Pressure _pressure;
   Map<String, String> _recentWeather;
+  final _windshear = <String>[];
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -590,6 +591,30 @@ class Metar {
     _string += capitalize(s.trimLeft());
   }
 
+  void _handleWindshear(RegExpMatch match) {
+    final all = match.namedGroup('all');
+    final number = match.namedGroup('num');
+    final name = match.namedGroup('name');
+
+    final rwyNames = {
+      'R': 'right',
+      'L': 'left',
+      'C': 'center',
+    };
+
+    if (all != null) {
+      _windshear.add(capitalize(all));
+    } else {
+      _windshear.add('$number${name != null ? " ${rwyNames[name]}" : ""}');
+    }
+
+    if (_windshear.length == 1) {
+      _string += '--- Windshear ---\n';
+    }
+
+    _string += ' * ${capitalize(_windshear.last)}';
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -650,6 +675,9 @@ class Metar {
       [METAR_REGEX().TEMP_RE, _handleTemperatures, false],
       [METAR_REGEX().PRESS_RE, _handlePressure, false],
       [METAR_REGEX().RECENT_RE, _handleRecentWeather, false],
+      [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
+      [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
+      [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -681,4 +709,5 @@ class Metar {
   Temperature get dewpoint => _dewpoint;
   Pressure get pressure => _pressure;
   Map<String, String> get recentWeather => _recentWeather;
+  List<String> get windshear => _windshear;
 }

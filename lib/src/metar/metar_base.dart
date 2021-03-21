@@ -576,19 +576,22 @@ class Metar {
     final other = match.namedGroup('other');
 
     _recentWeather = {
-      'description': description ?? '',
-      'precipitation': precipitation ?? '',
-      'obscuration': obscuration ?? '',
-      'other': other ?? '',
+      'description':
+          description != null ? _translations.WEATHER_DESC[description] : '',
+      'precipitation': precipitation != null
+          ? _translations.WEATHER_PREC[precipitation]
+          : '',
+      'obscuration':
+          obscuration != null ? _translations.WEATHER_OBSC[obscuration] : '',
+      'other': other != null ? _translations.WEATHER_OTHER[other] : '',
     };
 
     _string += '--- Recent Weather ---\n * ';
 
-    final s =
-        '${description != null ? _translations.WEATHER_DESC[description] : ""}'
-        ' ${precipitation != null ? _translations.WEATHER_PREC[precipitation] : ""}'
-        ' ${obscuration != null ? _translations.WEATHER_PREC[obscuration] : ""}'
-        ' ${other != null ? _translations.WEATHER_PREC[other] : ""}\n';
+    final s = '${_recentWeather["description"]}'
+        ' ${_recentWeather["precipitation"]}'
+        ' ${_recentWeather["obscuration"]}'
+        ' ${_recentWeather["other"]}\n';
 
     _string += capitalize(s.trimLeft());
   }

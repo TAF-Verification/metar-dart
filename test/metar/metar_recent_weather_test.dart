@@ -15,7 +15,7 @@ void main() {
 
     test('Test the precipitation', () {
       final value = metar.recentWeather['precipitation'];
-      expect(value, 'RA');
+      expect(value, 'rain');
     });
 
     test('Test the obscuration', () {
@@ -36,12 +36,12 @@ void main() {
 
     test('Test the description', () {
       final value = metar.recentWeather['description'];
-      expect(value, 'TS');
+      expect(value, 'thunderstorm');
     });
 
     test('Test the precipitation', () {
       final value = metar.recentWeather['precipitation'];
-      expect(value, 'GR');
+      expect(value, 'hail');
     });
 
     test('Test the obscuration', () {

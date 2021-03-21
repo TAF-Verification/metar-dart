@@ -145,6 +145,7 @@ class Metar {
     return Metar(data[1], utcMonth: date.month, utcYear: date.year);
   }
 
+  /// Get a resume of the report in the console with the toString() method
   @override
   String toString() {
     return _string;

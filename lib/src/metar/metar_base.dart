@@ -533,8 +533,8 @@ class Metar {
     }
 
     _string += '--- Temperatures ---\n'
-        ' * Absolute: ${_temperature.inCelsius ?? "unknown"}\n'
-        ' * Dewpoint: ${_dewpoint.inCelsius ?? "unknown"}\n';
+        ' * Absolute: ${_temperature != null ? "${_temperature.inCelsius}°C" : "unknown"}\n'
+        ' * Dewpoint: ${_dewpoint != null ? "${_dewpoint.inCelsius}°C" : "unknown"}\n';
   }
 
   void _handlePressure(RegExpMatch match) {

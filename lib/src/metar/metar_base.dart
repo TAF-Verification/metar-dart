@@ -99,6 +99,7 @@ class Metar {
   Map<String, String> _recentWeather;
   final _windshear = <String>[];
   Tuple2<Temperature, String> _seaState;
+  Map<String, String> _runwayState;
 
   Metar(String code, {int utcMonth, int utcYear}) {
     if (code.isEmpty || code == null) {
@@ -636,6 +637,65 @@ class Metar {
         ' * State: ${_seaState.item2}\n';
   }
 
+  void _handleRunwayState(RegExpMatch match) {
+    final number = match.namedGroup('num');
+    var name = match.namedGroup('name');
+    final deposit = match.namedGroup('deposit');
+    final contamination = match.namedGroup('contamination');
+    var depth = match.namedGroup('depth');
+    var friction = match.namedGroup('friction');
+    final snoclo = match.namedGroup('SNOCLO');
+    final clrd = match.namedGroup('CLRD');
+
+    name ??= name = name
+        .replaceFirst('L', ' left')
+        .replaceFirst('R', ' right')
+        .replaceFirst('C', ' center');
+
+    if (depth == null) {
+      depth = '';
+    } else if (int.parse(depth) == 1 || int.parse(depth) <= 90) {
+      depth = '${int.parse(depth)} mm';
+    } else {
+      depth = _translations.DEPOSIT_DEPTH[depth];
+    }
+
+    if (friction == null) {
+      friction = '';
+    } else if (int.parse(friction) < 91) {
+      friction = 'friction coefficient 0.$friction';
+    } else {
+      friction = _translations.SURFACE_FRICTION[friction];
+    }
+
+    _runwayState = {
+      'runway': '$number${name != null ? " $name" : ""}',
+      'snoclo': snoclo != null
+          ? 'aerodrome is closed due to extreme deposit of snow'
+          : '',
+      'clrd': clrd != null ? 'contaminants have ceased of exist' : '',
+      'deposit':
+          deposit != null ? '${_translations.RUNWAY_DEPOSITS[deposit]}' : '',
+      'contamination': contamination != null
+          ? '${_translations.RUNWAY_CONTAMINATION[contamination]}'
+          : '',
+      'depth': depth,
+      'friction': friction,
+    };
+
+    _string += '--- Runway State ---\n';
+    if (snoclo != null) {
+      _string += ' * ${capitalize(_runwayState["snoclo"])}\n';
+    } else if (clrd != null) {
+      _string += ' * ${capitalize(_runwayState["clrd"])}\n';
+    } else {
+      _string += ' * Deposit: ${_runwayState["deposit"]}\n'
+          ' * Contamination: ${_runwayState["contamination"]}\n'
+          ' * Depth: ${_runwayState["depth"]}\n'
+          ' * Friction: ${_runwayState["friction"]}\n';
+    }
+  }
+
   // Method to parse the groups
   void _parseGroups(
     List<String> groups,
@@ -700,6 +760,7 @@ class Metar {
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
       [METAR_REGEX().WINDSHEAR_RUNWAY_RE, _handleWindshear, false],
       [METAR_REGEX().SEASTATE_RE, _handleSeaState, false],
+      [METAR_REGEX().RUNWAYSTATE_RE, _handleRunwayState, false],
     ];
 
     _parseGroups(_body.split(' '), handlers);
@@ -733,4 +794,5 @@ class Metar {
   Map<String, String> get recentWeather => _recentWeather;
   List<String> get windshear => _windshear;
   Tuple2<Temperature, String> get seaState => _seaState;
+  Map<String, String> get runwayState => _runwayState;
 }

@@ -1,0 +1,2 @@
+changelog:
+  diff_link_template: 'https://github.com/diego-garro/metar-dart/compare/%from%...%to%'

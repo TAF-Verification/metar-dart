@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Fix github workflow
+
 ## 0.1.1
 
 - Some fixes in tests

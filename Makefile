@@ -1,3 +1,4 @@
+DART=dart
 PUB=pub
 PUB_RUN=$(PUB) run
 CIDER=cider
@@ -14,12 +15,18 @@ endif
 
 patch: check_no_main
 	$(CIDER_BUMP) patch
+	$(DART) .create_tag.dart
+	git push --follow-tags
 
 minor: check_no_main
 	$(CIDER_BUMP) minor
+	$(DART) .create_tag.dart
+	git push --follow-tags
 
 major:
 	$(CIDER_BUMP) major
+	$(DART) .create_tag.dart
+	git push --follow-tags
 
 tests:
 	$(PUB_RUN) test

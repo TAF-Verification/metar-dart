@@ -40,13 +40,13 @@ void main() {
 
     test('Test the runway state contamination', () {
       final value = metar.runwayState['contamination'];
-      final expected = '11%-25%';
+      final expected = 'contamination 11%-25%';
       expect(value, expected);
     });
 
     test('Test the runway state depth', () {
       final value = metar.runwayState['depth'];
-      expect(value, '76 mm');
+      expect(value, 'depth 76 mm');
     });
 
     test('Test the runway state friction', () {

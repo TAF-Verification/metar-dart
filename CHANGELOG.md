@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Fix tests in runwayState
+
 ## 0.2.0
 
 - Add toJson() method

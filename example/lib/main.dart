@@ -4,7 +4,7 @@ import 'package:metar_dart/metar_dart.dart';
 void main() {
   /// Instantiate the object Metar() providin the code as an argument
   final metar = Metar(
-    'METAR KMIA 210800Z 33007G17KT 9999 SCT040 BKN055 16/13 A3002 NOSIG',
+    'METAR KMIA 210800Z 33007G17KT 5000 +RA VCTS SCT020TCU BKN055 16/13 A3002 RESHRA NOSIG',
   );
 
   /// Get the features of the report
@@ -21,4 +21,7 @@ void main() {
 
   /// You can see a resume of the METAR with the toString() method
   print(metar.toString());
+
+  /// Transforming the METAR as a Json format
+  print(metar.toJson());
 }

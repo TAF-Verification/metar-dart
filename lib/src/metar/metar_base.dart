@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:metar_dart/src/database/translations.dart';
 import 'package:tuple/tuple.dart';
@@ -65,6 +67,27 @@ String _sanitizeWindshear(String code) {
   }
 
   return code;
+}
+
+Map<String, String> _extractRunwayData(
+  Tuple7<String, String, String, Length, String, Length, String> runway,
+) {
+  return <String, String>{
+    'name': runway.item1,
+    'units': runway.item2,
+    'low': runway.item3,
+    'lowRange': runway.item4 != null ? '${runway.item4.inMeters}' : '',
+    'high': runway.item5,
+    'highRange': runway.item6 != null ? '${runway.item6.inMeters}' : '',
+    'trend': runway.item7,
+  };
+}
+
+String _extractSkyData(Tuple3<String, Length, String> layer) {
+  final height =
+      layer.item2.inFeet == 0 ? '' : ' at ${layer.item2.inFeet} feet';
+  final cloud = layer.item3 != '' ? ' of ${layer.item3}' : '';
+  return '${layer.item1}$height$cloud';
 }
 
 /// Metar model to parse the code for every station
@@ -149,6 +172,90 @@ class Metar {
   @override
   String toString() {
     return _string;
+  }
+
+  /// Get the report as a Json format
+  String toJson() {
+    final map = <String, dynamic>{
+      'code': _code,
+      'type': _type,
+      'time': _time.toString(),
+      'station': _station.toMap(),
+      'wind': <String, dynamic>{
+        'units': 'knots',
+        'direction': <String, String>{
+          'degrees': '${_windDirection?.directionInDegrees}',
+          'cardinalPoint': '${_windDirection.cardinalPoint}',
+        },
+        'speed': '${_windSpeed?.inKnot}',
+        'gust': '${_windGust?.inKnot}',
+        'variation': <String, Map<String, String>>{
+          'from': <String, String>{
+            'degrees': '${_windVariationFrom?.directionInDegrees}',
+            'cardinalPoint': '${_windVariationFrom?.cardinalPoint}',
+          },
+          'to': <String, String>{
+            'degrees': '${_windVariationTo?.directionInDegrees}',
+            'cardinalPoint': '${_windVariationTo?.cardinalPoint}',
+          },
+        },
+      },
+      'visibility': <String, dynamic>{
+        'units': 'meters',
+        'prevailing': '${_visibility?.inMeters}',
+        'minimum': <String, dynamic>{
+          'visibility': '${_minimumVisibility?.inMeters}',
+          'direction': <String, String>{
+            'degrees': '${_minimumVisibilityDirection?.directionInDegrees}',
+            'cardinalPoint': '${_minimumVisibilityDirection?.cardinalPoint}',
+          },
+        },
+        'runwayRanges': <Map<String, String>>[
+          for (var rwy in _runway) _extractRunwayData(rwy)
+        ],
+      },
+      'weather': <String>[
+        for (var weather in _weather)
+          weather.values
+              .toList()
+              .join(' ')
+              .replaceAll(RegExp(r'\s{2,}'), ' ')
+              .trim(),
+      ],
+      'sky': <String>[
+        for (var layer in _sky) _extractSkyData(layer),
+      ],
+      'temperatures': <String, String>{
+        'units': '°C',
+        'absolute': '${_temperature?.inCelsius}',
+        'dewpoint': '${_dewpoint?.inCelsius}',
+      },
+      'pressure': <String, String>{
+        'units': 'hPa',
+        'value': '${_pressure?.inHPa}',
+      },
+      'suplementaryInfo': {
+        'weather': _recentWeather?.values
+            ?.toList()
+            ?.join(' ')
+            ?.replaceAll(RegExp(r'\s{2,}'), ' ')
+            ?.trim(),
+        'windshear': _windshear.join(' '),
+        'seaState': <String, String>{
+          'units': '°C',
+          'temperature':
+              _seaState != null ? '${_seaState.item1?.inCelsius}' : null,
+          'state': _seaState != null ? _seaState.item2.toLowerCase() : null,
+        },
+        'runwayState': _runwayState?.values
+            ?.toList()
+            ?.join(' ')
+            ?.replaceAll(RegExp(r'\s{2,}'), ' ')
+            ?.trim(),
+      }
+    };
+
+    return jsonEncode(map);
   }
 
   /// Here begins the body group handlers
@@ -665,10 +772,12 @@ class Metar {
     final snoclo = match.namedGroup('SNOCLO');
     final clrd = match.namedGroup('CLRD');
 
-    name ??= name = name
-        .replaceFirst('L', ' left')
-        .replaceFirst('R', ' right')
-        .replaceFirst('C', ' center');
+    if (name != null) {
+      name = name
+          .replaceFirst('L', ' left')
+          .replaceFirst('R', ' right')
+          .replaceFirst('C', ' center');
+    }
 
     if (depth == null) {
       depth = '';
@@ -687,18 +796,18 @@ class Metar {
     }
 
     _runwayState = {
-      'runway': '$number${name != null ? " $name" : ""}',
+      'runway': '${number ?? ""}${name != null ? " $name" : ""}',
+      'deposit':
+          deposit != null ? '${_translations.RUNWAY_DEPOSITS[deposit]}' : '',
+      'contamination': contamination != null
+          ? 'contamination ${_translations.RUNWAY_CONTAMINATION[contamination]}'
+          : '',
+      'depth': 'depth $depth',
+      'friction': friction,
       'snoclo': snoclo != null
           ? 'aerodrome is closed due to extreme deposit of snow'
           : '',
       'clrd': clrd != null ? 'contaminants have ceased of exist' : '',
-      'deposit':
-          deposit != null ? '${_translations.RUNWAY_DEPOSITS[deposit]}' : '',
-      'contamination': contamination != null
-          ? '${_translations.RUNWAY_CONTAMINATION[contamination]}'
-          : '',
-      'depth': depth,
-      'friction': friction,
     };
 
     _string += '--- Runway State ---\n';

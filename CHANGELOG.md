@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Add toJson() method
+
 ## 0.1.2
 
 - Fix github workflow

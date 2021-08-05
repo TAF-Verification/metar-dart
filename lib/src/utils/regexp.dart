@@ -4,7 +4,7 @@ final REGEXP = RegularExpresions();
 class RegularExpresions {
   RegExp MISSING_RE = RegExp(r'^[M/]+$');
 
-  RegExp TYPE_RE = RegExp(r'^(?<type>METAR|SPECI|TAF)$');
+  RegExp TYPE = RegExp(r'^(?<type>METAR|SPECI|TAF)$');
 
   RegExp COR_RE = RegExp(r'^(?<cor>COR)$');
 

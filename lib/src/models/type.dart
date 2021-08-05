@@ -26,8 +26,8 @@ class TypeData extends Code {
 class Type {
   TypeData _type;
 
-  Type(RegExpMatch match) {
-    _type = TypeData(match.namedGroup('type'));
+  Type(String code) {
+    _type = TypeData(code);
   }
 
   @override

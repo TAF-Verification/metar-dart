@@ -1,6 +1,7 @@
 // Translations of the sky conditions codes into english
+final SKY_TRANSLATIONS = SkyTranslations();
 
-class SKY_TRANSLATIONS {
+class SkyTranslations {
   Map<String, String> SKY_COVER = {
     'SKC': 'clear',
     'CLR': 'clear',

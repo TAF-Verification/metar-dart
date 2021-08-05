@@ -1,9 +1,10 @@
 // Regular expressions to decode various groups of the METAR code
+final REGEXP = RegularExpresions();
 
-class METAR_REGEX {
+class RegularExpresions {
   RegExp MISSING_RE = RegExp(r'^[M/]+$');
 
-  RegExp TYPE_RE = RegExp(r'^(?<type>METAR|SPECI)$');
+  RegExp TYPE_RE = RegExp(r'^(?<type>METAR|SPECI|TAF)$');
 
   RegExp COR_RE = RegExp(r'^(?<cor>COR)$');
 
@@ -56,43 +57,43 @@ class METAR_REGEX {
       r'^R(?<num>\d{2})?(?<name>[CLR])?/((?<deposit>\d|/)(?<contamination>\d|/)(?<depth>\d\d|//)(?<friction>\d\d|//)|(?<SNOCLO>SNOCLO)|(?<CLRD>CLRD//))$');
   //r'^((\d{2}) | R(\d{2})(RR?|LL?|C)?/?)((SNOCLO|CLRD(\d{2}|//)) | (\d|/)(\d|/)(\d{2}|//)(\d{2}|//))');
 
-  RegExp TREND_RE = RegExp(r'(TEMPO|BECMG|FCST|NOSIG)');
+  RegExp TREND = RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d+|PROB\d{2})$');
 
   RegExp TRENDTIME_RE = RegExp(r'^(FM|TL|AT)(\d{2})(\d{2}\s+)');
 
-  RegExp REMARK_RE = RegExp(r'((RMK(S)?)|NOSPECI)');
+  RegExp REMARK = RegExp(r'^(?<rmk>RMK(S)?)$');
 
 // Regular expressions for remark groups
-  RegExp AUTO_RE = RegExp(r'^AO(\d)\s+');
+  // RegExp AUTO_RE = RegExp(r'^AO(\d)\s+');
 
-  RegExp SEALVL_PRESS_RE = RegExp(r'^SLP(\d{3})');
+  // RegExp SEALVL_PRESS_RE = RegExp(r'^SLP(\d{3})');
 
-  RegExp PEAK_WIND_RE =
-      RegExp(r'^P[A-Z]\s+WND\s+(\d{3})(P?\d{3}?)/(\d{2})?(\d{2})');
+  // RegExp PEAK_WIND_RE =
+  //     RegExp(r'^P[A-Z]\s+WND\s+(\d{3})(P?\d{3}?)/(\d{2})?(\d{2})');
 
-  RegExp WIND_SHIFT_RE = RegExp(r'^WSHFT\s+(\d{2})?(\d{2})(\s+(FROPA))?');
+  // RegExp WIND_SHIFT_RE = RegExp(r'^WSHFT\s+(\d{2})?(\d{2})(\s+(FROPA))?');
 
-  RegExp PRECIP_1HR_RE = RegExp(r'^P(\d{4})');
+  // RegExp PRECIP_1HR_RE = RegExp(r'^P(\d{4})');
 
-  RegExp PRECIP_24HR_RE = RegExp(r'^(6|7)(\d{4})');
+  // RegExp PRECIP_24HR_RE = RegExp(r'^(6|7)(\d{4})');
 
-  RegExp PRESS_3HR_RE = RegExp(r'^5([0-8])(\d{3})');
+  // RegExp PRESS_3HR_RE = RegExp(r'^5([0-8])(\d{3})');
 
-  RegExp TEMP_1HR_RE = RegExp(r'^T(1|2)(0|1)(\d{3})');
+  // RegExp TEMP_1HR_RE = RegExp(r'^T(1|2)(0|1)(\d{3})');
 
-  RegExp TEMP_6HR_RE = RegExp(r'^(1|2)(0|1)(\d{3})');
+  // RegExp TEMP_6HR_RE = RegExp(r'^(1|2)(0|1)(\d{3})');
 
-  RegExp TEMP_24HR_RE = RegExp(r'^4(0|1)(\d{3})(0|1)(\d{3})');
+  // RegExp TEMP_24HR_RE = RegExp(r'^4(0|1)(\d{3})(0|1)(\d{3})');
 
-  RegExp UNPARSED_RE = RegExp(r'(\S+)\s+');
+  // RegExp UNPARSED_RE = RegExp(r'(\S+)\s+');
 
-  RegExp LIGHTNING_RE = RegExp(
-      r'^((OCNL|FRQ|CONS)\s+)?LGT((IC|CC|CG|CA)*)( \s+(( OHD | VC | DSNT\s+ | \s+AND\s+ | [NSEW][EW]? (-[NSEW][EW]?)* )+) )?');
+  // RegExp LIGHTNING_RE = RegExp(
+  //     r'^((OCNL|FRQ|CONS)\s+)?LGT((IC|CC|CG|CA)*)( \s+(( OHD | VC | DSNT\s+ | \s+AND\s+ | [NSEW][EW]? (-[NSEW][EW]?)* )+) )?');
 
-  RegExp TS_LOC_RE = RegExp(
-      r'TS(\s+(( OHD | VC | DSNT\s+ | \s+AND\s+ | [NSEW][EW]? (-[NSEW][EW]?)* )+))?( \s+MOV\s+([NSEW][EW]?) )?');
+  // RegExp TS_LOC_RE = RegExp(
+  //     r'TS(\s+(( OHD | VC | DSNT\s+ | \s+AND\s+ | [NSEW][EW]? (-[NSEW][EW]?)* )+))?( \s+MOV\s+([NSEW][EW]?) )?');
 
-  RegExp SNOWDEPTH_RE = RegExp(r'^4/(\d{3})');
+  // RegExp SNOWDEPTH_RE = RegExp(r'^4/(\d{3})');
 
-  RegExp ICE_ACCRETION_RE = RegExp(r'^I([136])(\d{3})');
+  // RegExp ICE_ACCRETION_RE = RegExp(r'^I([136])(\d{3})');
 }

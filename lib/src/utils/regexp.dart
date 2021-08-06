@@ -8,7 +8,7 @@ class RegularExpresions {
 
   RegExp COR_RE = RegExp(r'^(?<cor>COR)$');
 
-  RegExp STATION_RE = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
+  RegExp STATION = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
 
   RegExp TIME_RE = RegExp(r'^(?<day>\d{2})(?<hour>\d{2})(?<minute>\d{2})Z$');
 

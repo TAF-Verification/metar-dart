@@ -1,13 +1,7 @@
-List<String> getStation(String icao) {
-  List<String> target;
-  for (var list in _stations) {
-    if (icao == list[1]) {
-      target = list;
-      break;
-    }
+Iterable<List<String>> getStation() sync* {
+  for (var station in _stations) {
+    yield station;
   }
-
-  return target;
 }
 
 /// Information of every station as a List<List<String>>

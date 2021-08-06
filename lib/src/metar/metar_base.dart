@@ -6,8 +6,9 @@ import 'package:metar_dart/src/utils/utils.dart';
 class Metar extends Report {
   var _string = '';
   bool _truncate;
-  Type _type = Type('METAR');
   MetarSections _sections;
+  Type _type = Type('METAR');
+  Station _station;
 
   Metar(String code, {int year, int month, bool truncate = false})
       : super(code) {
@@ -34,9 +35,19 @@ class Metar extends Report {
 
   Type get type => _type;
 
+  // Handle station
+  void _handle_station(RegExpMatch match) {
+    _station = Station(match.namedGroup('station'));
+
+    _string += _station.toString() + '\n';
+  }
+
+  Station get station => _station;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handle_type),
+      Tuple2(REGEXP.STATION, _handle_station),
     ];
 
     Iterable<RegExpMatch> matches;

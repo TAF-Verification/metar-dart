@@ -29,18 +29,18 @@ void main() {
     });
 
     test('Test the latitude of station', () {
-      final value = metar.station.latitude.inDegrees;
-      expect(value, 40.38);
+      final value = metar.station.latitude;
+      expect(value, '40.38N');
     });
 
     test('Test the longitude of station', () {
-      final value = metar.station.longitude.inDegrees;
-      expect(value, -73.46);
+      final value = metar.station.longitude;
+      expect(value, '073.46W');
     });
 
     test('Test the elevation of station', () {
       final value = metar.station.elevation;
-      expect(value, 9);
+      expect(value, '9');
     });
   });
 }

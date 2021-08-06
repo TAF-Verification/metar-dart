@@ -1,72 +1,16 @@
-import 'package:metar_dart/src/units/angle.dart';
-import 'package:metar_dart/src/units/position.dart';
-
-class Station {
-  final String _name;
-  final String _icao;
-  final String _iata;
-  final String _synop;
-  String _lat;
-  String _long;
-  final String _elev;
-  final String _country;
-  Position _position;
-
-  Station(this._name, this._icao, this._iata, this._synop, this._lat,
-      this._long, this._elev, this._country) {
-    if (_lat.contains('S')) {
-      _lat = '-' + _lat.replaceFirst('S', '');
-    } else {
-      _lat = _lat.replaceFirst('N', '');
-    }
-    if (_long.contains('W')) {
-      _long = '-' + _long.replaceFirst('W', '');
-    } else {
-      _long = _long.replaceFirst('E', '');
-    }
-    _position = Position(double.parse(_lat), double.parse(_long));
-  }
-
-  String get name => _name;
-  String get icao => _icao;
-  String get iata {
-    if (_iata == '   ') {
-      return 'NaN';
-    }
-    return _iata;
-  }
-
-  String get synop {
-    if (_synop == '     ') {
-      return 'NaN';
-    }
-    return _synop;
-  }
-
-  Map<String, String> toMap() {
-    return <String, String>{
-      'name': _name,
-      'icao': _icao.trim(),
-      'iata': _iata.trim(),
-      'synop': _synop.trim(),
-      'elevation': _elev,
-      'country': _countries[_country],
-      'latitude': '${_position.latitude.inDegrees}',
-      'longitude': '${_position.longitude.inDegrees}',
-    };
-  }
-
-  // double get latitude => double.parse(_lat);
-  // double get longitude => double.parse(_long);
-  int get elevation => int.parse(_elev);
-  String get country => _countries[_country];
-  Position get position => _position;
-  Angle get longitude => _position.longitude;
-  Angle get latitude => _position.latitude;
+/// Get the country name for a two character code given.
+///
+/// Args:
+///     code (str): The two character code of country.
+///
+/// Returns:
+///     str: The country name if found in dictionary, else None.
+String getCountry(String code) {
+  return _countries[code];
 }
 
-/// Countries map of codes (key) and names (value)
-Map<String, String> _countries = <String, String>{
+// Countries dictionary of codes (key) and names (value)
+Map<String, String> _countries = {
   'AF': 'Afghanistan',
   'AL': 'Albania',
   'DZ': 'Algeria',
@@ -125,7 +69,7 @@ Map<String, String> _countries = <String, String>{
   'CW': 'Curaçao',
   'CY': 'Cyprus',
   'CZ': 'Czechia',
-  'CI': 'Côte d\'Ivoire',
+  'CI': "Côte d'Ivoire",
   'DK': 'Denmark',
   'DJ': 'Djibouti',
   'DM': 'Dominica',
@@ -184,11 +128,11 @@ Map<String, String> _countries = <String, String>{
   'KZ': 'Kazakhstan',
   'KE': 'Kenya',
   'KI': 'Kiribati',
-  'KP': 'Korea (the Democratic People\'s Republic of)',
+  'KP': "Korea (the Democratic People's Republic of)",
   'KR': 'Korea (the Republic of)',
   'KW': 'Kuwait',
   'KG': 'Kyrgyzstan',
-  'LA': 'Lao People\'s Democratic Republic (the)',
+  'LA': "Lao People's Democratic Republic (the)",
   'LV': 'Latvia',
   'LB': 'Lebanon',
   'LS': 'Lesotho',

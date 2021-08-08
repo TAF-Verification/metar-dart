@@ -6,12 +6,16 @@ import 'package:metar_dart/src/utils/utils.dart';
 class Metar extends Report {
   var _string = '';
   bool _truncate;
+  int _year, _month;
   MetarSections _sections;
   Type _type = Type('METAR');
   Station _station;
+  Time _time;
 
   Metar(String code, {int year, int month, bool truncate = false})
       : super(code) {
+    _year = year;
+    _month = month;
     _truncate = truncate;
 
     if (code.isEmpty || code == null) {
@@ -27,8 +31,8 @@ class Metar extends Report {
   String toString() => _string;
 
   // Handle type
-  void _handle_type(RegExpMatch match) {
-    _type = Type(match.namedGroup('type'));
+  void _handle_type(String group) {
+    _type = Type(group);
 
     _string += _type.toString() + '\n';
   }
@@ -36,21 +40,31 @@ class Metar extends Report {
   Type get type => _type;
 
   // Handle station
-  void _handle_station(RegExpMatch match) {
-    _station = Station(match.namedGroup('station'));
+  void _handle_station(String group) {
+    _station = Station(group);
 
     _string += _station.toString() + '\n';
   }
 
   Station get station => _station;
 
+  // Handle time
+  void _handle_time(String group) {
+    final match = REGEXP.TIME.firstMatch(group);
+    _time = Time(group, match, _year, _month);
+
+    _string += 'Time: ${_time.toString()}\n';
+  }
+
+  Time get time => _time;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handle_type),
       Tuple2(REGEXP.STATION, _handle_station),
+      Tuple2(REGEXP.TIME, _handle_time),
     ];
 
-    Iterable<RegExpMatch> matches;
     var index = 0;
 
     final body = sanitizeVisibility(_sections.body);
@@ -60,11 +74,10 @@ class Metar extends Report {
       for (var i = index; i < handlers.length; i++) {
         var handler = handlers[i];
 
-        matches = handler.item1.allMatches(group);
         index++;
 
-        if (matches.isNotEmpty) {
-          handler.item2(matches.elementAt(0));
+        if (handler.item1.hasMatch(group)) {
+          handler.item2(group);
           unparsed_groups.remove(group);
           break;
         }

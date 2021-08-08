@@ -10,7 +10,7 @@ class RegularExpresions {
 
   RegExp STATION = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
 
-  RegExp TIME_RE = RegExp(r'^(?<day>\d{2})(?<hour>\d{2})(?<minute>\d{2})Z$');
+  RegExp TIME = RegExp(r'^(?<day>\d{2})(?<hour>\d{2})(?<minute>\d{2})Z$');
 
   RegExp MODIFIER_RE =
       RegExp(r'^(?<mod>AUTO|FINO|NIL|TEST|CORR?|RTD|CC[A-G])$');

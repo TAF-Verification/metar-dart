@@ -9,37 +9,37 @@ void main() {
 
   group('Test the station features of METAR', () {
     test('Test the name of station', () {
-      final value = metar.station.name;
+      final value = metar.station?.name;
       expect(value, 'NY NYC/JFK ARPT');
     });
 
     test('Test the IATA code of station', () {
-      final value = metar.station.iata;
+      final value = metar.station?.iata;
       expect(value, 'JFK');
     });
 
     test('Test the SYNOP code of station', () {
-      final value = metar.station.synop;
+      final value = metar.station?.synop;
       expect(value, '74486');
     });
 
     test('Test the country of station', () {
-      final value = metar.station.country;
+      final value = metar.station?.country;
       expect(value, 'United States of America (the)');
     });
 
     test('Test the latitude of station', () {
-      final value = metar.station.latitude;
+      final value = metar.station?.latitude;
       expect(value, '40.38N');
     });
 
     test('Test the longitude of station', () {
-      final value = metar.station.longitude;
+      final value = metar.station?.longitude;
       expect(value, '073.46W');
     });
 
     test('Test the elevation of station', () {
-      final value = metar.station.elevation;
+      final value = metar.station?.elevation;
       expect(value, '9');
     });
   });

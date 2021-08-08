@@ -7,14 +7,14 @@ final TYPES = {
 };
 
 class TypeData extends Code {
-  String _type;
+  String _type = '';
 
   TypeData(String code) : super(code) {
-    _handler(code);
+    _type = _handler(code) ?? '';
   }
 
-  void _handler(String code) {
-    _type = TYPES[code];
+  String? _handler(String code) {
+    return TYPES[code];
   }
 
   @override
@@ -24,7 +24,7 @@ class TypeData extends Code {
 }
 
 class Type {
-  TypeData _type;
+  TypeData _type = TypeData('METAR');
 
   Type(String code) {
     _type = TypeData(code);

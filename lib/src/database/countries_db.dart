@@ -5,7 +5,7 @@
 ///
 /// Returns:
 ///     str: The country name if found in dictionary, else None.
-String getCountry(String code) {
+String? getCountry(String? code) {
   return _countries[code];
 }
 

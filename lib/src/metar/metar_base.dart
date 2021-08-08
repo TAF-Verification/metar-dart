@@ -6,19 +6,20 @@ import 'package:metar_dart/src/utils/utils.dart';
 class Metar extends Report {
   var _string = '';
   bool _truncate;
-  int _year, _month;
-  MetarSections _sections;
+  int? _year, _month;
+  MetarSections _sections = MetarSections('');
   Type _type = Type('METAR');
-  Station _station;
-  Time _time;
+  Station? _station;
+  Time? _time;
 
-  Metar(String code, {int year, int month, bool truncate = false})
-      : super(code) {
+  Metar(String code, {int? year, int? month, bool truncate = false})
+      : _truncate = truncate,
+        super(code) {
     _year = year;
     _month = month;
     _truncate = truncate;
 
-    if (code.isEmpty || code == null) {
+    if (code.isEmpty) {
       throw ParserError('METAR code must be not null or not empty string');
     }
 
@@ -46,7 +47,7 @@ class Metar extends Report {
     _string += _station.toString() + '\n';
   }
 
-  Station get station => _station;
+  Station? get station => _station;
 
   // Handle time
   void _handle_time(String group) {
@@ -56,7 +57,7 @@ class Metar extends Report {
     _string += 'Time: ${_time.toString()}\n';
   }
 
-  Time get time => _time;
+  Time? get time => _time;
 
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[

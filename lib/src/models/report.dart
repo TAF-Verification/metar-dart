@@ -1,5 +1,5 @@
 abstract class Report {
-  String _raw_code;
+  String _raw_code = '';
   final _unparsed_groups = <String>[];
 
   Report(String code) {

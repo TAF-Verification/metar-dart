@@ -6,24 +6,24 @@ final remark_pattern =
     REGEXP.REMARK.pattern.replaceAll('^', '').replaceAll('\$', '');
 
 class MetarSections {
-  List<String> _sections;
-  String _body, _trend, _remark;
+  String _body = '', _trend = '', _remark = '';
+  List<String> _sections = <String>['', '', ''];
 
   MetarSections(String code) {
     _sections = _handler(code);
   }
 
   List<String> _handler(String code) {
-    int rmkIndex, trendIndex;
+    int? rmkIndex, trendIndex;
     final trend_re = RegExp(trend_pattern);
     final rmk_re = RegExp(remark_pattern);
 
     if (trend_re.hasMatch(code)) {
-      trendIndex = trend_re.firstMatch(code).start;
+      trendIndex = trend_re.firstMatch(code)?.start;
     }
 
     if (rmk_re.hasMatch(code)) {
-      rmkIndex = rmk_re.firstMatch(code).start;
+      rmkIndex = rmk_re.firstMatch(code)?.start;
     }
 
     if (trendIndex == null && rmkIndex != null) {
@@ -35,7 +35,7 @@ class MetarSections {
     } else if (trendIndex == null && rmkIndex == null) {
       _body = code;
     } else {
-      if (trendIndex > rmkIndex) {
+      if (trendIndex! > rmkIndex!) {
         _body = code.substring(0, rmkIndex - 1);
         _remark = code.substring(rmkIndex, trendIndex - 1);
         _trend = code.substring(trendIndex);

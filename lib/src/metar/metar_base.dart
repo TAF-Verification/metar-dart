@@ -11,6 +11,7 @@ class Metar extends Report {
   Type _type = Type('METAR');
   Station? _station;
   Time? _time;
+  Modifier? _modifier;
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -59,11 +60,21 @@ class Metar extends Report {
 
   Time? get time => _time;
 
+  // Handle modifier
+  void _handle_modifier(String group) {
+    _modifier = Modifier(group);
+
+    _string += 'Modifier: ${_modifier.toString()}\n';
+  }
+
+  Modifier? get modifier => _modifier;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handle_type),
       Tuple2(REGEXP.STATION, _handle_station),
       Tuple2(REGEXP.TIME, _handle_time),
+      Tuple2(REGEXP.MODIFIER, _handle_modifier),
     ];
 
     var index = 0;

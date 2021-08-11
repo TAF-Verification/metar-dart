@@ -12,6 +12,7 @@ class Metar extends Report {
   Station? _station;
   Time? _time;
   Modifier? _modifier;
+  Wind? _wind;
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -69,12 +70,22 @@ class Metar extends Report {
 
   Modifier? get modifier => _modifier;
 
+  void _handle_wind(String group) {
+    final match = REGEXP.WIND.firstMatch(group);
+    _wind = Wind(match);
+
+    _string += 'Wind: ${_wind.toString()}\n';
+  }
+
+  Wind? get wind => _wind;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handle_type),
       Tuple2(REGEXP.STATION, _handle_station),
       Tuple2(REGEXP.TIME, _handle_time),
       Tuple2(REGEXP.MODIFIER, _handle_modifier),
+      Tuple2(REGEXP.WIND, _handle_wind),
     ];
 
     var index = 0;

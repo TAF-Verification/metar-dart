@@ -14,8 +14,10 @@ class RegularExpresions {
 
   RegExp MODIFIER = RegExp(r'^(?<mod>AUTO|FINO|NIL|TEST|COR(R)?|RTD|CC[A-G])$');
 
-  RegExp WIND_RE = RegExp(
-      r'^(?<dir>[\d]{3}|///|MMM|VRB|P)(?<speed>[\d]{2}|[/M]{2})(G(?<gust>\d{2}|[/M{2}]))?(?<units>KT|MPS)$');
+  RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|MMM|VRB|P)'
+      r'(?<speed>[\d]{2}|[/M]{2})'
+      r'(G(?<gust>\d{2}|[/M{2}]))?'
+      r'(?<units>KT|MPS)$');
 
   RegExp WINDVARIATION_RE = RegExp(r'^(?<from>\d{3})V(?<to>\d{3})$');
 

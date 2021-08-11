@@ -1,6 +1,6 @@
 import 'package:metar_dart/src/models/descriptors.dart';
 
-final DESCRIPTION = {
+final MODIFIERS = {
   'COR': 'Correction',
   'CORR': 'Correction',
   'AMD': 'Amendment',
@@ -10,33 +10,17 @@ final DESCRIPTION = {
   'FINO': 'Missing report',
 };
 
-class ModifierData extends Code {
-  String? _modifier;
-
-  ModifierData(String code) : super(code) {
-    _modifier = DESCRIPTION[code];
-  }
+class Modifier extends Group {
+  Modifier(String code) : super(code);
 
   @override
   String toString() {
-    return '$_modifier';
+    if (MODIFIERS.containsKey(code)) {
+      return '${MODIFIERS[code]}';
+    }
+
+    return '';
   }
 
-  String? get modifier => _modifier;
-}
-
-class Modifier {
-  ModifierData? _modifier;
-
-  Modifier(String code) {
-    _modifier = ModifierData(code);
-  }
-
-  @override
-  String toString() {
-    return _modifier == null ? '' : _modifier.toString();
-  }
-
-  String? get code => _modifier?.code;
-  String? get modifier => _modifier?.modifier;
+  String? get modifier => MODIFIERS[code];
 }

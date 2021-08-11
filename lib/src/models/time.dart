@@ -1,13 +1,11 @@
 import 'package:metar_dart/src/models/descriptors.dart';
 
-class TimeData extends Code {
-  DateTime? _time;
+class Time extends Group {
+  DateTime _time = DateTime.now().toUtc();
 
-  TimeData(String code, RegExpMatch? match, int? year, int? month)
-      : super(code) {
-    final today = DateTime.now();
-    year ??= today.year;
-    month ??= today.month;
+  Time(String code, RegExpMatch? match, int? year, int? month) : super(code) {
+    year ??= _time.year;
+    month ??= _time.month;
 
     final dayStr = match?.namedGroup('day') ?? '00';
     final hourStr = match?.namedGroup('hour') ?? '00';
@@ -26,25 +24,9 @@ class TimeData extends Code {
   }
 
   DateTime? get time => _time;
-}
-
-class Time {
-  TimeData? _time;
-
-  Time(String group, RegExpMatch? match, int? year, int? month) {
-    _time = TimeData(group, match, year, month);
-  }
-
-  @override
-  String toString() {
-    return _time.toString();
-  }
-
-  int? get year => _time?.time?.year;
-  int? get month => _time?.time?.month;
-  int? get day => _time?.time?.day;
-  int? get hour => _time?.time?.hour;
-  int? get minute => _time?.time?.minute;
-  String? get code => _time?.code;
-  DateTime? get time => _time?.time;
+  int? get year => _time.year;
+  int? get month => _time.month;
+  int? get day => _time.day;
+  int? get hour => _time.hour;
+  int? get minute => _time.minute;
 }

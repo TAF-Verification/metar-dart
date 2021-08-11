@@ -6,33 +6,17 @@ final TYPES = {
   'TAF': 'Terminal Aerodrome Forecast',
 };
 
-class TypeData extends Code {
-  String _type = '';
-
-  TypeData(String code) : super(code) {
-    _type = _handler(code) ?? '';
-  }
-
-  String? _handler(String code) {
-    return TYPES[code];
-  }
+class Type extends Group {
+  Type(String code) : super(code);
 
   @override
-  String toString() => '$code: $type';
+  String toString() {
+    if (TYPES.containsKey(code)) {
+      return '${TYPES[code]}';
+    }
 
-  String get type => _type;
-}
-
-class Type {
-  TypeData _type = TypeData('METAR');
-
-  Type(String code) {
-    _type = TypeData(code);
+    return '';
   }
 
-  @override
-  String toString() => _type.toString();
-
-  String get code => _type.code;
-  String get type => _type.type;
+  String? get type => TYPES[code];
 }

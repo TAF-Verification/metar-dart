@@ -13,8 +13,8 @@ void main() {
   print(metar.raw_code);
   print(metar.sections);
   print('${metar.type.code} -> ${metar.type.type}');
-  print(metar.station?.name);
-  print(metar.time.toString());
+  // print(metar.station?.name);
+  // print(metar.time.toString());
   // print(metar.time);
   // print(metar.windDirection?.directionInDegrees);
   // print(metar.windDirection?.cardinalPoint);

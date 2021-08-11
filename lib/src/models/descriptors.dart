@@ -1,7 +1,7 @@
-abstract class Code {
+abstract class Group {
   final String _code;
 
-  Code(this._code);
+  Group(this._code);
 
   String get code => _code;
 }

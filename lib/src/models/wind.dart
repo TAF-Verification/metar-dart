@@ -1,3 +1,4 @@
+import 'package:metar_dart/src/models/descriptors.dart';
 import 'package:metar_dart/src/utils/utils.dart';
 
 final COMPASS_DIRS = {
@@ -93,12 +94,43 @@ class Speed {
   double? get speed => _speed;
 }
 
-class Wind {
+class WindVariation extends Group {
+  Direction? _from;
+  Direction? _to;
+
+  WindVariation(String? code, RegExpMatch? match) : super(code) {
+    _from = Direction(match?.namedGroup('from'));
+    _to = Direction(match?.namedGroup('to'));
+  }
+
+  @override
+  String toString() {
+    return 'from'
+        ' $fromCardinalDirection ($fromInDegrees°)'
+        ' to'
+        ' $toCardinalDirection ($toInDegrees°)';
+  }
+
+  String? get fromCardinalDirection => handleCardinal(_from?.direction);
+  double? get fromInDegrees => _from?.direction;
+  double? get fromInRadians =>
+      handleValue(_from?.direction, CONVERSIONS.DEGREES_TO_RADIANS);
+  double? get fromInGradians =>
+      handleValue(_from?.direction, CONVERSIONS.DEGREES_TO_GRADIANS);
+  String? get toCardinalDirection => handleCardinal(_to?.direction);
+  double? get toInDegrees => _to?.direction;
+  double? get toInRadians =>
+      handleValue(_to?.direction, CONVERSIONS.DEGREES_TO_RADIANS);
+  double? get toInGradians =>
+      handleValue(_to?.direction, CONVERSIONS.DEGREES_TO_GRADIANS);
+}
+
+class Wind extends Group {
   Direction? _direction;
   Speed? _speed;
   Speed? _gust;
 
-  Wind(RegExpMatch? match) {
+  Wind(String? code, RegExpMatch? match) : super(code) {
     final units = match?.namedGroup('units');
     _direction = Direction(match?.namedGroup('dir'));
     _speed = Speed(match?.namedGroup('speed'), units.toString());

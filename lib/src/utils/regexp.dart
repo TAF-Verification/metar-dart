@@ -19,7 +19,8 @@ class RegularExpresions {
       r'(G(?<gust>\d{2}|[/M{2}]))?'
       r'(?<units>KT|MPS)$');
 
-  RegExp WINDVARIATION_RE = RegExp(r'^(?<from>\d{3})V(?<to>\d{3})$');
+  RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'
+      r'V(?<to>\d{3})$');
 
   RegExp OPTIONALVIS_RE = RegExp(r'^(?<opt>\d)$');
 

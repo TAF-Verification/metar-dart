@@ -11,7 +11,7 @@ final MODIFIERS = {
 };
 
 class Modifier extends Group {
-  Modifier(String code) : super(code);
+  Modifier(String? code) : super(code);
 
   @override
   String toString() {

@@ -9,27 +9,27 @@ void main() {
 
   group('Test the date of METAR', () {
     test('Test the year', () {
-      final value = metar.time?.year;
+      final value = metar.time.year;
       expect(value, 2021);
     });
 
     test('Test the month', () {
-      final value = metar.time?.month;
+      final value = metar.time.month;
       expect(value, 3);
     });
 
     test('Test the day', () {
-      final value = metar.time?.day;
+      final value = metar.time.day;
       expect(value, 12);
     });
 
     test('Test the hour', () {
-      final value = metar.time?.hour;
+      final value = metar.time.hour;
       expect(value, 20);
     });
 
     test('Test the minute', () {
-      final value = metar.time?.minute;
+      final value = metar.time.minute;
       expect(value, 51);
     });
   });

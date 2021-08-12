@@ -1,9 +1,9 @@
 abstract class Group {
-  final String _code;
+  final String? _code;
 
   Group(this._code);
 
-  String get code => _code;
+  String? get code => _code;
 }
 
 // void main() {

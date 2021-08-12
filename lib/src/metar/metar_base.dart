@@ -9,10 +9,11 @@ class Metar extends Report {
   int? _year, _month;
   MetarSections _sections = MetarSections('');
   Type _type = Type('METAR');
-  Station? _station;
-  Time? _time;
-  Modifier? _modifier;
-  Wind? _wind;
+  Station _station = Station(null);
+  Time _time = Time(null, null, null, null);
+  Modifier _modifier = Modifier(null);
+  Wind _wind = Wind(null, null);
+  WindVariation _windVariation = WindVariation(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -34,7 +35,7 @@ class Metar extends Report {
   String toString() => _string;
 
   // Handle type
-  void _handle_type(String group) {
+  void _handleType(String group) {
     _type = Type(group);
 
     _string += _type.toString() + '\n';
@@ -43,49 +44,59 @@ class Metar extends Report {
   Type get type => _type;
 
   // Handle station
-  void _handle_station(String group) {
+  void _handleStation(String group) {
     _station = Station(group);
 
     _string += _station.toString() + '\n';
   }
 
-  Station? get station => _station;
+  Station get station => _station;
 
   // Handle time
-  void _handle_time(String group) {
+  void _handleTime(String group) {
     final match = REGEXP.TIME.firstMatch(group);
     _time = Time(group, match, _year, _month);
 
     _string += 'Time: ${_time.toString()}\n';
   }
 
-  Time? get time => _time;
+  Time get time => _time;
 
   // Handle modifier
-  void _handle_modifier(String group) {
+  void _handleModifier(String group) {
     _modifier = Modifier(group);
 
     _string += 'Modifier: ${_modifier.toString()}\n';
   }
 
-  Modifier? get modifier => _modifier;
+  Modifier get modifier => _modifier;
 
-  void _handle_wind(String group) {
+  void _handleWind(String group) {
     final match = REGEXP.WIND.firstMatch(group);
-    _wind = Wind(match);
+    _wind = Wind(group, match);
 
     _string += 'Wind: ${_wind.toString()}\n';
   }
 
-  Wind? get wind => _wind;
+  Wind get wind => _wind;
+
+  void _handleWindVariation(String group) {
+    final match = REGEXP.WIND_VARIATION.firstMatch(group);
+    _windVariation = WindVariation(group, match);
+
+    _string += 'Wind variation: ${_windVariation.toString()}';
+  }
+
+  WindVariation get windVariation => _windVariation;
 
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
-      Tuple2(REGEXP.TYPE, _handle_type),
-      Tuple2(REGEXP.STATION, _handle_station),
-      Tuple2(REGEXP.TIME, _handle_time),
-      Tuple2(REGEXP.MODIFIER, _handle_modifier),
-      Tuple2(REGEXP.WIND, _handle_wind),
+      Tuple2(REGEXP.TYPE, _handleType),
+      Tuple2(REGEXP.STATION, _handleStation),
+      Tuple2(REGEXP.TIME, _handleTime),
+      Tuple2(REGEXP.MODIFIER, _handleModifier),
+      Tuple2(REGEXP.WIND, _handleWind),
+      Tuple2(REGEXP.WIND_VARIATION, _handleWindVariation),
     ];
 
     var index = 0;

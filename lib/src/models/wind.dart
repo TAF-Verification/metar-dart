@@ -1,5 +1,5 @@
 import 'package:metar_dart/src/models/descriptors.dart';
-import 'package:metar_dart/src/utils/utils.dart';
+import 'package:metar_dart/src/utils/utils.dart' show Conversions, handleValue;
 
 final COMPASS_DIRS = {
   'NNE': [11.25, 33.75],
@@ -82,7 +82,7 @@ class Speed {
     }
 
     if (units == 'MPS') {
-      _speed = handleValue(_speed, CONVERSIONS.MPS_TO_KNOT);
+      _speed = handleValue(_speed, Conversions.MPS_TO_KNOT);
     }
   }
 
@@ -114,15 +114,15 @@ class WindVariation extends Group {
   String? get fromCardinalDirection => handleCardinal(_from?.direction);
   double? get fromInDegrees => _from?.direction;
   double? get fromInRadians =>
-      handleValue(_from?.direction, CONVERSIONS.DEGREES_TO_RADIANS);
+      handleValue(_from?.direction, Conversions.DEGREES_TO_RADIANS);
   double? get fromInGradians =>
-      handleValue(_from?.direction, CONVERSIONS.DEGREES_TO_GRADIANS);
+      handleValue(_from?.direction, Conversions.DEGREES_TO_GRADIANS);
   String? get toCardinalDirection => handleCardinal(_to?.direction);
   double? get toInDegrees => _to?.direction;
   double? get toInRadians =>
-      handleValue(_to?.direction, CONVERSIONS.DEGREES_TO_RADIANS);
+      handleValue(_to?.direction, Conversions.DEGREES_TO_RADIANS);
   double? get toInGradians =>
-      handleValue(_to?.direction, CONVERSIONS.DEGREES_TO_GRADIANS);
+      handleValue(_to?.direction, Conversions.DEGREES_TO_GRADIANS);
 }
 
 class Wind extends Group {
@@ -149,16 +149,16 @@ class Wind extends Group {
   String? get cardinalDirection => handleCardinal(_direction?.direction);
   double? get directionInDegrees => _direction?.direction;
   double? get directionInRadians =>
-      handleValue(_direction?.direction, CONVERSIONS.DEGREES_TO_RADIANS);
+      handleValue(_direction?.direction, Conversions.DEGREES_TO_RADIANS);
   double? get directionInGradians =>
-      handleValue(_direction?.direction, CONVERSIONS.DEGREES_TO_GRADIANS);
+      handleValue(_direction?.direction, Conversions.DEGREES_TO_GRADIANS);
   double? get speedInKnot => _speed?.speed;
-  double? get speedInMps => handleValue(_speed?.speed, CONVERSIONS.KNOT_TO_MPS);
-  double? get speedInKph => handleValue(_speed?.speed, CONVERSIONS.KNOT_TO_KPH);
+  double? get speedInMps => handleValue(_speed?.speed, Conversions.KNOT_TO_MPS);
+  double? get speedInKph => handleValue(_speed?.speed, Conversions.KNOT_TO_KPH);
   double? get speedInMiph =>
-      handleValue(_speed?.speed, CONVERSIONS.KNOT_TO_MIPH);
+      handleValue(_speed?.speed, Conversions.KNOT_TO_MIPH);
   double? get gustInKnot => _gust?.speed;
-  double? get gustInMps => handleValue(_gust?.speed, CONVERSIONS.KNOT_TO_MPS);
-  double? get gustInKph => handleValue(_gust?.speed, CONVERSIONS.KNOT_TO_KPH);
-  double? get gustInMiph => handleValue(_gust?.speed, CONVERSIONS.KNOT_TO_MIPH);
+  double? get gustInMps => handleValue(_gust?.speed, Conversions.KNOT_TO_MPS);
+  double? get gustInKph => handleValue(_gust?.speed, Conversions.KNOT_TO_KPH);
+  double? get gustInMiph => handleValue(_gust?.speed, Conversions.KNOT_TO_MIPH);
 }

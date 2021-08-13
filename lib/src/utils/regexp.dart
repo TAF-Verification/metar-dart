@@ -22,10 +22,14 @@ class RegularExpresions {
   RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'
       r'V(?<to>\d{3})$');
 
-  RegExp OPTIONALVIS_RE = RegExp(r'^(?<opt>\d)$');
+  //RegExp OPTIONALVIS_RE = RegExp(r'^(?<opt>\d)$');
 
-  RegExp VISIBILITY_RE = RegExp(
-      r'^(?<vis>\d{4}|\//\//)|(?<extreme>M|P)?(?<visextreme>\d{1,2}|\d/\d)(?<units>SM|KM|M|U)|(?<cavok>CAVOK)$');
+  RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|\//\//)'
+      r'(?<dir>[NSEW]([EW])?)?|'
+      r'((?<opt>\d)_)?(M|P)?'
+      r'(?<visextreme>\d{1,2}|\d/\d)'
+      r'(?<units>SM|KM|M|U)|'
+      r'(?<cavok>CAVOK)$');
 
   RegExp SECVISIBILITY_RE = RegExp(r'^(?<vis>\d{4})(?<dir>[NSEW]([EW])?)$');
 

@@ -3,11 +3,10 @@ String sanitizeVisibility(String report) {
 
   for (var i = 0; i < 3; i++) {
     if (regex.hasMatch(report)) {
-      final match = regex.allMatches(report);
-      final matches = match.elementAt(0);
+      final match = regex.firstMatch(report)!;
       report = report.replaceFirst(
         regex,
-        ' ${matches.namedGroup('int')}_${matches.namedGroup('frac')} ',
+        ' ${match.namedGroup('int')}_${match.namedGroup('frac')} ',
       );
     }
   }

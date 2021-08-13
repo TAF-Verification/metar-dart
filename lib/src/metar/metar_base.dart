@@ -14,6 +14,7 @@ class Metar extends Report {
   Modifier _modifier = Modifier(null);
   Wind _wind = Wind(null, null);
   WindVariation _windVariation = WindVariation(null, null);
+  Visibility _visibility = Visibility(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -71,6 +72,7 @@ class Metar extends Report {
 
   Modifier get modifier => _modifier;
 
+  // Handle wind
   void _handleWind(String group) {
     final match = REGEXP.WIND.firstMatch(group);
     _wind = Wind(group, match);
@@ -80,6 +82,7 @@ class Metar extends Report {
 
   Wind get wind => _wind;
 
+  // Handle wind variation
   void _handleWindVariation(String group) {
     final match = REGEXP.WIND_VARIATION.firstMatch(group);
     _windVariation = WindVariation(group, match);
@@ -89,6 +92,16 @@ class Metar extends Report {
 
   WindVariation get windVariation => _windVariation;
 
+  // Handle visibility
+  void _handleVisibility(String group) {
+    final match = REGEXP.VISIBILITY.firstMatch(group);
+    _visibility = Visibility(group, match);
+
+    _string += 'Visibility: ${_visibility.toString()}\n';
+  }
+
+  Visibility get visibility => _visibility;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -97,6 +110,7 @@ class Metar extends Report {
       Tuple2(REGEXP.MODIFIER, _handleModifier),
       Tuple2(REGEXP.WIND, _handleWind),
       Tuple2(REGEXP.WIND_VARIATION, _handleWindVariation),
+      Tuple2(REGEXP.VISIBILITY, _handleVisibility),
     ];
 
     var index = 0;

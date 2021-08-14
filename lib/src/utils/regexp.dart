@@ -31,7 +31,8 @@ class RegularExpresions {
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
 
-  RegExp SECVISIBILITY_RE = RegExp(r'^(?<vis>\d{4})(?<dir>[NSEW]([EW])?)$');
+  RegExp MINIMUM_VISIBILITY = RegExp(r'^(?<vis>\d{4})'
+      r'(?<dir>[NSEW]([EW])?)$');
 
   RegExp RUNWAY_RE = RegExp(
       r'^(?<name>R\d{2}([RLC])?)/(?<rvrlow>[MP])?(?<low>\d{2,4})(V(?<rvrhigh>[MP])?(?<high>\d{2,4}))?(?<units>FT)?(?<trend>[NDU])?$');

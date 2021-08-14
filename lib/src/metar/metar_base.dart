@@ -1,3 +1,4 @@
+import 'package:metar_dart/src/models/visibility.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:metar_dart/src/models/models.dart';
@@ -15,6 +16,7 @@ class Metar extends Report {
   Wind _wind = Wind(null, null);
   WindVariation _windVariation = WindVariation(null, null);
   Visibility _visibility = Visibility(null, null);
+  MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -102,6 +104,15 @@ class Metar extends Report {
 
   Visibility get visibility => _visibility;
 
+  void _handleMinimumVisibility(String group) {
+    final match = REGEXP.MINIMUM_VISIBILITY.firstMatch(group);
+    _minimumVisibility = MinimumVisibility(group, match);
+
+    _string += 'Minimum visibility: ${_minimumVisibility.toString()}';
+  }
+
+  MinimumVisibility get minimumVisibility => _minimumVisibility;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -111,6 +122,7 @@ class Metar extends Report {
       Tuple2(REGEXP.WIND, _handleWind),
       Tuple2(REGEXP.WIND_VARIATION, _handleWindVariation),
       Tuple2(REGEXP.VISIBILITY, _handleVisibility),
+      Tuple2(REGEXP.MINIMUM_VISIBILITY, _handleMinimumVisibility),
     ];
 
     var index = 0;

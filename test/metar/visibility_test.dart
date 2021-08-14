@@ -81,46 +81,46 @@ void main() {
     });
   });
 
-  // group('Test the minimum visibility of METAR', () {
-  //   final code =
-  //       'UUDD 180100Z 00000MPS 4800 2100NW -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
-  //   final metar = Metar(code);
+  group('Test the minimum visibility of METAR', () {
+    final code =
+        'UUDD 180100Z 00000MPS 4800 2100NW -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
+    final metar = Metar(code);
 
-  //   test('Test the minimum visibility in kilometers', () {
-  //     final value = metar.minimumVisibility.inKilometers;
-  //     expect(value, 2.10);
-  //   });
+    test('Test the minimum visibility in kilometers', () {
+      final value = metar.minimumVisibility.inKilometers;
+      expect(value, 2.10);
+    });
 
-  //   test('Test the minimum visibility in meters', () {
-  //     final value = metar.minimumVisibility.inMeters;
-  //     expect(value, 2100.0);
-  //   });
+    test('Test the minimum visibility in meters', () {
+      final value = metar.minimumVisibility.inMeters;
+      expect(value, 2100.0);
+    });
 
-  //   test('Test the minimum visibility in feet', () {
-  //     final value = metar.minimumVisibility.inFeet;
-  //     expect(value, 6889.76);
-  //   });
+    test('Test the minimum visibility in feet', () {
+      final value = metar.minimumVisibility.inFeet;
+      expect(value, 6889.76378);
+    });
 
-  //   test('Test the minimum visibility in miles', () {
-  //     final value = metar.minimumVisibility.inMiles;
-  //     expect(value, 1.3);
-  //   });
+    test('Test the minimum visibility in miles', () {
+      final value = metar.minimumVisibility.inSeaMiles;
+      expect(value, 1.13391);
+    });
 
-  //   test('Test the minimum visibility direction in degrees', () {
-  //     final value = metar.minimumVisibilityDirection.directionInDegrees;
-  //     expect(value, 315.0);
-  //   });
+    test('Test the minimum visibility direction in degrees', () {
+      final value = metar.minimumVisibility.directionInDegrees;
+      expect(value, 315.0);
+    });
 
-  //   test('Test the cardinal point minimum visibility direction', () {
-  //     final value = metar.minimumVisibilityDirection.cardinalPoint;
-  //     expect(value, 'NW');
-  //   });
+    test('Test the cardinal point minimum visibility direction', () {
+      final value = metar.minimumVisibility.cardinalDirection;
+      expect(value, 'NW');
+    });
 
-  //   test('Test the minimum visibility direction in radians', () {
-  //     final value = metar.minimumVisibilityDirection.directionInRadians;
-  //     expect(value, 5.497787);
-  //   });
-  // });
+    test('Test the minimum visibility direction in radians', () {
+      final value = metar.minimumVisibility.directionInRadians;
+      expect(value, 5.49779);
+    });
+  });
 
   // group('Test the runway range', () {
   //   final code =

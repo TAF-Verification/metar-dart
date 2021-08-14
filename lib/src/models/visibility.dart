@@ -52,6 +52,44 @@ class Distance {
   double? get distance => _distance;
 }
 
+class MinimumVisibility extends Group {
+  Direction _direction = Direction(null);
+  Distance _distance = Distance(null);
+
+  MinimumVisibility(String? code, RegExpMatch? match) : super(code) {
+    if (match != null) {
+      final vis = match.namedGroup('vis');
+      if (vis == '9999') {
+        _distance = Distance('10000');
+      } else {
+        _distance = Distance(vis);
+      }
+      _direction = Direction(match.namedGroup('dir'));
+    }
+  }
+
+  @override
+  String toString() {
+    return cardinalDirection != null
+        ? '$inKilometers km to $cardinalDirection'
+        : '$inKilometers km';
+  }
+
+  double? get inMeters => _distance.distance;
+  double? get inKilometers =>
+      handleValue(_distance.distance, Conversions.M_TO_KM);
+  double? get inSeaMiles =>
+      handleValue(_distance.distance, Conversions.M_TO_SMI);
+  double? get inFeet => handleValue(_distance.distance, Conversions.M_TO_FT);
+
+  String? get cardinalDirection => _direction.direction;
+  double? get directionInDegrees => handleDirection(_direction.direction, 1.0);
+  double? get directionInRadians =>
+      handleDirection(_direction.direction, Conversions.DEGREES_TO_RADIANS);
+  double? get directionInGradians =>
+      handleDirection(_direction.direction, Conversions.DEGREES_TO_GRADIANS);
+}
+
 class Visibility extends Group {
   Direction _direction = Direction(null);
   Distance _distance = Distance(null);

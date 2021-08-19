@@ -1,6 +1,7 @@
 import 'package:metar_dart/src/models/descriptors.dart';
 import 'package:metar_dart/src/models/wind.dart' show COMPASS_DIRS;
 import 'package:metar_dart/src/utils/utils.dart' show handleValue, Conversions;
+import 'package:tuple/tuple.dart';
 
 class Direction {
   String? _direction;
@@ -168,4 +169,200 @@ class Visibility extends Group {
       handleDirection(_direction.direction, Conversions.DEGREES_TO_RADIANS);
   double? get directionInGradians =>
       handleDirection(_direction.direction, Conversions.DEGREES_TO_GRADIANS);
+}
+
+final NAMES = {
+  'R': 'right',
+  'L': 'left',
+  'C': 'center',
+};
+
+class RunwayName {
+  String? _name;
+
+  RunwayName(String? code) {
+    if (code != null) {
+      if (code.length == 3) {
+        final nameChar = code[2];
+        final nameStr = NAMES[nameChar];
+
+        _name = code.replaceFirst(nameChar, ' $nameStr');
+      } else {
+        _name = code;
+      }
+    }
+  }
+
+  @override
+  String toString() {
+    return _name.toString();
+  }
+
+  String? get name => _name;
+}
+
+final LIMITS = {
+  'M': 'below of',
+  'P': 'above of',
+};
+
+class RVRLimits {
+  String? _limit;
+
+  RVRLimits(String? code) {
+    _limit = LIMITS[code];
+  }
+
+  @override
+  String toString() {
+    return _limit.toString();
+  }
+
+  String? get limit => _limit;
+}
+
+final TRENDS = {
+  'N': 'no change',
+  'U': 'increasing',
+  'D': 'decreasing',
+};
+
+class Trend {
+  String? _trend;
+
+  Trend(String? code) {
+    _trend = TRENDS[code];
+  }
+
+  @override
+  String toString() {
+    return _trend.toString();
+  }
+
+  String? get trend => _trend;
+}
+
+class RunwayRange extends Group {
+  RunwayName _name = RunwayName(null);
+  RVRLimits _rvrlow = RVRLimits(null);
+  Distance _low = Distance(null);
+  RVRLimits _rvrhigh = RVRLimits(null);
+  Distance _high = Distance(null);
+  Trend _trend = Trend(null);
+
+  RunwayRange(String? code, RegExpMatch? match) : super(code) {
+    if (match != null) {
+      final units = match.namedGroup('units');
+      _name = RunwayName(match.namedGroup('name'));
+      _rvrlow = RVRLimits(match.namedGroup('rvrlow'));
+      _rvrhigh = RVRLimits(match.namedGroup('rvrhigh'));
+      _trend = Trend(match.namedGroup('trend'));
+
+      final low = match.namedGroup('low');
+      final high = match.namedGroup('high');
+      if (units == 'FT') {
+        _low = Distance(
+            '${double.tryParse(low.toString())! * Conversions.FT_TO_M}');
+
+        _high = Distance(
+            '${double.tryParse(high.toString())! * Conversions.FT_TO_M}');
+      } else {
+        _low = Distance(low);
+        _high = Distance(high);
+      }
+    }
+  }
+
+  String _highAsString() {
+    if (_high.distance != null && _rvrhigh.limit != null) {
+      return ' varying to $_rvrhigh $_high meters';
+    } else if (_high.distance != null) {
+      return ' varying to $_high meters';
+    } else {
+      return '';
+    }
+  }
+
+  @override
+  String toString() {
+    if (_low.distance != null) {
+      return 'runway $name'
+          ' $low'
+          '${_highAsString()}'
+          "${trend != null ? ' $trend' : ''}";
+    }
+
+    return 'no data';
+  }
+
+  String? get name => _name.name;
+  String? get low {
+    if (_rvrlow.limit != null) {
+      return '$_rvrlow $_low meters';
+    }
+
+    return '$_low meters';
+  }
+
+  String? get high =>
+      _highAsString().replaceFirst(RegExp(r'\svarying\sto\s'), '');
+  String? get trend => _trend.trend;
+
+  double? get lowInMeters => _low.distance;
+  double? get lowInKilometers =>
+      handleValue(_low.distance, Conversions.M_TO_KM);
+  double? get lowInSeaMiles => handleValue(_low.distance, Conversions.M_TO_SMI);
+  double? get lowInFeet => handleValue(_low.distance, Conversions.M_TO_FT);
+
+  double? get highInMeters => _high.distance;
+  double? get highInKilometers =>
+      handleValue(_high.distance, Conversions.M_TO_KM);
+  double? get highInSeaMiles =>
+      handleValue(_high.distance, Conversions.M_TO_SMI);
+  double? get highInFeet => handleValue(_high.distance, Conversions.M_TO_FT);
+}
+
+class RunwayRanges {
+  RunwayRange _first = RunwayRange(null, null);
+  RunwayRange _second = RunwayRange(null, null);
+  RunwayRange _third = RunwayRange(null, null);
+  final List<RunwayRange> _rangesList = <RunwayRange>[];
+  int _count = 0;
+
+  RunwayRanges();
+
+  void add(RunwayRange range) {
+    if (_count >= 3) {
+      throw RangeError("Can't set more than three runway ranges");
+    }
+
+    if (_count == 0) {
+      _first = range;
+    } else if (_count == 1) {
+      _second = range;
+    } else {
+      _third = range;
+    }
+
+    _rangesList.add(range);
+    _count++;
+  }
+
+  @override
+  String toString() {
+    return _rangesList.join(' | ');
+  }
+
+  int get length => _rangesList.length;
+  List<String> get codes {
+    final list = _rangesList.map((e) => e.code.toString()).toList();
+
+    return list;
+  }
+
+  Iterable<RunwayRange> get iter => _rangesList.map((e) => e);
+  List<RunwayRange> get toList => _rangesList;
+  RunwayRange get first => _first;
+  RunwayRange get second => _second;
+  RunwayRange get third => _third;
 }

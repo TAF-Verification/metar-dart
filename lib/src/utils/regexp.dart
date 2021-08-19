@@ -34,8 +34,13 @@ class RegularExpresions {
   RegExp MINIMUM_VISIBILITY = RegExp(r'^(?<vis>\d{4})'
       r'(?<dir>[NSEW]([EW])?)$');
 
-  RegExp RUNWAY_RE = RegExp(
-      r'^(?<name>R\d{2}([RLC])?)/(?<rvrlow>[MP])?(?<low>\d{2,4})(V(?<rvrhigh>[MP])?(?<high>\d{2,4}))?(?<units>FT)?(?<trend>[NDU])?$');
+  RegExp RUNWAY = RegExp(r'^R(?<name>\d{2}([RLC])?)/'
+      r'(?<rvrlow>[MP])?'
+      r'(?<low>\d{2,4})'
+      r'(V(?<rvrhigh>[MP])?'
+      r'(?<high>\d{2,4}))?'
+      r'(?<units>FT)?'
+      r'(?<trend>[NDU])?$');
 
   RegExp WEATHER_RE = RegExp(
       r'^((?<intensity>(-|\+|VC))?(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?((?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');

@@ -17,7 +17,8 @@ class Metar extends Report {
   WindVariation _windVariation = WindVariation(null, null);
   Visibility _visibility = Visibility(null, null);
   MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
-  RunwayRanges _runwayRanges = RunwayRanges();
+  final RunwayRanges _runwayRanges = RunwayRanges();
+  final Weathers _weathers = Weathers();
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -105,6 +106,7 @@ class Metar extends Report {
 
   Visibility get visibility => _visibility;
 
+  // Handle minimum visibility
   void _handleMinimumVisibility(String group) {
     final match = REGEXP.MINIMUM_VISIBILITY.firstMatch(group);
     _minimumVisibility = MinimumVisibility(group, match);
@@ -114,6 +116,7 @@ class Metar extends Report {
 
   MinimumVisibility get minimumVisibility => _minimumVisibility;
 
+  // Handle runway ranges
   void _handleRunwayRange(String group) {
     final match = REGEXP.RUNWAY.firstMatch(group);
     final runwayRange = RunwayRange(group, match);
@@ -124,6 +127,18 @@ class Metar extends Report {
   }
 
   RunwayRanges get runwayRanges => _runwayRanges;
+
+  // Handle weathers
+  void _handleWeather(String group) {
+    final match = REGEXP.WEATHER.firstMatch(group);
+    final weather = Weather(group, match);
+
+    _weathers.add(weather);
+
+    _string += 'Weathers: ${_weathers.toString()}';
+  }
+
+  Weathers get weathers => _weathers;
 
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
@@ -138,6 +153,9 @@ class Metar extends Report {
       Tuple2(REGEXP.RUNWAY, _handleRunwayRange),
       Tuple2(REGEXP.RUNWAY, _handleRunwayRange),
       Tuple2(REGEXP.RUNWAY, _handleRunwayRange),
+      Tuple2(REGEXP.WEATHER, _handleWeather),
+      Tuple2(REGEXP.WEATHER, _handleWeather),
+      Tuple2(REGEXP.WEATHER, _handleWeather),
     ];
 
     var index = 0;

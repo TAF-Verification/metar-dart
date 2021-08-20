@@ -1,8 +1,7 @@
 // Translations of the sky conditions codes into english
-final SKY_TRANSLATIONS = SkyTranslations();
 
 class SkyTranslations {
-  Map<String, String> SKY_COVER = {
+  static Map<String, String> SKY_COVER = {
     'SKC': 'clear',
     'CLR': 'clear',
     'NSC': 'clear',
@@ -15,7 +14,7 @@ class SkyTranslations {
     'VV': 'indefinite ceiling',
   };
 
-  Map<String, String> CLOUD_TYPE = {
+  static Map<String, String> CLOUD_TYPE = {
     'AC': 'altocumulus',
     'ACC': 'altocumulus castellanus',
     'ACSL': 'standing lenticulas altocumulus',
@@ -36,7 +35,7 @@ class SkyTranslations {
 
 // Translation of the present-weather codes into english
 
-  Map<String, String> WEATHER_INT = {
+  static Map<String, String> WEATHER_INT = {
     '-': 'light',
     '+': 'heavy',
     '-VC': 'nearby light',
@@ -44,7 +43,7 @@ class SkyTranslations {
     'VC': 'nearby',
   };
 
-  Map<String, String> WEATHER_DESC = {
+  static Map<String, String> WEATHER_DESC = {
     'MI': 'shallow',
     'PR': 'partial',
     'BC': 'patches of',
@@ -55,7 +54,7 @@ class SkyTranslations {
     'FZ': 'freezing',
   };
 
-  Map<String, String> WEATHER_PREC = {
+  static Map<String, String> WEATHER_PREC = {
     'DZ': 'drizzle',
     'RA': 'rain',
     'SN': 'snow',
@@ -68,7 +67,7 @@ class SkyTranslations {
     '//': '',
   };
 
-  Map<String, String> WEATHER_OBSC = {
+  static Map<String, String> WEATHER_OBSC = {
     'BR': 'mist',
     'FG': 'fog',
     'FU': 'smoke',
@@ -79,7 +78,7 @@ class SkyTranslations {
     'PY': 'spray',
   };
 
-  Map<String, String> WEATHER_OTHER = {
+  static Map<String, String> WEATHER_OTHER = {
     'PO': 'sand whirls',
     'SQ': 'squalls',
     'FC': 'funnel cloud',
@@ -87,18 +86,18 @@ class SkyTranslations {
     'DS': 'dust storm',
   };
 
-  Map<String, String> WEATHER_SPECIAL = {
+  static Map<String, String> WEATHER_SPECIAL = {
     '+FC': 'tornado',
   };
 
-  Map<String, String> COLOR = {
+  static Map<String, String> COLOR = {
     'BLU': 'blue',
     'GRN': 'green',
     'WHT': 'white',
   };
 
   // 3700
-  Map<String, String> SEA_STATE = {
+  static Map<String, String> SEA_STATE = {
     '0': 'calm (glassy)',
     '1': 'calm (rippled)',
     '2': 'smooth (wavelets)',
@@ -112,7 +111,7 @@ class SkyTranslations {
   };
 
   // 0919
-  Map<String, String> RUNWAY_DEPOSITS = {
+  static Map<String, String> RUNWAY_DEPOSITS = {
     '0': 'clear and dry',
     '1': 'damp',
     '2': 'wet and water patches',
@@ -128,7 +127,7 @@ class SkyTranslations {
   };
 
   // 0519
-  Map<String, String> RUNWAY_CONTAMINATION = {
+  static Map<String, String> RUNWAY_CONTAMINATION = {
     '1': 'less than 10%',
     '2': '11%-25%',
     '3': 'reserved',
@@ -142,7 +141,7 @@ class SkyTranslations {
   };
 
   // 1079
-  Map<String, String> DEPOSIT_DEPTH = {
+  static Map<String, String> DEPOSIT_DEPTH = {
     '00': 'less than 1 mm',
     '91': 'reserved',
     '92': '10 cm',
@@ -158,7 +157,7 @@ class SkyTranslations {
   };
 
   // 0366
-  Map<String, String> SURFACE_FRICTION = {
+  static Map<String, String> SURFACE_FRICTION = {
     '91': 'breaking action poor',
     '92': 'breaking action medium/poor',
     '93': 'breaking action medium',
@@ -173,7 +172,7 @@ class SkyTranslations {
 
 // Translation of various remark codes into english
 
-  Map<String, String> PRESSURE_TENDENCY = {
+  static Map<String, String> PRESSURE_TENDENCY = {
     '0': 'increasing, then decreasing',
     '1': 'increasing more slowly',
     '2': 'increasing',
@@ -185,20 +184,20 @@ class SkyTranslations {
     '8': 'decreasing more quickly',
   };
 
-  Map<String, String> LIGHTNING_FREQUENCY = {
+  static Map<String, String> LIGHTNING_FREQUENCY = {
     'OCNL': 'occasional',
     'FRQ': 'frequent',
     'CONS': 'constant',
   };
 
-  Map<String, String> LIGHTNING_TYPE = {
+  static Map<String, String> LIGHTNING_TYPE = {
     'IC': 'intracloud',
     'CC': 'cloud-to-cloud',
     'CG': 'cloud-to-ground',
     'CA': 'cloud-to-air',
   };
 
-  Map<String, String> REPORT_TYPE = {
+  static Map<String, String> REPORT_TYPE = {
     'METAR': 'routine report',
     'SPECI': 'special report',
     'AUTO': 'automatic report',

@@ -42,8 +42,11 @@ class RegularExpresions {
       r'(?<units>FT)?'
       r'(?<trend>[NDU])?$');
 
-  RegExp WEATHER_RE = RegExp(
-      r'^((?<intensity>(-|\+|VC))?(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?((?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
+  RegExp WEATHER = RegExp(r'^((?<intensity>(-|\+|VC))?'
+      r'(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?'
+      r'((?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
+      r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
+      r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
   RegExp SKY_RE = RegExp(
       r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|[O0]VC|///)(?<height>\d{3}|///)?(?<cloud>TCU|CB|///)?$');

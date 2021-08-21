@@ -8,3 +8,4 @@ export 'package:metar_dart/src/models/wind.dart' show Wind, WindVariation;
 export 'package:metar_dart/src/models/visibility.dart'
     show Visibility, MinimumVisibility, RunwayRanges, RunwayRange;
 export 'package:metar_dart/src/models/weather.dart' show Weather, Weathers;
+export 'package:metar_dart/src/models/sky.dart' show CloudLayer, Sky;

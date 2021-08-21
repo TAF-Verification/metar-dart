@@ -48,8 +48,9 @@ class RegularExpresions {
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
-  RegExp SKY_RE = RegExp(
-      r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|[O0]VC|///)(?<height>\d{3}|///)?(?<cloud>TCU|CB|///)?$');
+  RegExp SKY = RegExp(r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
+      r'(?<height>\d{3}|///)?'
+      r'(?<cloud>TCU|CB|///)?$');
 
   RegExp TEMP_RE = RegExp(
       r'^(?<tsign>M|-)?(?<temp>\d{2}|//|XX|MM)/(?<dsign>M|-)?(?<dewpt>\d{2}|//|XX|MM)$');

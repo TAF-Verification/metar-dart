@@ -25,6 +25,8 @@ String? handleCardinal(double? value) {
 
   if (value == null) {
     cardinal = null;
+  } else if (value == 0.0) {
+    return 'calm';
   } else if (value == 999.0) {
     return 'variable';
   } else {

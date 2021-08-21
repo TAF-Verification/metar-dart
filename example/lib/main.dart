@@ -31,6 +31,10 @@ void main() {
   for (var ww in metar.weathers.iter) {
     print(ww);
   }
+  print(metar.sky);
+  for (var layer in metar.sky.iter) {
+    print(layer);
+  }
   // print(metar.temperature?.inCelsius);
   // print(metar.pressure?.inHPa);
 

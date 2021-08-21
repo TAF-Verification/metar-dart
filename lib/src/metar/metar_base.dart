@@ -19,6 +19,7 @@ class Metar extends Report {
   MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
   final RunwayRanges _runwayRanges = RunwayRanges();
   final Weathers _weathers = Weathers();
+  final Sky _sky = Sky();
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -123,7 +124,7 @@ class Metar extends Report {
 
     _runwayRanges.add(runwayRange);
 
-    _string += 'Runway ranges: ${_runwayRanges.toString()}\n';
+    _string += 'Runway range: ${runwayRange.toString()}\n';
   }
 
   RunwayRanges get runwayRanges => _runwayRanges;
@@ -135,10 +136,22 @@ class Metar extends Report {
 
     _weathers.add(weather);
 
-    _string += 'Weathers: ${_weathers.toString()}';
+    _string += 'Weather: ${weather.toString()}\n';
   }
 
   Weathers get weathers => _weathers;
+
+  // Handle cloud layer
+  void _handleCloudLayer(String group) {
+    final match = REGEXP.SKY.firstMatch(group);
+    final cloudLayer = CloudLayer(group, match);
+
+    _sky.add(cloudLayer);
+
+    _string += 'Cloud layer: ${cloudLayer.toString()}\n';
+  }
+
+  Sky get sky => _sky;
 
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
@@ -156,6 +169,10 @@ class Metar extends Report {
       Tuple2(REGEXP.WEATHER, _handleWeather),
       Tuple2(REGEXP.WEATHER, _handleWeather),
       Tuple2(REGEXP.WEATHER, _handleWeather),
+      Tuple2(REGEXP.SKY, _handleCloudLayer),
+      Tuple2(REGEXP.SKY, _handleCloudLayer),
+      Tuple2(REGEXP.SKY, _handleCloudLayer),
+      Tuple2(REGEXP.SKY, _handleCloudLayer),
     ];
 
     var index = 0;

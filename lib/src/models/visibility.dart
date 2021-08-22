@@ -1,7 +1,6 @@
 import 'package:metar_dart/src/models/descriptors.dart';
 import 'package:metar_dart/src/models/wind.dart' show COMPASS_DIRS;
 import 'package:metar_dart/src/utils/utils.dart' show handleValue, Conversions;
-import 'package:tuple/tuple.dart';
 
 class Direction {
   String? _direction;

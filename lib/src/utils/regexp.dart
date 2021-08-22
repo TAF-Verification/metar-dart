@@ -52,8 +52,10 @@ class RegularExpresions {
       r'(?<height>\d{3}|///)?'
       r'(?<cloud>TCU|CB|///)?$');
 
-  RegExp TEMP_RE = RegExp(
-      r'^(?<tsign>M|-)?(?<temp>\d{2}|//|XX|MM)/(?<dsign>M|-)?(?<dewpt>\d{2}|//|XX|MM)$');
+  RegExp TEMPERATURES = RegExp(r'^(?<tsign>M|-)?'
+      r'(?<temp>\d{2}|//|XX|MM)/'
+      r'(?<dsign>M|-)?'
+      r'(?<dewpt>\d{2}|//|XX|MM)$');
 
   RegExp PRESS_RE =
       RegExp(r'^(?<units>A|Q|QNH)?(?<press>\d{4}|\//\//)(?<units2>INS)?$');

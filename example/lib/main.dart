@@ -35,6 +35,9 @@ void main() {
   for (var layer in metar.sky.iter) {
     print(layer);
   }
+  print(metar.temperatures);
+  print(metar.temperatures.temperatureInFahrenheit);
+  print(metar.temperatures.dewpointInFahrenheit);
   // print(metar.temperature?.inCelsius);
   // print(metar.pressure?.inHPa);
 

@@ -9,32 +9,32 @@ void main() {
     final metar = Metar(code);
 
     test('Test the absolute temperature in Celsius', () {
-      final value = metar.temperature.inCelsius;
+      final value = metar.temperatures.temperatureInCelsius;
       expect(value, 4.0);
     });
 
     test('Test the absolute temperature in Fahrenheit', () {
-      final value = metar.temperature.inFahrenheit;
+      final value = metar.temperatures.temperatureInFahrenheit;
       expect(value, 39.2);
     });
 
     test('Test the absolute temperature in Kelvin', () {
-      final value = metar.temperature.inKelvin;
+      final value = metar.temperatures.temperatureInKelvin;
       expect(value, 277.15);
     });
 
     test('Test the dewpoint temperature in Celsius', () {
-      final value = metar.dewpoint.inCelsius;
+      final value = metar.temperatures.dewpointInCelsius;
       expect(value, -3.0);
     });
 
     test('Test the dewpoint temperature in Fahrenheit', () {
-      final value = metar.dewpoint.inFahrenheit;
+      final value = metar.temperatures.dewpointInFahrenheit;
       expect(value, 26.6);
     });
 
     test('Test the dewpoint temperature in Kelvin', () {
-      final value = metar.dewpoint.inKelvin;
+      final value = metar.temperatures.dewpointInKelvin;
       expect(value, 270.15);
     });
   });
@@ -44,32 +44,32 @@ void main() {
     final metar = Metar(code);
 
     test('Test the absolute temperature in Celsius', () {
-      final value = metar.temperature.inCelsius;
+      final value = metar.temperatures.temperatureInCelsius;
       expect(value, 31.0);
     });
 
     test('Test the absolute temperature in Fahrenheit', () {
-      final value = metar.temperature.inFahrenheit;
+      final value = metar.temperatures.temperatureInFahrenheit;
       expect(value, 87.8);
     });
 
     test('Test the absolute temperature in Kelvin', () {
-      final value = metar.temperature.inKelvin;
+      final value = metar.temperatures.temperatureInKelvin;
       expect(value, 304.15);
     });
 
     test('Test the dewpoint temperature in Celsius', () {
-      final value = metar.dewpoint.inCelsius;
+      final value = metar.temperatures.dewpointInCelsius;
       expect(value, 19.0);
     });
 
     test('Test the dewpoint temperature in Fahrenheit', () {
-      final value = metar.dewpoint.inFahrenheit;
+      final value = metar.temperatures.dewpointInFahrenheit;
       expect(value, 66.2);
     });
 
     test('Test the dewpoint temperature in Kelvin', () {
-      final value = metar.dewpoint.inKelvin;
+      final value = metar.temperatures.dewpointInKelvin;
       expect(value, 292.15);
     });
   });
@@ -78,13 +78,13 @@ void main() {
     final code = 'MSSS 182050Z 17011KT 130V220 9999 FEW060 //\/// Q1012 A2990';
     final metar = Metar(code);
 
-    test('Test the absolute temperature in Celsius', () {
-      final value = metar.temperature?.inCelsius;
+    test('Test the absolute temperature in Celsius as null', () {
+      final value = metar.temperatures.temperatureInCelsius;
       expect(value, null);
     });
 
-    test('Test the dewpoint temperature in Celsius', () {
-      final value = metar.dewpoint?.inCelsius;
+    test('Test the dewpoint temperature in Celsius as null', () {
+      final value = metar.temperatures.dewpointInCelsius;
       expect(value, null);
     });
   });

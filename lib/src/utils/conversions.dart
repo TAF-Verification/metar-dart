@@ -9,6 +9,15 @@ double? handleValue(double? value, double conversion) {
   }
 }
 
+double? handleTemperature(double? value, double Function(double) conversion) {
+  if (value == null) {
+    return null;
+  } else {
+    final val = conversion(value).toStringAsFixed(5);
+    return double.parse(val);
+  }
+}
+
 class Conversions {
   // Distance conversions
   static final SMI_TO_KM = 1.852;
@@ -28,4 +37,17 @@ class Conversions {
   static final KNOT_TO_MIPH = 1.15078;
   static final KNOT_TO_KPH = 1.852;
   static final MPS_TO_KNOT = 1 / KNOT_TO_MPS;
+
+  // Temperature conversions
+  static double celsiusToKelvin(double temp) {
+    return temp + 273.15;
+  }
+
+  static double celsiusToFahrenheit(double temp) {
+    return temp * 9 / 5 + 32;
+  }
+
+  static double celsiusToRankine(double temp) {
+    return temp * 9 / 5 + 491.67;
+  }
 }

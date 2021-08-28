@@ -21,6 +21,7 @@ class Metar extends Report {
   final Weathers _weathers = Weathers();
   final Sky _sky = Sky();
   Temperatures _temperatures = Temperatures(null, null);
+  Pressure _pressure = Pressure(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -159,10 +160,20 @@ class Metar extends Report {
     final match = REGEXP.TEMPERATURES.firstMatch(group);
     _temperatures = Temperatures(group, match);
 
-    _string += 'Temperatures: ${_temperatures.toString()}';
+    _string += 'Temperatures: $_temperatures\n';
   }
 
   Temperatures get temperatures => _temperatures;
+
+  // Handle pressure
+  void _handlePressure(String group) {
+    final match = REGEXP.PRESSURE.firstMatch(group);
+    _pressure = Pressure(group, match);
+
+    _string += 'Pressure: $_pressure\n';
+  }
+
+  Pressure get pressure => _pressure;
 
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
@@ -185,6 +196,7 @@ class Metar extends Report {
       Tuple2(REGEXP.SKY, _handleCloudLayer),
       Tuple2(REGEXP.SKY, _handleCloudLayer),
       Tuple2(REGEXP.TEMPERATURES, _handleTemperatures),
+      Tuple2(REGEXP.PRESSURE, _handlePressure),
     ];
 
     var index = 0;

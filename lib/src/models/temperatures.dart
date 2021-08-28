@@ -1,5 +1,5 @@
 import 'package:metar_dart/src/models/descriptors.dart';
-import 'package:metar_dart/src/utils/conversions.dart';
+import 'package:metar_dart/src/utils/utils.dart';
 import 'package:metar_dart/src/utils/utils.dart'
     show handleTemperature, Conversions;
 

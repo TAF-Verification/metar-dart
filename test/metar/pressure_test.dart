@@ -9,18 +9,23 @@ void main() {
     final pressure = metar.pressure;
 
     test('Test the pressure in hPa', () {
-      final value = pressure.inHPa;
+      final value = pressure.inHectoPascals;
       expect(value, 1013.0);
     });
 
     test('Test the pressure in inHg', () {
-      final value = pressure.inInHg;
-      expect(value, 29.91);
+      final value = pressure.inMercuryInches;
+      expect(value, 29.91389);
     });
 
     test('Test the pressure in mb', () {
-      final value = pressure.inMb;
+      final value = pressure.inMilliBars;
       expect(value, 1013.0);
+    });
+
+    test('Test the pressure in atmospheres', () {
+      final value = pressure.inAtmospheres;
+      expect(value, 0.99975);
     });
   });
 
@@ -30,18 +35,23 @@ void main() {
     final pressure = metar.pressure;
 
     test('Test the pressure in hPa', () {
-      final value = pressure.inHPa;
-      expect(value, 1024.39);
+      final value = pressure.inHectoPascals;
+      expect(value, 1024.38198);
     });
 
     test('Test the pressure in inHg', () {
-      final value = pressure.inInHg;
+      final value = pressure.inMercuryInches;
       expect(value, 30.25);
     });
 
     test('Test the pressure in mb', () {
-      final value = pressure.inMb;
-      expect(value, 1024.39);
+      final value = pressure.inMilliBars;
+      expect(value, 1024.38198);
+    });
+
+    test('Test the pressure in atmospheres', () {
+      final value = pressure.inAtmospheres;
+      expect(value, 1.01099);
     });
   });
 }

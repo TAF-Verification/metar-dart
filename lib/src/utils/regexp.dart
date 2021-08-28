@@ -57,8 +57,9 @@ class RegularExpresions {
       r'(?<dsign>M|-)?'
       r'(?<dewpt>\d{2}|//|XX|MM)$');
 
-  RegExp PRESS_RE =
-      RegExp(r'^(?<units>A|Q|QNH)?(?<press>\d{4}|\//\//)(?<units2>INS)?$');
+  RegExp PRESSURE = RegExp(r'^(?<units>A|Q|QNH)?'
+      r'(?<press>\d{4}|\//\//)'
+      r'(?<units2>INS)?$');
 
   RegExp RECENT_RE = RegExp(
       r'^RE(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?(?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?(?<other>PO|SQ|FC|SS|DS)?$');

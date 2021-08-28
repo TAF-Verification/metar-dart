@@ -38,6 +38,15 @@ class Conversions {
   static final KNOT_TO_KPH = 1.852;
   static final MPS_TO_KNOT = 1 / KNOT_TO_MPS;
 
+  // Pressure conversions
+  static final HPA_TO_INHG = 0.02953;
+  static final INHG_TO_HPA = 1 / HPA_TO_INHG;
+  static final HPA_TO_BAR = 0.001;
+  static final BAR_TO_HPA = 1 / HPA_TO_BAR;
+  static final MBAR_TO_HPA = BAR_TO_HPA / 1000;
+  static final HPA_TO_MBAR = HPA_TO_BAR * 1000;
+  static final HPA_TO_ATM = 1 / 1013.25;
+
   // Temperature conversions
   static double celsiusToKelvin(double temp) {
     return temp + 273.15;

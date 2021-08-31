@@ -11,3 +11,4 @@ export 'package:metar_dart/src/models/weather.dart' show Weather, Weathers;
 export 'package:metar_dart/src/models/sky.dart' show CloudLayer, Sky;
 export 'package:metar_dart/src/models/temperatures.dart' show Temperatures;
 export 'package:metar_dart/src/models/pressure.dart' show Pressure;
+export 'package:metar_dart/src/models/recent_weather.dart' show RecentWeather;

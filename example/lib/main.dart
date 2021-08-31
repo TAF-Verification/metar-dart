@@ -38,8 +38,9 @@ void main() {
   print(metar.temperatures);
   print(metar.temperatures.temperatureInFahrenheit);
   print(metar.temperatures.dewpointInFahrenheit);
-  // print(metar.temperature?.inCelsius);
-  // print(metar.pressure?.inHPa);
+  print(metar.recentWeather);
+  print('########################');
+  print(metar);
 
   // You can see a resume of the METAR with the toString() method
   // print(metar.toString());

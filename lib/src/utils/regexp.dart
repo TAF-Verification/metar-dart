@@ -61,8 +61,10 @@ class RegularExpresions {
       r'(?<press>\d{4}|\//\//)'
       r'(?<units2>INS)?$');
 
-  RegExp RECENT_RE = RegExp(
-      r'^RE(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?(?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?(?<other>PO|SQ|FC|SS|DS)?$');
+  RegExp RECENT_WEATHER = RegExp(r'^RE(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?'
+      r'(?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?'
+      r'(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?'
+      r'(?<other>PO|SQ|FC|SS|DS)?$');
 
   RegExp WINDSHEAR_RUNWAY_RE =
       RegExp(r'^WS(?<all>ALL)?(RWY|R(?<num>\d{2})(?<name>[RCL])?)$');

@@ -66,8 +66,8 @@ class RegularExpresions {
       r'(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?'
       r'(?<other>PO|SQ|FC|SS|DS)?$');
 
-  RegExp WINDSHEAR_RUNWAY_RE =
-      RegExp(r'^WS(?<all>ALL)?(RWY|R(?<num>\d{2})(?<name>[RCL])?)$');
+  RegExp WINDSHEAR = RegExp(r'^WS(?<all>_ALL)?'
+      r'_(RWY|R(?<name>\d{2}[RCL]?))$');
 
   RegExp SEASTATE_RE = RegExp(r'^W(?<sign>M)?(?<temp>\d{2})/S(?<state>\d)$');
 

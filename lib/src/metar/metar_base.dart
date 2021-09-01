@@ -23,6 +23,7 @@ class Metar extends Report {
   Temperatures _temperatures = Temperatures(null, null);
   Pressure _pressure = Pressure(null, null);
   RecentWeather _recentWeather = RecentWeather(null, null);
+  final Windshear _windshear = Windshear();
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -186,6 +187,16 @@ class Metar extends Report {
 
   RecentWeather get recentWeather => _recentWeather;
 
+  // Handle windshear
+  void _handleWindshear(String group) {
+    final match = REGEXP.WINDSHEAR.firstMatch(group);
+    _windshear.add(group, match!);
+
+    _string += 'Windshear: $_windshear\n';
+  }
+
+  Windshear get windshear => _windshear;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -209,11 +220,15 @@ class Metar extends Report {
       Tuple2(REGEXP.TEMPERATURES, _handleTemperatures),
       Tuple2(REGEXP.PRESSURE, _handlePressure),
       Tuple2(REGEXP.RECENT_WEATHER, _handleRecentWeather),
+      Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
+      Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
+      Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
     ];
 
     var index = 0;
 
-    final body = sanitizeVisibility(_sections.body);
+    var body = sanitizeVisibility(_sections.body);
+    body = sanitizeWindshear(body);
     body.split(' ').forEach((group) {
       unparsed_groups.add(group);
 

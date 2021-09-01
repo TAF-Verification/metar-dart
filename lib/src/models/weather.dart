@@ -85,7 +85,7 @@ class Weathers {
 
   void add(Weather weather) {
     if (_count >= 3) {
-      throw RangeError("Can't set more than three weathers");
+      throw RangeError("can't set more than three weathers codes");
     }
 
     if (_count == 0) {

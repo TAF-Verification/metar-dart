@@ -69,7 +69,9 @@ class RegularExpresions {
   RegExp WINDSHEAR = RegExp(r'^WS(?<all>_ALL)?'
       r'_(RWY|R(?<name>\d{2}[RCL]?))$');
 
-  RegExp SEASTATE_RE = RegExp(r'^W(?<sign>M)?(?<temp>\d{2})/S(?<state>\d)$');
+  RegExp SEA_STATE = RegExp(r'^W(?<sign>M)?'
+      r'(?<temp>\d{2})/S'
+      r'(?<state>\d)$');
 
   RegExp COLOR_RE =
       RegExp(r'^(BLACK)?(BLU|GRN|WHT|RED)\+?(/?(BLACK)?(BLU|GRN|WHT|RED)\+?)*');

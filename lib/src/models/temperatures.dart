@@ -1,7 +1,14 @@
 import 'package:metar_dart/src/models/descriptors.dart';
-import 'package:metar_dart/src/utils/utils.dart';
 import 'package:metar_dart/src/utils/utils.dart'
     show handleTemperature, Conversions;
+
+String? setTemperature(String? sign, String? temp) {
+  if (sign == 'M' || sign == '-') {
+    return '-$temp';
+  }
+
+  return temp;
+}
 
 class Temperature {
   double? _temperature;
@@ -31,8 +38,8 @@ class Temperatures extends Group {
       final tsign = match.namedGroup('tsign');
       final dsign = match.namedGroup('dsign');
 
-      final temp = _handleTemperature(tsign, match.namedGroup('temp'));
-      final dewpt = _handleTemperature(dsign, match.namedGroup('dewpt'));
+      final temp = setTemperature(tsign, match.namedGroup('temp'));
+      final dewpt = setTemperature(dsign, match.namedGroup('dewpt'));
 
       _temperature = Temperature(temp);
       _dewpoint = Temperature(dewpt);
@@ -46,15 +53,8 @@ class Temperatures extends Group {
         'dewpoint $dewpointInCelsius°';
   }
 
-  String? _handleTemperature(String? sign, String? temp) {
-    if (sign == 'M' || sign == '-') {
-      return '-$temp';
-    }
-
-    return temp;
-  }
-
-  double? get temperatureInCelsius => _temperature.temperature;
+  double? get temperatureInCelsius =>
+      handleTemperature(_temperature.temperature, Conversions.sameValue);
   double? get temperatureInFahrenheit => handleTemperature(
       _temperature.temperature, Conversions.celsiusToFahrenheit);
   double? get temperatureInKelvin =>
@@ -62,7 +62,8 @@ class Temperatures extends Group {
   double? get temperatureInRankine =>
       handleTemperature(_temperature.temperature, Conversions.celsiusToRankine);
 
-  double? get dewpointInCelsius => _dewpoint.temperature;
+  double? get dewpointInCelsius =>
+      handleTemperature(_dewpoint.temperature, Conversions.sameValue);
   double? get dewpointInFahrenheit =>
       handleTemperature(_dewpoint.temperature, Conversions.celsiusToFahrenheit);
   double? get dewpointInKelvin =>

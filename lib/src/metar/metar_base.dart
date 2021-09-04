@@ -24,6 +24,7 @@ class Metar extends Report {
   Pressure _pressure = Pressure(null, null);
   RecentWeather _recentWeather = RecentWeather(null, null);
   final Windshear _windshear = Windshear();
+  SeaState _seaState = SeaState(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -197,6 +198,16 @@ class Metar extends Report {
 
   Windshear get windshear => _windshear;
 
+  // Handle sea state
+  void _handleSeaState(String group) {
+    final match = REGEXP.SEA_STATE.firstMatch(group);
+    _seaState = SeaState(group, match);
+
+    _string += 'Sea state: $_seaState\n';
+  }
+
+  SeaState get seaState => _seaState;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -223,6 +234,7 @@ class Metar extends Report {
       Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
       Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
       Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
+      Tuple2(REGEXP.SEA_STATE, _handleSeaState),
     ];
 
     var index = 0;

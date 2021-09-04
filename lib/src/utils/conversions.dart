@@ -59,4 +59,9 @@ class Conversions {
   static double celsiusToRankine(double temp) {
     return temp * 9 / 5 + 491.67;
   }
+
+  // Helper when need to return same value
+  static double sameValue(double value) {
+    return value;
+  }
 }

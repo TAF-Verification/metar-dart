@@ -25,6 +25,7 @@ class Metar extends Report {
   RecentWeather _recentWeather = RecentWeather(null, null);
   final Windshear _windshear = Windshear();
   SeaState _seaState = SeaState(null, null);
+  RunwayState _runwayState = RunwayState(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -208,6 +209,15 @@ class Metar extends Report {
 
   SeaState get seaState => _seaState;
 
+  void _handleRunwayState(String group) {
+    final match = REGEXP.RUNWAY_STATE.firstMatch(group);
+    _runwayState = RunwayState(group, match);
+
+    _string += 'Runway state: $_runwayState\n';
+  }
+
+  RunwayState get runwayState => _runwayState;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -235,6 +245,7 @@ class Metar extends Report {
       Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
       Tuple2(REGEXP.WINDSHEAR, _handleWindshear),
       Tuple2(REGEXP.SEA_STATE, _handleSeaState),
+      Tuple2(REGEXP.RUNWAY_STATE, _handleRunwayState),
     ];
 
     var index = 0;

@@ -128,15 +128,15 @@ class SkyTranslations {
 
   // 0519
   static Map<String, String> RUNWAY_CONTAMINATION = {
-    '1': 'less than 10%',
-    '2': '11%-25%',
+    '1': 'less than 10% of runway',
+    '2': '11%-25% of runway',
     '3': 'reserved',
     '4': 'reserved',
-    '5': '26%-50%',
+    '5': '26%-50% of runway',
     '6': 'reserved',
     '7': 'reserved',
     '8': 'reserved',
-    '9': '51%-100%',
+    '9': '51%-100% of runway',
     '/': 'not reported',
   };
 

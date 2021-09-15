@@ -186,6 +186,10 @@ class RunwayName {
         final nameStr = NAMES[nameChar];
 
         _name = code.replaceFirst(nameChar, ' $nameStr');
+      } else if (code == '88') {
+        _name = 'all runways';
+      } else if (code == '99') {
+        _name = 'repeated';
       } else {
         _name = code;
       }

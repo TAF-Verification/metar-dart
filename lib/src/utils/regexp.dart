@@ -76,9 +76,13 @@ class RegularExpresions {
   RegExp COLOR_RE =
       RegExp(r'^(BLACK)?(BLU|GRN|WHT|RED)\+?(/?(BLACK)?(BLU|GRN|WHT|RED)\+?)*');
 
-  RegExp RUNWAYSTATE_RE = RegExp(
-      r'^R(?<num>\d{2})?(?<name>[CLR])?/((?<deposit>\d|/)(?<contamination>\d|/)(?<depth>\d\d|//)(?<friction>\d\d|//)|(?<SNOCLO>SNOCLO)|(?<CLRD>CLRD//))$');
-  //r'^((\d{2}) | R(\d{2})(RR?|LL?|C)?/?)((SNOCLO|CLRD(\d{2}|//)) | (\d|/)(\d|/)(\d{2}|//)(\d{2}|//))');
+  RegExp RUNWAY_STATE = RegExp(r'^R(?<name>\d{2}([RLC])?)?/('
+      r'(?<deposits>\d|/)'
+      r'(?<contamination>\d|/)'
+      r'(?<depth>\d\d|//)'
+      r'(?<friction>\d\d|//)|'
+      r'(?<snoclo>SNOCLO)|'
+      r'(?<clrd>CLRD//))$');
 
   RegExp TREND = RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d+|PROB\d{2})$');
 

@@ -16,7 +16,7 @@ class Modifier extends Group {
   @override
   String toString() {
     if (MODIFIERS.containsKey(code)) {
-      return '${MODIFIERS[code]}';
+      return '${MODIFIERS[code]!.toLowerCase()}';
     }
 
     return '';

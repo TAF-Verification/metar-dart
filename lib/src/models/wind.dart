@@ -107,6 +107,10 @@ class WindVariation extends Group {
 
   @override
   String toString() {
+    if (_from?.direction == null) {
+      return '';
+    }
+
     return 'from'
         ' $fromCardinalDirection ($fromInDegrees°)'
         ' to'
@@ -141,11 +145,15 @@ class Wind extends Group {
 
   @override
   String toString() {
-    final gust = _gust?.speed == null ? '' : ' gust of ${_gust?.speed} kt';
-    return '$cardinalDirection'
-        ' ($directionInDegrees°)'
-        ' $speedInKnot kt'
-        '$gust';
+    final direction = _direction?.direction == null
+        ? ''
+        : '$cardinalDirection ($directionInDegrees°)';
+    final speed = _speed?.speed == null ? '' : '$speedInKnot kt';
+    final gust = _gust?.speed == null ? '' : 'gust of ${_gust?.speed} kt';
+
+    final string = '$direction $speed $gust'.trim();
+
+    return string;
   }
 
   String? get cardinalDirection => handleCardinal(_direction?.direction);

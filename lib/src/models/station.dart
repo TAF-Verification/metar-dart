@@ -16,9 +16,9 @@ class Station extends Group {
 
   @override
   String toString() {
-    return 'Name: $name\n'
-        'Coordinates: $latitude - $longitude\n'
-        'Elevation: $elevation m MSL\n'
+    return 'Name: $name | '
+        'Coordinates: $latitude - $longitude | '
+        'Elevation: $elevation m MSL | '
         'Country: $country';
   }
 

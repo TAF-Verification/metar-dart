@@ -26,7 +26,15 @@ class SeaState extends Group {
 
   @override
   String toString() {
-    return 'temperature $temperatureInCelsius°, $state';
+    if (_temperature.temperature == null && _state.value != null) {
+      return 'no temperature, $state';
+    } else if (_temperature.temperature != null && _state.value == null) {
+      return 'temperature $temperatureInCelsius°';
+    } else if (_temperature.temperature == null && _state.value == null) {
+      return '';
+    } else {
+      return 'temperature $temperatureInCelsius°, $state';
+    }
   }
 
   String? get state => _state.value;

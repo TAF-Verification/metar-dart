@@ -155,7 +155,7 @@ class RunwayState extends Group {
   @override
   String toString() {
     if (_match == null) {
-      return 'null';
+      return '';
     }
 
     if (snoclo != null) {
@@ -166,9 +166,9 @@ class RunwayState extends Group {
       return '$clrd';
     }
 
-    return '$name'
-        '${_depositsToString()}'
-        'contamination $contamination'
+    return '$name, '
+        '${_depositsToString()}, '
+        'contamination $contamination, '
         '${_surfaceFrictionToString()}';
   }
 

@@ -54,7 +54,11 @@ class Pressure extends Group {
 
   @override
   String toString() {
-    return '$inHectoPascals hPa';
+    if (_pressure.pressure == null) {
+      return '';
+    }
+
+    return '${inHectoPascals!.toStringAsFixed(2)} hPa';
   }
 
   double? get inHectoPascals => handleValue(_pressure.pressure, 1);

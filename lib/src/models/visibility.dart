@@ -302,9 +302,11 @@ class RunwayRange extends Group {
   String? get low {
     if (_rvrlow.limit != null) {
       return '$_rvrlow $_low meters';
+    } else if (_low.distance != null) {
+      return '$_low meters';
+    } else {
+      return '';
     }
-
-    return '$_low meters';
   }
 
   String? get high =>

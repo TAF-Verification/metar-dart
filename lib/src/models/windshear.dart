@@ -53,12 +53,20 @@ class Windshear {
 
   @override
   String toString() {
-    return _windshearList.join(' | ');
+    if (_all) {
+      return 'all runways';
+    } else if (_windshearList.isNotEmpty) {
+      return _windshearList.join(' | ');
+    } else {
+      return '';
+    }
   }
 
   int get length => _windshearList.length;
   List<String> get codes {
-    final list = _windshearList.map((e) => e.code.toString()).toList();
+    final list = _windshearList
+        .map((e) => e.code.toString().replaceAll('_', ' '))
+        .toList();
 
     return list;
   }

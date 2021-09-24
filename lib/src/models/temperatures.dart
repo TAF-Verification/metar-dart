@@ -48,9 +48,20 @@ class Temperatures extends Group {
 
   @override
   String toString() {
-    return 'temperature $temperatureInCelsius°'
-        ' | '
-        'dewpoint $dewpointInCelsius°';
+    final temperature = _temperature.temperature;
+    final dewpoint = _dewpoint.temperature;
+
+    if (temperature == null && dewpoint != null) {
+      return 'no temperature | dewpoint $dewpointInCelsius°';
+    } else if (temperature != null && dewpoint == null) {
+      return 'temperature $temperatureInCelsius° | no dewpoint';
+    } else if (temperature == null && dewpoint == null) {
+      return '';
+    } else {
+      return 'temperature $temperatureInCelsius°'
+          ' | '
+          'dewpoint $dewpointInCelsius°';
+    }
   }
 
   double? get temperatureInCelsius =>

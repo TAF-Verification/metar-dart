@@ -34,13 +34,13 @@ main() {
   print('Type: ${metar.type}');
 
   // Get the wind speed in knots
-  print('Wind speed: ${metar.windSpeed?.inKnot}');
+  print('Wind speed: ${metar.wind.speedInKnot}');
 
   // Get the pressure in hecto pascals
-  print('Pressure: ${metar.pressure?.inHPa}');
+  print('Pressure: ${metar.pressure.inHPa}');
 
   // Get the temperature in fahrenheit
-  print('Temperature: ${metar.temperature?.inFahrenheit}');
+  print('Temperature: ${metar.temperatures.temperatureInFahrenheit}');
 }
 ```
 
@@ -76,17 +76,3 @@ the following command in your terminal to activate it
 ```
 pub global activate cider
 ```
-
-## Special mentions
-
-Thanks to the work made by [@yeradis][yeradis], who create the package
-`units` for starting point of measurements in Dart. I took the files directly because they
-have an issue in angle.dart that not resolved. Hope they do it soon.
-
-[yeradis]: https://github.com/yeradis
-
-The files are in `lib/src/units/` folder:
-  * angle.dart
-  * length.dart
-  * speed.dart
-  * temperature.dart

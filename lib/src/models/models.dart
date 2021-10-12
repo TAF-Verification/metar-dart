@@ -15,3 +15,4 @@ export 'package:metar_dart/src/models/recent_weather.dart' show RecentWeather;
 export 'package:metar_dart/src/models/windshear.dart' show Windshear;
 export 'package:metar_dart/src/models/sea_state.dart' show SeaState;
 export 'package:metar_dart/src/models/runway_state.dart' show RunwayState;
+export 'package:metar_dart/src/models/forecast.dart' show Period, TrendForecast;

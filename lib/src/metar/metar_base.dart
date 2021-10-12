@@ -26,6 +26,7 @@ class Metar extends Report {
   final Windshear _windshear = Windshear();
   SeaState _seaState = SeaState(null, null);
   RunwayState _runwayState = RunwayState(null, null);
+  TrendForecast _trendForecast = TrendForecast(null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -40,7 +41,8 @@ class Metar extends Report {
 
     _sections = MetarSections(raw_code);
 
-    _parse();
+    _parse_body();
+    _parse_trend();
   }
 
   @override
@@ -218,6 +220,33 @@ class Metar extends Report {
 
   RunwayState get runwayState => _runwayState;
 
+  void _handleTrend(String group) {
+    _trendForecast = TrendForecast(group);
+
+    _string += 'TrendForecast: $_trendForecast';
+  }
+
+  void _handleTrendTimeGroup(String group) {
+    final match = REGEXP.TREND_TIME_GROUP.firstMatch(group);
+    final period = Period(group, match);
+
+    switch (period.prefix) {
+      case 'from':
+        _trendForecast.from_period = period;
+        break;
+      case 'until':
+        _trendForecast.until_period = period;
+        break;
+      case 'at':
+        _trendForecast.at_period = period;
+        break;
+      default:
+        break;
+    }
+  }
+
+  TrendForecast get trendForecast => _trendForecast;
+
   void _parse_body() {
     final handlers = <Tuple2<RegExp, Function>>[
       Tuple2(REGEXP.TYPE, _handleType),
@@ -248,11 +277,28 @@ class Metar extends Report {
       Tuple2(REGEXP.RUNWAY_STATE, _handleRunwayState),
     ];
 
+    _parse(handlers, _sections.body);
+  }
+
+  void _parse_trend() {
+    final handlers = [
+      Tuple2(REGEXP.TREND, _handleTrend),
+      Tuple2(REGEXP.TREND_TIME_GROUP, _handleTrendTimeGroup),
+      Tuple2(REGEXP.TREND_TIME_GROUP, _handleTrendTimeGroup),
+    ];
+
+    _parse(handlers, _sections.trend, sectionType: 'trend');
+  }
+
+  void _parse(List<Tuple2<RegExp, Function>> handlers, String section,
+      {String sectionType = 'body'}) {
     var index = 0;
 
-    var body = sanitizeVisibility(_sections.body);
-    body = sanitizeWindshear(body);
-    body.split(' ').forEach((group) {
+    section = sanitizeVisibility(section);
+    if (sectionType == 'body') {
+      section = sanitizeWindshear(section);
+    }
+    section.split(' ').forEach((group) {
       unparsed_groups.add(group);
 
       for (var i = index; i < handlers.length; i++) {
@@ -273,10 +319,6 @@ class Metar extends Report {
         'failed while processing ${unparsed_groups.join(" ")} from: $raw_code',
       );
     }
-  }
-
-  void _parse() {
-    _parse_body();
   }
 
   List<String> get sections => _sections.sections;

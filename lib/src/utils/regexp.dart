@@ -84,9 +84,9 @@ class RegularExpresions {
       r'(?<snoclo>SNOCLO)|'
       r'(?<clrd>CLRD//))$');
 
-  RegExp TREND = RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d+|PROB\d{2})$');
+  RegExp TREND = RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 
-  RegExp TRENDTIME_RE = RegExp(r'^(FM|TL|AT)(\d{2})(\d{2}\s+)');
+  RegExp TREND_TIME_GROUP = RegExp(r'^(?<prefix>FM|TL|AT)(?<time>\d{4})$');
 
   RegExp REMARK = RegExp(r'^(?<rmk>RMK(S)?)$');
 

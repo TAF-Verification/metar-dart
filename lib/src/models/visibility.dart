@@ -230,10 +230,10 @@ final TRENDS = {
   'D': 'decreasing',
 };
 
-class Trend {
+class VisibilityTrend {
   String? _trend;
 
-  Trend(String? code) {
+  VisibilityTrend(String? code) {
     _trend = TRENDS[code];
   }
 
@@ -251,7 +251,7 @@ class RunwayRange extends Group {
   Distance _low = Distance(null);
   RVRLimits _rvrhigh = RVRLimits(null);
   Distance _high = Distance(null);
-  Trend _trend = Trend(null);
+  VisibilityTrend _trend = VisibilityTrend(null);
 
   RunwayRange(String? code, RegExpMatch? match) : super(code) {
     if (match != null) {
@@ -259,7 +259,7 @@ class RunwayRange extends Group {
       _name = RunwayName(match.namedGroup('name'));
       _rvrlow = RVRLimits(match.namedGroup('rvrlow'));
       _rvrhigh = RVRLimits(match.namedGroup('rvrhigh'));
-      _trend = Trend(match.namedGroup('trend'));
+      _trend = VisibilityTrend(match.namedGroup('trend'));
 
       final low = match.namedGroup('low');
       final high = match.namedGroup('high');

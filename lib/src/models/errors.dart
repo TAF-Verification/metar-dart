@@ -1,3 +1,5 @@
+part of models;
+
 class ParserError implements Exception {
   String _message = 'ParserError: ';
 

@@ -1,3 +1,5 @@
+part of utils;
+
 /// Regular expressions to decode various groups of the METAR code.
 class RegularExpresions {
   static RegExp MISSING_RE = RegExp(r'^[M/]+$');

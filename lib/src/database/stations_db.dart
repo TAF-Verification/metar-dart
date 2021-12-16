@@ -1,5 +1,5 @@
 List<String> getStation(String icao) {
-  List<String> target;
+  late List<String> target;
   for (var list in _stations) {
     if (icao == list[1]) {
       target = list;

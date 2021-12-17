@@ -7,7 +7,7 @@ abstract class Report {
   final _unparsedGroups = <String>[];
 
   var _string = '';
-  Type _type = Type("METAR");
+  Type _type = Type('METAR');
 
   Report(String code) : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
@@ -23,6 +23,7 @@ abstract class Report {
     _string += _type.toString() + '\n';
   }
 
+  /// Get the type of the report.
   Type get type => _type;
 
   /// Parse the report groups to extract relevant data.

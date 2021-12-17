@@ -8,6 +8,7 @@ abstract class Report {
 
   var _string = '';
   Type _type = Type('METAR');
+  Station _station = Station(null);
 
   Report(String code) : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
@@ -17,14 +18,27 @@ abstract class Report {
   @override
   String toString() => _string;
 
+  void _concatenateString(Object object) {
+    _string += object.toString() + '\n';
+  }
+
   void _handleType(String group) {
     _type = Type(group);
 
-    _string += _type.toString() + '\n';
+    _concatenateString(_type);
   }
 
   /// Get the type of the report.
   Type get type => _type;
+
+  void _handleStation(String group) {
+    _station = Station(group);
+
+    _concatenateString(_station);
+  }
+
+  /// Get the station info of the report.
+  Station get station => _station;
 
   /// Parse the report groups to extract relevant data.
   void _parse(List<GroupHandler> handlers, String section,

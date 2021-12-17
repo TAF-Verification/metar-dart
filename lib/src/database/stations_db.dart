@@ -1,13 +1,13 @@
-List<String> getStation(String icao) {
-  late List<String> target;
-  for (var list in _stations) {
-    if (icao == list[1]) {
-      target = list;
-      break;
-    }
-  }
+part of database;
 
-  return target;
+/// Generator of stations data as lists
+///
+/// Yields:
+///   List<String>: the data of every station around the world.
+Iterable<List<String>> getStation() sync* {
+  for (var station in _stations) {
+    yield station;
+  }
 }
 
 /// Information of every station as a List<List<String>>

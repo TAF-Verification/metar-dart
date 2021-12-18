@@ -6,8 +6,9 @@ final _description = <String, String>{
   'TAF': 'Terminal Aerodrome Forecast',
 };
 
+/// Basic structure for type groups in reports from land stations.
 class Type extends Group {
-  late String _type;
+  late final String _type;
 
   Type(String code) : super(code) {
     _type = _description[code]!;

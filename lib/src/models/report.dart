@@ -9,10 +9,19 @@ abstract class Report {
   var _string = '';
   Type _type = Type('METAR');
   Station _station = Station(null);
+  late int _year, _month;
+  Time _time = Time(null);
 
-  Report(String code) : assert(code != '', 'code must be a non-empty string') {
+  Report(String code, {int? year, int? month})
+      : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
     _rawCode = code.replaceAll(RegExp(r'\s{2,}'), ' ');
+    if (year != null) {
+      _year = year;
+    }
+    if (month != null) {
+      _month = month;
+    }
   }
 
   @override
@@ -39,6 +48,11 @@ abstract class Report {
 
   /// Get the station info of the report.
   Station get station => _station;
+
+  void _handleTime(String group);
+
+  /// Get the time of the report.
+  Time get time => _time;
 
   /// Parse the report groups to extract relevant data.
   void _parse(List<GroupHandler> handlers, String section,

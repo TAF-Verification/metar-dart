@@ -3,9 +3,9 @@ part of models;
 class Metar extends Report {
   final bool _truncate;
 
-  Metar(String code, {truncate = false})
+  Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
-        super(code) {
+        super(code, year: year, month: month) {
     sections = _handleSections(rawCode);
 
     // Parsers
@@ -22,11 +22,19 @@ class Metar extends Report {
   String get remark => sections[2];
 
   // Handlers
+  @override
+  void _handleTime(String group) {
+    final match = RegularExpresions.TIME.firstMatch(group);
+    _time = Time.fromMETAR(group, match: match, year: _year, month: _month);
+
+    _string += 'Time: ${_time.toString()}\n';
+  }
 
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(RegularExpresions.TYPE, _handleType),
       GroupHandler(RegularExpresions.STATION, _handleStation),
+      GroupHandler(RegularExpresions.TIME, _handleTime),
     ];
 
     _parse(handlers, body);

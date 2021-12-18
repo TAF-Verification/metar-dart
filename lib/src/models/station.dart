@@ -1,5 +1,6 @@
 part of models;
 
+/// Basic structure for station code groups in reports from land stations.
 class Station extends Group {
   List<String?> _station = List.generate(8, (index) => null);
 

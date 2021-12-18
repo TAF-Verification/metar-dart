@@ -1,6 +1,6 @@
 part of models;
 
-class Metar extends Report {
+class Metar extends Report with ModifierMixin {
   final bool _truncate;
 
   Metar(String code, {int? year, int? month, bool truncate = false})
@@ -35,6 +35,7 @@ class Metar extends Report {
       GroupHandler(RegularExpresions.TYPE, _handleType),
       GroupHandler(RegularExpresions.STATION, _handleStation),
       GroupHandler(RegularExpresions.TIME, _handleTime),
+      GroupHandler(RegularExpresions.MODIFIER, _handleModifier),
     ];
 
     _parse(handlers, body);

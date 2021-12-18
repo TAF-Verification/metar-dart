@@ -29,8 +29,8 @@ class Time extends Group {
     }
   }
 
-  /// Private method to verify if year and month are both null. In case of
-  /// some of them are null, it is reassigned to current year or month.
+  /// Verify if year or month are null. In case of some of them
+  /// are null, it is reassigned to current year or month.
   DateTime _verifyNull(int? year, int? month) {
     final currentTime = DateTime.now().toUtc();
 

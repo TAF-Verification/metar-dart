@@ -16,9 +16,9 @@ class RegularExpresions {
   static RegExp MODIFIER =
       RegExp(r'^(?<mod>AUTO|FINO|NIL|TEST|COR(R)?|RTD|CC[A-G])$');
 
-  static RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|MMM|VRB|P)'
-      r'(?<speed>[\d]{2}|[/M]{2})'
-      r'(G(?<gust>\d{2}|[/M{2}]))?'
+  static RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|VRB)'
+      r'P?(?<speed>\d{2,3}|//)'
+      r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
 
   static RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'

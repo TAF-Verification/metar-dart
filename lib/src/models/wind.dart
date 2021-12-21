@@ -77,27 +77,7 @@ class Wind extends Group {
   }
 
   /// Get the cardinal direction associated to the wind direction.
-  String? get cardinalDirection {
-    String? _cardinal;
-    final value = _direction.converted(conversionDouble: 1);
-
-    if (value != null) {
-      final northDirs = COMPASS_DIRS['N'];
-
-      if (value >= northDirs![0] || value < northDirs[1]) {
-        _cardinal = 'N';
-      }
-
-      COMPASS_DIRS.forEach((k, v) {
-        if (value >= v[0] && value < v[1]) {
-          _cardinal = k;
-          return;
-        }
-      });
-    }
-
-    return _cardinal;
-  }
+  String? get cardinalDirection => _direction.cardinal;
 
   /// Get if the wind direction is variable in report.
   bool get variable => _direction.variable;
@@ -184,6 +164,30 @@ class Direction extends Numeric {
     }
 
     return super.toString();
+  }
+
+  /// Get the cardinal direction associated to the wind direction.
+  /// e.g. "NW" (north west).
+  String? get cardinal {
+    String? _cardinal;
+    final value = converted(conversionDouble: 1);
+
+    if (value != null) {
+      final northDirs = COMPASS_DIRS['N'];
+
+      if (value >= northDirs![0] || value < northDirs[1]) {
+        _cardinal = 'N';
+      }
+
+      COMPASS_DIRS.forEach((k, v) {
+        if (value >= v[0] && value < v[1]) {
+          _cardinal = k;
+          return;
+        }
+      });
+    }
+
+    return _cardinal;
   }
 
   /// Get True if direction is `VRB` in the report. False otherwise.

@@ -3,6 +3,9 @@ part of models;
 class Metar extends Report with ModifierMixin, WindMixin {
   final bool _truncate;
 
+  // Body groups.
+  WindVariation _windVariation = WindVariation(null, null);
+
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
         super(code, year: year, month: month) {
@@ -30,6 +33,16 @@ class Metar extends Report with ModifierMixin, WindMixin {
     _string += 'Time: ${_time.toString()}\n';
   }
 
+  void _handleWindVariation(String group) {
+    final match = RegularExpresions.WIND_VARIATION.firstMatch(group);
+    _windVariation = WindVariation(group, match);
+
+    _concatenateString(_windVariation);
+  }
+
+  /// Get the wind variation data of the METAR.
+  WindVariation get windVariation => _windVariation;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(RegularExpresions.TYPE, _handleType),
@@ -37,6 +50,7 @@ class Metar extends Report with ModifierMixin, WindMixin {
       GroupHandler(RegularExpresions.TIME, _handleTime),
       GroupHandler(RegularExpresions.MODIFIER, _handleModifier),
       GroupHandler(RegularExpresions.WIND, _handleWind),
+      GroupHandler(RegularExpresions.WIND_VARIATION, _handleWindVariation),
     ];
 
     _parse(handlers, body);

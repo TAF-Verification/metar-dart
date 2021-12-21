@@ -19,6 +19,7 @@ part 'station.dart';
 part 'time.dart';
 part 'modifier.dart';
 part 'wind.dart';
+part 'wind_variation.dart';
 
 // mixins
 part 'mixins/modifier_mixin.dart';

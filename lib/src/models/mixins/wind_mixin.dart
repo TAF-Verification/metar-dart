@@ -11,6 +11,6 @@ mixin WindMixin on Report {
     _concatenateString(_wind);
   }
 
-  /// Get the modifier type of the report.
+  /// Get the wind data of the report.
   Wind get wind => _wind;
 }

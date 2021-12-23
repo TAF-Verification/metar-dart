@@ -26,10 +26,10 @@ class RegularExpresions {
 
   //RegExp OPTIONALVIS_RE = RegExp(r'^(?<opt>\d)$');
 
-  static RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|\//\//)'
+  static RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
       r'(?<dir>[NSEW]([EW])?)?|'
-      r'((?<opt>\d)_)?(M|P)?'
-      r'(?<visextreme>\d{1,2}|\d/\d)'
+      r'(?<integer>\d{1,2})?_?(M|P)?'
+      r'(?<fraction>\d/\d)?'
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
 

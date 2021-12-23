@@ -20,7 +20,9 @@ part 'time.dart';
 part 'modifier.dart';
 part 'wind.dart';
 part 'wind_variation.dart';
+part 'visibility.dart';
 
 // mixins
 part 'mixins/modifier_mixin.dart';
 part 'mixins/wind_mixin.dart';
+part 'mixins/visibility_mixin.dart';

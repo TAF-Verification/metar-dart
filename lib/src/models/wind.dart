@@ -153,6 +153,25 @@ class Direction extends Numeric {
     }
   }
 
+  factory Direction.fromCardinal(String code) {
+    if (code == 'N') {
+      return Direction('360');
+    }
+
+    final keys = COMPASS_DIRS.keys;
+    for (var key in keys) {
+      if (key == code) {
+        final dirs = COMPASS_DIRS[key];
+        final meanDir = dirs!.reduce((a, b) => a + b) / 2;
+        final strDir = '${meanDir.toInt()}'.padLeft(3, '0');
+        return Direction(strDir);
+      }
+    }
+
+    throw AssertionError(
+        'invalid cardinal direction code, use one of the following: ${COMPASS_DIRS.keys}');
+  }
+
   @override
   String toString() {
     if (_variable) {

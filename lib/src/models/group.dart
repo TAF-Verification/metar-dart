@@ -1,9 +1,15 @@
 part of models;
 
 abstract class Group {
-  final String? _code;
+  late final String? _code;
 
-  Group(this._code);
+  Group(String? code) {
+    if (code != null) {
+      code = code.replaceAll('_', ' ');
+    }
+
+    _code = code;
+  }
 
   /// Get the code of the group.
   String? get code => _code;

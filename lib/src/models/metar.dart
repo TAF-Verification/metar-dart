@@ -1,10 +1,11 @@
 part of models;
 
-class Metar extends Report with ModifierMixin, WindMixin {
+class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
   final bool _truncate;
 
   // Body groups.
   WindVariation _windVariation = WindVariation(null, null);
+  MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -43,6 +44,16 @@ class Metar extends Report with ModifierMixin, WindMixin {
   /// Get the wind variation data of the METAR.
   WindVariation get windVariation => _windVariation;
 
+  void _handleMinimumVisibility(String group) {
+    final match = RegularExpresions.VISIBILITY.firstMatch(group);
+    _minimumVisibility = MinimumVisibility(group, match);
+
+    _concatenateString(_minimumVisibility);
+  }
+
+  /// Get the minimum visibility data of the METAR.
+  MinimumVisibility get minimumVisibility => _minimumVisibility;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(RegularExpresions.TYPE, _handleType),
@@ -51,6 +62,8 @@ class Metar extends Report with ModifierMixin, WindMixin {
       GroupHandler(RegularExpresions.MODIFIER, _handleModifier),
       GroupHandler(RegularExpresions.WIND, _handleWind),
       GroupHandler(RegularExpresions.WIND_VARIATION, _handleWindVariation),
+      GroupHandler(RegularExpresions.VISIBILITY, _handleVisibility),
+      GroupHandler(RegularExpresions.VISIBILITY, _handleMinimumVisibility),
     ];
 
     _parse(handlers, body);

@@ -6,6 +6,7 @@ class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
   // Body groups.
   WindVariation _windVariation = WindVariation(null, null);
   MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
+  GroupList<RunwayRange> _runwayRanges = GroupList<RunwayRange>(3);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -54,6 +55,18 @@ class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
   /// Get the minimum visibility data of the METAR.
   MinimumVisibility get minimumVisibility => _minimumVisibility;
 
+  void _handleRunwayRange(String group) {
+    final match = RegularExpresions.RUNWAY.firstMatch(group);
+    final range = RunwayRange(group, match);
+
+    _runwayRanges.add(range);
+
+    _concatenateString(range);
+  }
+
+  /// Get the runway ranges data of the METAR if provided.
+  GroupList<RunwayRange> get runwayRanges => _runwayRanges;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(RegularExpresions.TYPE, _handleType),
@@ -64,6 +77,9 @@ class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
       GroupHandler(RegularExpresions.WIND_VARIATION, _handleWindVariation),
       GroupHandler(RegularExpresions.VISIBILITY, _handleVisibility),
       GroupHandler(RegularExpresions.VISIBILITY, _handleMinimumVisibility),
+      GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
+      GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
+      GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
     ];
 
     _parse(handlers, body);

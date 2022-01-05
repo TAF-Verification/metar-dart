@@ -21,6 +21,7 @@ part 'modifier.dart';
 part 'wind.dart';
 part 'wind_variation.dart';
 part 'visibility.dart';
+part 'runway_range.dart';
 
 // mixins
 part 'mixins/modifier_mixin.dart';

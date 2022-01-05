@@ -36,7 +36,7 @@ class RegularExpresions {
   static RegExp MINIMUM_VISIBILITY = RegExp(r'^(?<vis>\d{4})'
       r'(?<dir>[NSEW]([EW])?)$');
 
-  static RegExp RUNWAY = RegExp(r'^R(?<name>\d{2}([RLC])?)/'
+  static RegExp RUNWAY = RegExp(r'^R(?<name>\d{2}[RLC]?)/'
       r'(?<rvrlow>[MP])?'
       r'(?<low>\d{2,4})'
       r'(V(?<rvrhigh>[MP])?'

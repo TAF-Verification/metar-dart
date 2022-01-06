@@ -27,6 +27,11 @@ void main() {
       ranges.toString(),
       'runway 07 left below of 150.0 m varying to 600.0 m, increasing',
     );
+
+    expect(
+      () => ranges[1].code,
+      throwsA(isA<RangeError>()),
+    );
   });
 
   test('Test the METAR with one runway range and no high range', () {
@@ -52,6 +57,11 @@ void main() {
     expect(
       ranges.toString(),
       'runway 25 center above of 150.0 m, decreasing',
+    );
+
+    expect(
+      () => ranges[1].code,
+      throwsA(isA<RangeError>()),
     );
   });
 
@@ -95,6 +105,11 @@ void main() {
     expect(
       ranges[1].toString(),
       'runway 25 center above of 150.0 m, decreasing',
+    );
+
+    expect(
+      () => ranges[2].code,
+      throwsA(isA<RangeError>()),
     );
   });
 

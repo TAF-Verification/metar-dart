@@ -1,12 +1,13 @@
 part of models;
 
-class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
+class Metar extends Report
+    with ModifierMixin, WindMixin, VisibilityMixin, WeatherMixin {
   final bool _truncate;
 
   // Body groups.
   WindVariation _windVariation = WindVariation(null, null);
   MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
-  GroupList<RunwayRange> _runwayRanges = GroupList<RunwayRange>(3);
+  final _runwayRanges = GroupList<RunwayRange>(3);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -80,6 +81,9 @@ class Metar extends Report with ModifierMixin, WindMixin, VisibilityMixin {
       GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
       GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
       GroupHandler(RegularExpresions.RUNWAY, _handleRunwayRange),
+      GroupHandler(RegularExpresions.WEATHER, _handleWeather),
+      GroupHandler(RegularExpresions.WEATHER, _handleWeather),
+      GroupHandler(RegularExpresions.WEATHER, _handleWeather),
     ];
 
     _parse(handlers, body);

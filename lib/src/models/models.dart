@@ -22,8 +22,10 @@ part 'wind.dart';
 part 'wind_variation.dart';
 part 'visibility.dart';
 part 'runway_range.dart';
+part 'weather.dart';
 
 // mixins
 part 'mixins/modifier_mixin.dart';
 part 'mixins/wind_mixin.dart';
 part 'mixins/visibility_mixin.dart';
+part 'mixins/weather_mixin.dart';

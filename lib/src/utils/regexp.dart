@@ -44,9 +44,9 @@ class RegularExpresions {
       r'(?<units>FT)?'
       r'(?<trend>[NDU])?$');
 
-  static RegExp WEATHER = RegExp(r'^((?<intensity>(-|\+|VC))?'
-      r'(?<descrip>MI|PR|BC|DR|BL|SH|TS|FZ)?'
-      r'((?<precip>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
+  static RegExp WEATHER = RegExp(r'^((?<int>(-|\+|VC))?'
+      r'(?<desc>MI|PR|BC|DR|BL|SH|TS|FZ)?'
+      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 

@@ -1,5 +1,6 @@
 part of models;
 
+/// Mixin to add modifier attribute to the report.
 mixin ModifierMixin on Report {
   Modifier _modifier = Modifier(null);
 

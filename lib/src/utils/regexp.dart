@@ -50,10 +50,10 @@ class RegularExpresions {
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
-  static RegExp SKY =
+  static RegExp CLOUD =
       RegExp(r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
           r'(?<height>\d{3}|///)?'
-          r'(?<cloud>TCU|CB|///)?$');
+          r'(?<type>TCU|CB|///)?$');
 
   static RegExp TEMPERATURES = RegExp(r'^(?<tsign>M|-)?'
       r'(?<temp>\d{2}|//|XX|MM)/'

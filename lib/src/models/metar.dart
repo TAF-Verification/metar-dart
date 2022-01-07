@@ -1,7 +1,8 @@
 part of models;
 
+/// Parser for METAR reports.
 class Metar extends Report
-    with ModifierMixin, WindMixin, VisibilityMixin, WeatherMixin {
+    with ModifierMixin, WindMixin, VisibilityMixin, WeatherMixin, CloudMixin {
   final bool _truncate;
 
   // Body groups.
@@ -84,6 +85,10 @@ class Metar extends Report
       GroupHandler(RegularExpresions.WEATHER, _handleWeather),
       GroupHandler(RegularExpresions.WEATHER, _handleWeather),
       GroupHandler(RegularExpresions.WEATHER, _handleWeather),
+      GroupHandler(RegularExpresions.CLOUD, _handleCloud),
+      GroupHandler(RegularExpresions.CLOUD, _handleCloud),
+      GroupHandler(RegularExpresions.CLOUD, _handleCloud),
+      GroupHandler(RegularExpresions.CLOUD, _handleCloud),
     ];
 
     _parse(handlers, body);

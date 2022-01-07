@@ -1,5 +1,6 @@
 part of models;
 
+/// Mixin to add visibility attribute to the report.
 mixin VisibilityMixin on Report {
   Prevailing _visibility = Prevailing(null, null);
 

@@ -1,5 +1,6 @@
 part of models;
 
+/// Mixin to add weather list attribute to the report.
 mixin WeatherMixin on Report {
   final _weathers = GroupList<Weather>(3);
 

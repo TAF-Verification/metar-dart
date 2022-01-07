@@ -1,5 +1,6 @@
 part of models;
 
+/// Mixin to add wind attribute to the report.
 mixin WindMixin on Report {
   Wind _wind = Wind(null, null);
 

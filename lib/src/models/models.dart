@@ -24,6 +24,7 @@ part 'visibility.dart';
 part 'runway_range.dart';
 part 'weather.dart';
 part 'cloud.dart';
+part 'temperatures.dart';
 
 // mixins
 part 'mixins/modifier_mixin.dart';

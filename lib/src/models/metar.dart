@@ -9,6 +9,7 @@ class Metar extends Report
   WindVariation _windVariation = WindVariation(null, null);
   MinimumVisibility _minimumVisibility = MinimumVisibility(null, null);
   final _runwayRanges = GroupList<RunwayRange>(3);
+  Temperatures _temperatures = Temperatures(null, null);
 
   Metar(String code, {int? year, int? month, bool truncate = false})
       : _truncate = truncate,
@@ -69,6 +70,16 @@ class Metar extends Report
   /// Get the runway ranges data of the METAR if provided.
   GroupList<RunwayRange> get runwayRanges => _runwayRanges;
 
+  void _handleTemperatures(String group) {
+    final match = RegularExpresions.TEMPERATURES.firstMatch(group);
+    _temperatures = Temperatures(group, match);
+
+    _concatenateString(_temperatures);
+  }
+
+  /// Get the temperatures data of METAR.
+  Temperatures get temperatures => _temperatures;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(RegularExpresions.TYPE, _handleType),
@@ -89,6 +100,7 @@ class Metar extends Report
       GroupHandler(RegularExpresions.CLOUD, _handleCloud),
       GroupHandler(RegularExpresions.CLOUD, _handleCloud),
       GroupHandler(RegularExpresions.CLOUD, _handleCloud),
+      GroupHandler(RegularExpresions.TEMPERATURES, _handleTemperatures),
     ];
 
     _parse(handlers, body);

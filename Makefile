@@ -1,6 +1,6 @@
 DART=dart
+DART_RUN=$(DART) run
 PUB=pub
-PUB_RUN=$(PUB) run
 CIDER=cider
 CIDER_BUMP=$(CIDER) bump
 
@@ -29,4 +29,4 @@ major:
 	git push --follow-tags
 
 tests:
-	$(PUB_RUN) test
+	$(DART_RUN) test

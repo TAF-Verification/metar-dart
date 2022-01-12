@@ -1,3 +1,5 @@
+part of models;
+
 /// Basic structure of a group in a aeronautical report from land stations.
 abstract class Group {
   final String? _code;

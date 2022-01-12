@@ -1,12 +1,17 @@
 part of models;
 
 abstract class Report {
+  final bool _truncate;
   String _rawCode = '';
   String _string = '';
   final _unparsedGroups = <String>[];
   final _sections = <String>[];
 
-  Report(String code) : assert(code != '', 'code must be a non-empty string') {
+  // Type group
+  Type _type = Type('METAR');
+
+  Report(String code, this._truncate)
+      : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
 
     _rawCode = code.replaceAll(RegExp(r'\s{2,}'), ' ');
@@ -23,10 +28,20 @@ abstract class Report {
   }
 
   /// Parse the report groups to extract relevant data.
-  void _parse();
+  void _parse(List<GroupHandler> handlers, String section,
+      {String sectionType});
 
   /// Handler to separate the sections of the report.
   void _handleSections();
+
+  void _handleType(String group) {
+    _type = Type(group);
+
+    _concatenateString(_type);
+  }
+
+  /// Get the type of the report.
+  Type get type => _type;
 
   /// Get the raw code as its received in the instance.
   String get rawCode => _rawCode;

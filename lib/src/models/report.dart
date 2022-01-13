@@ -10,6 +10,9 @@ abstract class Report {
   // Type group
   Type _type = Type('METAR');
 
+  // Station group
+  Station _station = Station(null, null);
+
   Report(String code, this._truncate)
       : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
@@ -42,6 +45,15 @@ abstract class Report {
 
   /// Get the type of the report.
   Type get type => _type;
+
+  void _handleStation(String group) {
+    _station = Station(group, 'ICAO');
+
+    _concatenateString(_station);
+  }
+
+  /// Get the station data of the report.
+  Station get station => _station;
 
   /// Get the raw code as its received in the instance.
   String get rawCode => _rawCode;

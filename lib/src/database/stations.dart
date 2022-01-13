@@ -1,13 +1,13 @@
-List<String>? getStation(String icao) {
-  List<String>? target;
-  for (var list in _stations) {
-    if (icao == list[1]) {
-      target = list;
-      break;
-    }
-  }
+part of database;
 
-  return target;
+/// Generator of stations data as lists
+///
+/// Yields:
+///   List<String>: the data of every station around the world.
+Iterable<List<String>> getStation() sync* {
+  for (var station in _stations) {
+    yield station;
+  }
 }
 
 /// Information of every station as a List<List<String>>
@@ -20293,31 +20293,13 @@ List<List<String>> _stations = [
   ],
   ['RIVAS', 'MNRS', 'null', '78733', '11.25N', '085.49W', '53', 'NI'],
   ['CHACHARITA', 'MRCH', 'null', 'null', '09.59N', '084.47W', '2', 'CR'],
-  [
-    'LIBERIA/DANIEL O',
-    'MRLB',
-    'null',
-    '78774',
-    '10.36N',
-    '085.33W',
-    '82',
-    'CR'
-  ],
-  ['LIMON INTL AIRP', 'MRLM', 'null', '78767', '09.58N', '083.02W', '2', 'CR'],
+  ['LIBERIA/DANIEL O', 'MRLB', 'LIR', '78774', '10.36N', '085.33W', '82', 'CR'],
+  ['LIMON INTL AIRP', 'MRLM', 'LIO', '78767', '09.58N', '083.02W', '2', 'CR'],
   ['NICOYA', 'MRNC', 'null', '78755', '10.09N', '085.27W', '120', 'CR'],
-  [
-    'JUAN SANTAMARIA',
-    'MROC',
-    'null',
-    '78762',
-    '10.00N',
-    '084.13W',
-    '920',
-    'CR'
-  ],
+  ['JUAN SANTAMARIA', 'MROC', 'SJO', '78762', '10.00N', '084.13W', '920', 'CR'],
   ['PALMAR SUR', 'MRPM', 'null', '78772', '08.56N', '083.28W', '15', 'CR'],
   ['PUNTARENAS', 'MRPT', 'null', '78760', '09.58N', '084.49W', '3', 'CR'],
-  ['TOBIAS BOLANOS', 'MRPV', 'null', '78764', '09.57N', '084.09W', '994', 'CR'],
+  ['TOBIAS BOLANOS', 'MRPV', 'SQY', '78764', '09.57N', '084.09W', '994', 'CR'],
   ['BOCAS DEL TORO', 'MPBO', 'null', 'null', '09.21N', '082.15W', '3', 'PA'],
   ['DAVID/ENRIQUE M', 'MPDA', 'null', '78793', '08.24N', '082.26W', '27', 'PA'],
   ['COLON', 'MPEJ', 'null', '78794', '09.21N', '079.52W', '8', 'PA'],

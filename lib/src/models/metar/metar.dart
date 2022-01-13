@@ -21,6 +21,7 @@ class Metar extends Report {
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
+      GroupHandler(MetarRegExp.STATION, _handleStation),
     ];
 
     _parse(handlers, body);

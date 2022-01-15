@@ -2,8 +2,19 @@ part of models;
 
 /// Parser for METAR reports.
 class Metar extends Report {
-  Metar(String code, {bool truncate = false}) : super(code, truncate) {
+  late MetarTime _time;
+  late final int? _year, _month;
+
+  Metar(
+    String code, {
+    int? year,
+    int? month,
+    bool truncate = false,
+  }) : super(code, truncate) {
     _handleSections();
+
+    _year = year;
+    _month = month;
 
     // Parse groups
     _parseBody();
@@ -18,10 +29,22 @@ class Metar extends Report {
   /// Get the remark part of the METAR.
   String get remark => _sections[2];
 
+  @override
+  void _handleTime(String group) {
+    final match = MetarRegExp.TIME.firstMatch(group);
+    _time = MetarTime(group, match, year: _year, month: _month);
+
+    _concatenateString(_time);
+  }
+
+  /// Get the time of the group.
+  MetarTime get time => _time;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
       GroupHandler(MetarRegExp.STATION, _handleStation),
+      GroupHandler(MetarRegExp.TIME, _handleTime),
     ];
 
     _parse(handlers, body);

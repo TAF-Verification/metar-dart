@@ -55,6 +55,8 @@ abstract class Report {
   /// Get the station data of the report.
   Station get station => _station;
 
+  void _handleTime(String group);
+
   /// Get the raw code as its received in the instance.
   String get rawCode => _rawCode;
 

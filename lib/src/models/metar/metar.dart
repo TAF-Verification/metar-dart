@@ -1,7 +1,7 @@
 part of models;
 
 /// Parser for METAR reports.
-class Metar extends Report {
+class Metar extends Report with ModifierMixin {
   late MetarTime _time;
   late final int? _year, _month;
 
@@ -45,6 +45,7 @@ class Metar extends Report {
       GroupHandler(MetarRegExp.TYPE, _handleType),
       GroupHandler(MetarRegExp.STATION, _handleStation),
       GroupHandler(MetarRegExp.TIME, _handleTime),
+      GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
     ];
 
     _parse(handlers, body);

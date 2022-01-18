@@ -11,13 +11,17 @@ part 'errors.dart';
 part 'stations.dart';
 part 'time.dart';
 part 'modifier.dart';
+part 'numeric.dart';
+part 'wind.dart';
 
 // Groups
 part 'type.dart';
 
 // Metar and its models
 part 'metar/metar.dart';
-part 'metar/models/metar_time.dart';
+part 'metar/models/time.dart';
+part 'metar/models/wind.dart';
 
-// Mixins
+// METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';
+part 'mixins/metar/wind_mixin.dart';

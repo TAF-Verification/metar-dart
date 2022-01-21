@@ -2,9 +2,9 @@ name: Test
 
 on:
   push:
-    branches: [ main, devel ]
+    branches: [main, devel-metar, devel-taf, devel-synop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -15,6 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: pub get
+        run: dart pub get
       - name: Run tests
-        run: pub run test
+        run: dart run test

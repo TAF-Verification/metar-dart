@@ -5,6 +5,9 @@ class Metar extends Report with ModifierMixin, MetarWindMixin {
   late MetarTime _time;
   late final int? _year, _month;
 
+  // Groups
+  WindVariation _windVariation = WindVariation(null, null);
+
   Metar(
     String code, {
     int? year,
@@ -40,6 +43,16 @@ class Metar extends Report with ModifierMixin, MetarWindMixin {
   /// Get the time of the group.
   MetarTime get time => _time;
 
+  void _handleWindVariation(String group) {
+    final match = MetarRegExp.WIND_VARIATION.firstMatch(group);
+    _windVariation = WindVariation(group, match);
+
+    _concatenateString(_windVariation);
+  }
+
+  /// Get the wind variation directions of the METAR.
+  WindVariation get windVariation => _windVariation;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -47,6 +60,7 @@ class Metar extends Report with ModifierMixin, MetarWindMixin {
       GroupHandler(MetarRegExp.TIME, _handleTime),
       GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
       GroupHandler(MetarRegExp.WIND, _handleWind),
+      GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
     ];
 
     _parse(handlers, body);

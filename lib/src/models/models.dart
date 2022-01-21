@@ -21,6 +21,7 @@ part 'type.dart';
 part 'metar/metar.dart';
 part 'metar/models/time.dart';
 part 'metar/models/wind.dart';
+part 'metar/models/wind_variation.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';

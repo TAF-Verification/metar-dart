@@ -12,10 +12,13 @@ class MetarRegExp {
   static final RegExp MODIFIER =
       RegExp(r'^(?<mod>COR(R)?|AMD|NIL|TEST|FINO|AUTO)$');
 
-  static RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|VRB)'
+  static final RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|VRB)'
       r'P?(?<speed>\d{2,3}|//)'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
+
+  static final RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'
+      r'V(?<to>\d{3})$');
 
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');

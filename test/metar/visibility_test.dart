@@ -110,37 +110,37 @@ void main() {
     expect(visibility.toString(), '');
   });
 
-  // test('Test the minimum visibility of METAR', () {
-  //   final code =
-  //       'UUDD 180100Z 00000MPS 4800 2100NW -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
-  //   final metar = Metar(code);
-  //   final minimumVisibility = metar.minimumVisibility;
+  test('Test the minimum visibility of METAR', () {
+    final code =
+        'UUDD 180100Z 00000MPS 4800 2100NW -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
+    final metar = Metar(code);
+    final minimumVisibility = metar.minimumVisibility;
 
-  //   expect(minimumVisibility.code, '2100NW');
-  //   expect(minimumVisibility.inMeters, 2100.0);
-  //   expect(minimumVisibility.inKilometers, 2.1);
-  //   expect(minimumVisibility.inSeaMiles, 1.1339092872570193);
-  //   expect(minimumVisibility.inFeet, 6889.763779527559);
-  //   expect(minimumVisibility.cardinalDirection, 'NW');
-  //   expect(minimumVisibility.directionInDegrees, 315.0);
-  //   expect(minimumVisibility.directionInRadians, 5.497787143782138);
-  //   expect(minimumVisibility.toString(), '2.1 km to NW (315.0°)');
-  // });
+    expect(minimumVisibility.code, '2100NW');
+    expect(minimumVisibility.inMeters, 2100.0);
+    expect(minimumVisibility.inKilometers, 2.1);
+    expect(minimumVisibility.inSeaMiles, 1.1339092872570193);
+    expect(minimumVisibility.inFeet, 6889.763779527559);
+    expect(minimumVisibility.cardinalDirection, 'NW');
+    expect(minimumVisibility.directionInDegrees, 315.0);
+    expect(minimumVisibility.directionInRadians, 5.497787143782138);
+    expect(minimumVisibility.toString(), '2.1 km to NW (315.0°)');
+  });
 
-  // test('Test the no minimum visibility', () {
-  //   final code =
-  //       'METAR UUDD 180100Z 25005MPS 4800 -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
-  //   final metar = Metar(code);
-  //   final minimumVisibility = metar.minimumVisibility;
+  test('Test the no minimum visibility', () {
+    final code =
+        'METAR UUDD 180100Z 25005MPS 4800 -SN BR SCT025 M02/M03 Q1007 R32L/290042 NOSIG';
+    final metar = Metar(code);
+    final minimumVisibility = metar.minimumVisibility;
 
-  //   expect(minimumVisibility.code, null);
-  //   expect(minimumVisibility.inMeters, null);
-  //   expect(minimumVisibility.inKilometers, null);
-  //   expect(minimumVisibility.inSeaMiles, null);
-  //   expect(minimumVisibility.inFeet, null);
-  //   expect(minimumVisibility.cardinalDirection, null);
-  //   expect(minimumVisibility.directionInDegrees, null);
-  //   expect(minimumVisibility.directionInRadians, null);
-  //   expect(minimumVisibility.toString(), '');
-  // });
+    expect(minimumVisibility.code, null);
+    expect(minimumVisibility.inMeters, null);
+    expect(minimumVisibility.inKilometers, null);
+    expect(minimumVisibility.inSeaMiles, null);
+    expect(minimumVisibility.inFeet, null);
+    expect(minimumVisibility.cardinalDirection, null);
+    expect(minimumVisibility.directionInDegrees, null);
+    expect(minimumVisibility.directionInRadians, null);
+    expect(minimumVisibility.toString(), '');
+  });
 }

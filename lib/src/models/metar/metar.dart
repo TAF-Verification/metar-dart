@@ -8,6 +8,8 @@ class Metar extends Report
 
   // Groups
   WindVariation _windVariation = WindVariation(null, null);
+  MetarMinimumVisibility _minimumVisibility =
+      MetarMinimumVisibility(null, null);
 
   Metar(
     String code, {
@@ -54,6 +56,16 @@ class Metar extends Report
   /// Get the wind variation directions of the METAR.
   WindVariation get windVariation => _windVariation;
 
+  void _handleMinimumVisibility(String group) {
+    final match = MetarRegExp.VISIBILITY.firstMatch(group);
+    _minimumVisibility = MetarMinimumVisibility(group, match);
+
+    _concatenateString(_minimumVisibility);
+  }
+
+  /// Get the minimum visibility data of the METAR.
+  MetarMinimumVisibility get minimumVisibility => _minimumVisibility;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -63,6 +75,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.WIND, _handleWind),
       GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
+      GroupHandler(MetarRegExp.VISIBILITY, _handleMinimumVisibility),
     ];
 
     _parse(handlers, body);

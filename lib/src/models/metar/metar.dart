@@ -1,7 +1,8 @@
 part of models;
 
 /// Parser for METAR reports.
-class Metar extends Report with ModifierMixin, MetarWindMixin {
+class Metar extends Report
+    with ModifierMixin, MetarWindMixin, MetarPrevailingMixin {
   late MetarTime _time;
   late final int? _year, _month;
 
@@ -61,6 +62,7 @@ class Metar extends Report with ModifierMixin, MetarWindMixin {
       GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
       GroupHandler(MetarRegExp.WIND, _handleWind),
       GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
+      GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
     ];
 
     _parse(handlers, body);
@@ -71,7 +73,7 @@ class Metar extends Report with ModifierMixin, MetarWindMixin {
       {String sectionType = 'body'}) {
     var index = 0;
 
-    // section = sanitizeVisibility(section);
+    section = sanitizeVisibility(section);
     // if (sectionType == 'body') {
     //   section = sanitizeWindshear(section);
     // }

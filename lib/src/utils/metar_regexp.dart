@@ -20,6 +20,13 @@ class MetarRegExp {
   static final RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'
       r'V(?<to>\d{3})$');
 
+  static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
+      r'(?<dir>[NSEW]([EW])?)?|'
+      r'(?<integer>\d{1,2})?_?(M|P)?'
+      r'(?<fraction>\d/\d)?'
+      r'(?<units>SM|KM|M|U)|'
+      r'(?<cavok>CAVOK)$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

@@ -10,6 +10,7 @@ class Metar extends Report
   WindVariation _windVariation = WindVariation(null, null);
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
+  final _runwayRanges = GroupList<MetarRunwayRange>(3);
 
   Metar(
     String code, {
@@ -66,6 +67,17 @@ class Metar extends Report
   /// Get the minimum visibility data of the METAR.
   MetarMinimumVisibility get minimumVisibility => _minimumVisibility;
 
+  void _handleRunwayRange(String group) {
+    final match = MetarRegExp.RUNWAY_RANGE.firstMatch(group);
+    final range = MetarRunwayRange(group, match);
+    _runwayRanges.add(range);
+
+    _concatenateString(range);
+  }
+
+  /// Get the runway ranges data of the METAR if provided.
+  GroupList<MetarRunwayRange> get runwayRanges => _runwayRanges;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -76,6 +88,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
       GroupHandler(MetarRegExp.VISIBILITY, _handleMinimumVisibility),
+      GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
+      GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
+      GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
     ];
 
     _parse(handlers, body);

@@ -27,6 +27,14 @@ class MetarRegExp {
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
 
+  static final RegExp RUNWAY_RANGE = RegExp(r'^R(?<name>\d{2}[RLC]?)/'
+      r'(?<rvrlow>[MP])?'
+      r'(?<low>\d{2,4})'
+      r'(V(?<rvrhigh>[MP])?'
+      r'(?<high>\d{2,4}))?'
+      r'(?<units>FT)?'
+      r'(?<trend>[NDU])?$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

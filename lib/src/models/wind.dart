@@ -50,12 +50,10 @@ class Direction extends Numeric {
     }
   }
 
-  /// Classmethod to create a Direction object from a cardinal
+  /// Factory constructor to create a Direction object from a cardinal
   /// direction code.
   /// Throws:
   ///     AssertionError: Raised if code is not in COMPASS_DIRS keys.
-  /// Returns:
-  ///     Direction: the Direction instance.
   factory Direction.fromCardinal(String code) {
     if (code == 'N') {
       return Direction('360');
@@ -113,6 +111,17 @@ class Direction extends Numeric {
 
   /// Get True if direction is `VRB` in the report. False otherwise.
   bool get variable => _variable;
+
+  /// Get the direction in degrees.
+  double? get inDegrees => _value;
+
+  /// Get the direction in radians.
+  double? get inRadians =>
+      converted(conversionDouble: Conversions.DEGREES_TO_RADIANS);
+
+  /// Get the direction in gradians.
+  double? get inGradians =>
+      converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
 }
 
 /// Basic structure for speed attributes.
@@ -139,6 +148,18 @@ class Speed extends Numeric {
 
     return super.toString();
   }
+
+  /// Get the speed in knot.
+  double? get inKnot => _value;
+
+  /// Get the speed in meters per second.
+  double? get inMps => converted(conversionDouble: Conversions.KNOT_TO_MPS);
+
+  /// Get the speed in kilometers per hour.
+  double? get inKph => converted(conversionDouble: Conversions.KNOT_TO_KPH);
+
+  /// Get the speed in miles per hour.
+  double? get inMiph => converted(conversionDouble: Conversions.KNOT_TO_MIPH);
 }
 
 /// Basic structure for wind groups in report from land stations.
@@ -189,43 +210,35 @@ class Wind {
   bool get variable => _direction.variable;
 
   /// Get the wind direction in degrees.
-  double? get directionInDegrees => _direction.value;
+  double? get directionInDegrees => _direction.inDegrees;
 
   /// Get the wind direction in radians.
-  double? get directionInRadians =>
-      _direction.converted(conversionDouble: Conversions.DEGREES_TO_RADIANS);
+  double? get directionInRadians => _direction.inRadians;
 
   /// Get the wind direction in gradians.
-  double? get directionInGradians =>
-      _direction.converted(conversionDouble: Conversions.DEGREES_TO_RADIANS);
+  double? get directionInGradians => _direction.inGradians;
 
   /// Get the wind speed in knots.
-  double? get speedInKnot => _speed.value;
+  double? get speedInKnot => _speed.inKnot;
 
   /// Get the wind speed in meters per second.
-  double? get speedInMps =>
-      _speed.converted(conversionDouble: Conversions.KNOT_TO_MPS);
+  double? get speedInMps => _speed.inMps;
 
   /// Get the wind speed in kilometers per hour.
-  double? get speedInKph =>
-      _speed.converted(conversionDouble: Conversions.KNOT_TO_KPH);
+  double? get speedInKph => _speed.inKph;
 
   /// Get the wind speed in miles per hour.
-  double? get speedInMiph =>
-      _speed.converted(conversionDouble: Conversions.KNOT_TO_MIPH);
+  double? get speedInMiph => _speed.inMiph;
 
   /// Get the wind gusts in knots.
-  double? get gustInKnot => _gust.value;
+  double? get gustInKnot => _gust.inKnot;
 
   /// Get the wind gusts in meters per second.
-  double? get gustInMps =>
-      _gust.converted(conversionDouble: Conversions.KNOT_TO_MPS);
+  double? get gustInMps => _gust.inMps;
 
   /// Get the wind gusts in kilometers per hour.
-  double? get gustInKph =>
-      _gust.converted(conversionDouble: Conversions.KNOT_TO_KPH);
+  double? get gustInKph => _gust.inKph;
 
   // Get the wind gusts in miles per hour.
-  double? get gustInMiph =>
-      _gust.converted(conversionDouble: Conversions.KNOT_TO_MIPH);
+  double? get gustInMiph => _gust.inMiph;
 }

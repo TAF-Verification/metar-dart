@@ -35,6 +35,12 @@ class MetarRegExp {
       r'(?<units>FT)?'
       r'(?<trend>[NDU])?$');
 
+  static final RegExp WEATHER = RegExp(r'^((?<int>(-|\+|VC))?'
+      r'(?<desc>MI|PR|BC|DR|BL|SH|TS|FZ)?'
+      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
+      r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
+      r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

@@ -2,7 +2,11 @@ part of models;
 
 /// Parser for METAR reports.
 class Metar extends Report
-    with ModifierMixin, MetarWindMixin, MetarPrevailingMixin {
+    with
+        ModifierMixin,
+        MetarWindMixin,
+        MetarPrevailingMixin,
+        MetarWeatherMixin {
   late MetarTime _time;
   late final int? _year, _month;
 
@@ -91,6 +95,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
+      GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleWeather),
     ];
 
     _parse(handlers, body);

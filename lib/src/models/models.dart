@@ -25,8 +25,10 @@ part 'metar/models/wind.dart';
 part 'metar/models/wind_variation.dart';
 part 'metar/models/visibility.dart';
 part 'metar/models/runway_range.dart';
+part 'metar/models/weather.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';
 part 'mixins/metar/wind_mixin.dart';
 part 'mixins/metar/visibility_mixin.dart';
+part 'mixins/metar/weather_mixin.dart';

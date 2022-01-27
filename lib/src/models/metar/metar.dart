@@ -6,7 +6,8 @@ class Metar extends Report
         ModifierMixin,
         MetarWindMixin,
         MetarPrevailingMixin,
-        MetarWeatherMixin {
+        MetarWeatherMixin,
+        MetarCloudMixin {
   late MetarTime _time;
   late final int? _year, _month;
 
@@ -98,6 +99,10 @@ class Metar extends Report
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
     ];
 
     _parse(handlers, body);

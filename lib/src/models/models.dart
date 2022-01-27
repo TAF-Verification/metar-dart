@@ -14,6 +14,7 @@ part 'modifier.dart';
 part 'numeric.dart';
 part 'wind.dart';
 part 'distance.dart';
+part 'clouds.dart';
 
 // Groups
 part 'type.dart';
@@ -32,3 +33,4 @@ part 'mixins/metar/modifier_mixin.dart';
 part 'mixins/metar/wind_mixin.dart';
 part 'mixins/metar/visibility_mixin.dart';
 part 'mixins/metar/weather_mixin.dart';
+part 'mixins/metar/cloud_mixin.dart';

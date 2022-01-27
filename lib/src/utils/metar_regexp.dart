@@ -41,6 +41,11 @@ class MetarRegExp {
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
+  static final RegExp CLOUD =
+      RegExp(r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
+          r'(?<height>\d{3}|///)?'
+          r'(?<type>TCU|CB|///)?$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

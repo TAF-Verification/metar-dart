@@ -70,19 +70,16 @@ class MetarMinimumVisibility extends Group {
   }
 
   /// Get the visibility in meters.
-  double? get inMeters => _visibility.value;
+  double? get inMeters => _visibility.inMeters;
 
   /// Get the visibility in kilometers.
-  double? get inKilometers =>
-      _visibility.converted(conversionDouble: Conversions.M_TO_KM);
+  double? get inKilometers => _visibility.inKilometers;
 
   /// Get the visibility in sea miles.
-  double? get inSeaMiles =>
-      _visibility.converted(conversionDouble: Conversions.M_TO_SMI);
+  double? get inSeaMiles => _visibility.inSeaMiles;
 
   /// Get the visibility in feet.
-  double? get inFeet =>
-      _visibility.converted(conversionDouble: Conversions.M_TO_FT);
+  double? get inFeet => _visibility.inFeet;
 
   /// Get the cardinal direction associated with the visibility.
   String? get cardinalDirection => _direction.cardinal;

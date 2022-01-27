@@ -107,37 +107,31 @@ class MetarRunwayRange extends Group {
   String get lowRange => _rangeToString(_lowRange, _rvrLow);
 
   /// Get the runway low range in meters.
-  double? get lowInMeters => _lowRange.value;
+  double? get lowInMeters => _lowRange.inMeters;
 
   /// Get the runway low range in kilometers.
-  double? get lowInKilometers =>
-      _lowRange.converted(conversionDouble: Conversions.M_TO_KM);
+  double? get lowInKilometers => _lowRange.inKilometers;
 
   /// Get the runway low range in sea miles.
-  double? get lowInSeaMiles =>
-      _lowRange.converted(conversionDouble: Conversions.M_TO_SMI);
+  double? get lowInSeaMiles => _lowRange.inSeaMiles;
 
   /// Get the runway low range in feet.
-  double? get lowInFeet =>
-      _lowRange.converted(conversionDouble: Conversions.M_TO_FT);
+  double? get lowInFeet => _lowRange.inFeet;
 
   /// Get the runway high range as a String.
   String get highRange => _rangeToString(_highRange, _rvrHigh);
 
   /// Get the runway high range in meters.
-  double? get highInMeters => _highRange.value;
+  double? get highInMeters => _highRange.inMeters;
 
   /// Get the runway high range in kilometers.
-  double? get highInKilometers =>
-      _highRange.converted(conversionDouble: Conversions.M_TO_KM);
+  double? get highInKilometers => _highRange.inKilometers;
 
   /// Get the runway high range in sea miles.
-  double? get highInSeaMiles =>
-      _highRange.converted(conversionDouble: Conversions.M_TO_SMI);
+  double? get highInSeaMiles => _highRange.inSeaMiles;
 
   /// Get the runway high range in feet.
-  double? get highInFeet =>
-      _highRange.converted(conversionDouble: Conversions.M_TO_FT);
+  double? get highInFeet => _highRange.inFeet;
 
   /// Get the runway range trend.
   String? get trend => _trend;

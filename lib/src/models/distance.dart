@@ -21,4 +21,16 @@ class Distance extends Numeric {
 
     return super.toString();
   }
+
+  /// Get the distance in meters.
+  double? get inMeters => _value;
+
+  /// Get the distance in kilometers.
+  double? get inKilometers => converted(conversionDouble: Conversions.M_TO_KM);
+
+  /// Get the distance in sea miles.
+  double? get inSeaMiles => converted(conversionDouble: Conversions.M_TO_SMI);
+
+  /// Get the distance in feet.
+  double? get inFeet => converted(conversionDouble: Conversions.M_TO_FT);
 }

@@ -24,6 +24,25 @@ abstract class Group {
   String? get code => _code;
 }
 
+mixin GroupMixin implements Group {
+  @override
+  late String? _code;
+
+  /// Get the length of the code of the group.
+  @override
+  int get length {
+    if (_code == null) {
+      return 0;
+    }
+
+    return _code!.length;
+  }
+
+  /// Get the code of the group.
+  @override
+  String? get code => _code;
+}
+
 /// Basic structure of a groups list from groups found in a aeronautical
 ///  report from land stations.
 class GroupList<T extends Group> {

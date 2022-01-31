@@ -16,6 +16,7 @@ part 'wind.dart';
 part 'distance.dart';
 part 'clouds.dart';
 part 'temperature.dart';
+part 'pressure.dart';
 
 // Groups
 part 'type.dart';
@@ -29,6 +30,7 @@ part 'metar/models/visibility.dart';
 part 'metar/models/runway_range.dart';
 part 'metar/models/weather.dart';
 part 'metar/models/temperatures.dart';
+part 'metar/models/pressure.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';

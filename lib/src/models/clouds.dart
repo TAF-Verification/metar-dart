@@ -61,10 +61,10 @@ class Cloud extends Group {
       _type = CLOUD_TYPE[match.namedGroup('type')];
 
       var height = match.namedGroup('height');
-      if (height == '///') {
+      if (height == null || height == '///') {
         _height = '//\//';
       } else {
-        height = height! + '00';
+        height = height + '00';
         var heightAsDouble = double.parse(height);
         heightAsDouble = heightAsDouble * Conversions.FT_TO_M;
         _height = heightAsDouble.toStringAsFixed(10);

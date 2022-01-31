@@ -17,6 +17,7 @@ class Metar extends Report
       MetarMinimumVisibility(null, null);
   final _runwayRanges = GroupList<MetarRunwayRange>(3);
   Temperatures _temperatures = Temperatures(null, null);
+  MetarPressure _pressure = MetarPressure(null, null);
 
   Metar(
     String code, {
@@ -94,6 +95,16 @@ class Metar extends Report
   /// Get the temperatures data of the METAR.
   Temperatures get temperatures => _temperatures;
 
+  void _handlePressure(String group) {
+    final match = MetarRegExp.PRESSURE.firstMatch(group);
+    _pressure = MetarPressure(group, match);
+
+    _concatenateString(_pressure);
+  }
+
+  /// Get the pressure of the METAR.
+  MetarPressure get pressure => _pressure;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -115,6 +126,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
     ];
 
     _parse(handlers, body);

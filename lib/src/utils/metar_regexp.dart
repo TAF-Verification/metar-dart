@@ -51,6 +51,10 @@ class MetarRegExp {
       r'(?<dsign>M|-)?'
       r'(?<dewpt>\d{2}|//|XX|MM)$');
 
+  static final RegExp PRESSURE = RegExp(r'^(?<units>A|Q|QNH)?'
+      r'(?<press>\d{4}|\//\//)'
+      r'(?<units2>INS)?$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

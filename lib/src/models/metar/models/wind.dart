@@ -1,9 +1,6 @@
 part of models;
 
-class MetarWind extends Wind implements Group {
-  @override
-  late final String? _code;
-
+class MetarWind extends Wind with GroupMixin {
   MetarWind(String? code, RegExpMatch? match)
       : super(
           direction: null,
@@ -32,18 +29,4 @@ class MetarWind extends Wind implements Group {
       _code = code;
     }
   }
-
-  /// Get the length of the code of the group.
-  @override
-  int get length {
-    if (_code == null) {
-      return 0;
-    }
-
-    return _code!.length;
-  }
-
-  /// Get the code of the group.
-  @override
-  String? get code => _code;
 }

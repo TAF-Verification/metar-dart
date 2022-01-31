@@ -1,9 +1,6 @@
 part of models;
 
-class MetarTime extends Time implements Group {
-  @override
-  late final String? _code;
-
+class MetarTime extends Time with GroupMixin {
   MetarTime(String? code, RegExpMatch? match, {int? year, int? month})
       : super(null, null, year: year, month: month, minute: '00') {
     _code = code;
@@ -18,18 +15,4 @@ class MetarTime extends Time implements Group {
       _time = DateTime.parse('${_time.year}$_month${_day}T$_hour${_minute}00');
     }
   }
-
-  /// Get the length of the code of the group.
-  @override
-  int get length {
-    if (_code == null) {
-      return 0;
-    }
-
-    return _code!.length;
-  }
-
-  /// Get the code of the group.
-  @override
-  String? get code => _code;
 }

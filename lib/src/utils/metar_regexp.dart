@@ -46,6 +46,11 @@ class MetarRegExp {
           r'(?<height>\d{3}|///)?'
           r'(?<type>TCU|CB|///)?$');
 
+  static final RegExp TEMPERATURES = RegExp(r'^(?<tsign>M|-)?'
+      r'(?<temp>\d{2}|//|XX|MM)/'
+      r'(?<dsign>M|-)?'
+      r'(?<dewpt>\d{2}|//|XX|MM)$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

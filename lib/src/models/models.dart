@@ -31,6 +31,7 @@ part 'metar/models/runway_range.dart';
 part 'metar/models/weather.dart';
 part 'metar/models/temperatures.dart';
 part 'metar/models/pressure.dart';
+part 'metar/models/recent_weather.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';

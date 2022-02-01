@@ -1,10 +1,10 @@
 part of models;
 
-class WindVariation extends Group {
+class MetarWindVariation extends Group {
   Direction _from = Direction(null);
   Direction _to = Direction(null);
 
-  WindVariation(String? code, RegExpMatch? match) : super(code) {
+  MetarWindVariation(String? code, RegExpMatch? match) : super(code) {
     if (match != null) {
       _from = Direction(match.namedGroup('from'));
       _to = Direction(match.namedGroup('to'));

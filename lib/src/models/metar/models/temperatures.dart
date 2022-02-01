@@ -1,11 +1,11 @@
 part of models;
 
 /// Basic structure for temperatures in reports from land stations.
-class Temperatures extends Group {
+class MetarTemperatures extends Group {
   Temperature _temperature = Temperature(null);
   Temperature _dewpoint = Temperature(null);
 
-  Temperatures(String? code, RegExpMatch? match) : super(code) {
+  MetarTemperatures(String? code, RegExpMatch? match) : super(code) {
     if (match != null) {
       final _tsign = match.namedGroup('tsign');
       final _temp = match.namedGroup('temp');

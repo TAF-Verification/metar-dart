@@ -1,6 +1,6 @@
 part of models;
 
-Map<String, String> WEATHER_INT = {
+Map<String, String> INTENSITY = {
   '-': 'light',
   '+': 'heavy',
   '-VC': 'nearby light',
@@ -8,7 +8,7 @@ Map<String, String> WEATHER_INT = {
   'VC': 'nearby',
 };
 
-Map<String, String> WEATHER_DESC = {
+Map<String, String> DESCRIPTION = {
   'MI': 'shallow',
   'PR': 'partial',
   'BC': 'patches of',
@@ -19,7 +19,7 @@ Map<String, String> WEATHER_DESC = {
   'FZ': 'freezing',
 };
 
-Map<String, String> WEATHER_PREC = {
+Map<String, String> PRECIPITATION = {
   'DZ': 'drizzle',
   'RA': 'rain',
   'SN': 'snow',
@@ -32,7 +32,7 @@ Map<String, String> WEATHER_PREC = {
   '//': '',
 };
 
-Map<String, String> WEATHER_OBSC = {
+Map<String, String> OBSCURATION = {
   'BR': 'mist',
   'FG': 'fog',
   'FU': 'smoke',
@@ -43,7 +43,7 @@ Map<String, String> WEATHER_OBSC = {
   'PY': 'spray',
 };
 
-Map<String, String> WEATHER_OTHER = {
+Map<String, String> OTHER = {
   'PO': 'sand whirls',
   'SQ': 'squalls',
   'FC': 'funnel cloud',
@@ -60,11 +60,11 @@ class MetarWeather extends Group {
 
   MetarWeather(String? code, RegExpMatch? match) : super(code) {
     if (match != null) {
-      _intensity = WEATHER_INT[match.namedGroup('int')];
-      _description = WEATHER_DESC[match.namedGroup('desc')];
-      _precipitation = WEATHER_PREC[match.namedGroup('prec')];
-      _obscuration = WEATHER_OBSC[match.namedGroup('obsc')];
-      _other = WEATHER_OTHER[match.namedGroup('other')];
+      _intensity = INTENSITY[match.namedGroup('int')];
+      _description = DESCRIPTION[match.namedGroup('desc')];
+      _precipitation = PRECIPITATION[match.namedGroup('prec')];
+      _obscuration = OBSCURATION[match.namedGroup('obsc')];
+      _other = OTHER[match.namedGroup('other')];
     }
   }
 

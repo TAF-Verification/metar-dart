@@ -55,6 +55,12 @@ class MetarRegExp {
       r'(?<press>\d{4}|\//\//)'
       r'(?<units2>INS)?$');
 
+  static final RegExp RECENT_WEATHER =
+      RegExp(r'^RE(?<desc>MI|PR|BC|DR|BL|SH|TS|FZ)?'
+          r'(?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?'
+          r'(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?'
+          r'(?<other>PO|SQ|FC|SS|DS)?$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

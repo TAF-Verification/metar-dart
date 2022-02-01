@@ -12,12 +12,13 @@ class Metar extends Report
   late final int? _year, _month;
 
   // Groups
-  WindVariation _windVariation = WindVariation(null, null);
+  MetarWindVariation _windVariation = MetarWindVariation(null, null);
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
   final _runwayRanges = GroupList<MetarRunwayRange>(3);
-  Temperatures _temperatures = Temperatures(null, null);
+  MetarTemperatures _temperatures = MetarTemperatures(null, null);
   MetarPressure _pressure = MetarPressure(null, null);
+  MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
 
   Metar(
     String code, {
@@ -56,13 +57,13 @@ class Metar extends Report
 
   void _handleWindVariation(String group) {
     final match = MetarRegExp.WIND_VARIATION.firstMatch(group);
-    _windVariation = WindVariation(group, match);
+    _windVariation = MetarWindVariation(group, match);
 
     _concatenateString(_windVariation);
   }
 
   /// Get the wind variation directions of the METAR.
-  WindVariation get windVariation => _windVariation;
+  MetarWindVariation get windVariation => _windVariation;
 
   void _handleMinimumVisibility(String group) {
     final match = MetarRegExp.VISIBILITY.firstMatch(group);
@@ -87,13 +88,13 @@ class Metar extends Report
 
   void _handleTemperatures(String group) {
     final match = MetarRegExp.TEMPERATURES.firstMatch(group);
-    _temperatures = Temperatures(group, match);
+    _temperatures = MetarTemperatures(group, match);
 
     _concatenateString(_temperatures);
   }
 
   /// Get the temperatures data of the METAR.
-  Temperatures get temperatures => _temperatures;
+  MetarTemperatures get temperatures => _temperatures;
 
   void _handlePressure(String group) {
     final match = MetarRegExp.PRESSURE.firstMatch(group);
@@ -104,6 +105,16 @@ class Metar extends Report
 
   /// Get the pressure of the METAR.
   MetarPressure get pressure => _pressure;
+
+  void _handleRecentWeather(String group) {
+    final match = MetarRegExp.RECENT_WEATHER.firstMatch(group);
+    _recentWeather = MetarRecentWeather(group, match);
+
+    _concatenateString(_recentWeather);
+  }
+
+  /// Get the recent weather data of the METAR.
+  MetarRecentWeather get recentWeather => _recentWeather;
 
   void _parseBody() {
     final handlers = <GroupHandler>[
@@ -127,6 +138,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.RECENT_WEATHER, _handleRecentWeather),
     ];
 
     _parse(handlers, body);

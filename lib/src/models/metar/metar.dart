@@ -19,6 +19,7 @@ class Metar extends Report
   MetarTemperatures _temperatures = MetarTemperatures(null, null);
   MetarPressure _pressure = MetarPressure(null, null);
   MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
+  final _windshear = MetarWindshearList();
 
   Metar(
     String code, {
@@ -116,6 +117,17 @@ class Metar extends Report
   /// Get the recent weather data of the METAR.
   MetarRecentWeather get recentWeather => _recentWeather;
 
+  void _handleWindshear(String group) {
+    final match = MetarRegExp.WINDSHEAR.firstMatch(group);
+    final windshear = MetarWindshearRunway(group, match);
+    _windshear.add(windshear);
+
+    _concatenateString(windshear);
+  }
+
+  /// Get the windshear data of the METAR.
+  MetarWindshearList get windshear => _windshear;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -139,6 +151,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.RECENT_WEATHER, _handleRecentWeather),
+      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
     ];
 
     _parse(handlers, body);
@@ -150,9 +165,9 @@ class Metar extends Report
     var index = 0;
 
     section = sanitizeVisibility(section);
-    // if (sectionType == 'body') {
-    //   section = sanitizeWindshear(section);
-    // }
+    if (sectionType == 'body') {
+      section = sanitizeWindshear(section);
+    }
     section.split(' ').forEach((group) {
       unparsedGroups.add(group);
 

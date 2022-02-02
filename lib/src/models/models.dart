@@ -33,6 +33,7 @@ part 'metar/models/temperatures.dart';
 part 'metar/models/pressure.dart';
 part 'metar/models/recent_weather.dart';
 part 'metar/models/windshear.dart';
+part 'metar/models/sea_state.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';

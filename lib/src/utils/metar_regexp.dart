@@ -64,6 +64,10 @@ class MetarRegExp {
   static final RegExp WINDSHEAR = RegExp(r'^WS(?<all>_ALL)?'
       r'_(RWY|R(?<name>\d{2}[RCL]?))$');
 
+  static final RegExp SEA_STATE = RegExp(r'^W(?<sign>M)?'
+      r'(?<temp>\d{2})'
+      r'/S(?<state>\d)$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

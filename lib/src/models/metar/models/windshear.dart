@@ -16,9 +16,7 @@ class MetarWindshearRunway extends Group {
       if (name == null || name.length == 2) {
         _name = name;
       } else if (name.length == 3) {
-        final nameChar = name.split('').last;
-        final nameStr = NAMES[nameChar];
-        _name = name.replaceFirst(nameChar, ' $nameStr');
+        _name = setRunwayName(name);
       } else {
         _name = null;
       }

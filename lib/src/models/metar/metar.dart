@@ -21,6 +21,7 @@ class Metar extends Report
   MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
   final _windshear = MetarWindshearList();
   MetarSeaState _seaState = MetarSeaState(null, null);
+  MetarRunwayState _runwayState = MetarRunwayState(null, null);
 
   Metar(
     String code, {
@@ -139,6 +140,16 @@ class Metar extends Report
   /// Get the sea state data of the METAR.
   MetarSeaState get seaState => _seaState;
 
+  void _handleRunwayState(String group) {
+    final match = MetarRegExp.RUNWAY_STATE.firstMatch(group);
+    _runwayState = MetarRunwayState(group, match);
+
+    _concatenateString(_runwayState);
+  }
+
+  /// Get the runway state data of the METAR.
+  MetarRunwayState get runwayState => _runwayState;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -166,6 +177,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
       GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
       GroupHandler(MetarRegExp.SEA_STATE, _handleSeaState),
+      GroupHandler(MetarRegExp.RUNWAY_STATE, _handleRunwayState),
     ];
 
     _parse(handlers, body);

@@ -17,6 +17,29 @@ final TRENDS = <String, String>{
   'D': 'decreasing',
 };
 
+/// Helper to set the name of the runway.
+String? setRunwayName(String? code) {
+  if (code == null) {
+    return null;
+  }
+
+  if (code.length == 3) {
+    final nameChar = code[2];
+    final nameStr = NAMES[nameChar];
+    return code.replaceFirst(nameChar, ' $nameStr');
+  }
+
+  if (code == '88') {
+    return 'all runways';
+  }
+
+  if (code == '99') {
+    return 'repeated';
+  }
+
+  return code;
+}
+
 ///Basic structure of a groups list from groups found in a aeronautical
 /// report from land stations.
 class MetarRunwayRange extends Group {
@@ -37,7 +60,7 @@ class MetarRunwayRange extends Group {
       final lowRange = match.namedGroup('low');
       final highRange = match.namedGroup('high');
 
-      _name = _setName(match.namedGroup('name')!);
+      _name = setRunwayName(match.namedGroup('name')!);
       _lowRange = _setRange(lowRange, _units);
       _highRange = _setRange(highRange, _units);
     }
@@ -51,25 +74,6 @@ class MetarRunwayRange extends Group {
         '$lowRange'
         '${_highRange.value != null ? " varying to $_highRange" : ""}'
         '${_trend != null ? ", $_trend" : ""}';
-  }
-
-  /// Helper to set the name of the runway.
-  String _setName(String code) {
-    if (code.length == 3) {
-      final nameChar = code[2];
-      final nameStr = NAMES[nameChar];
-      return code.replaceFirst(nameChar, ' $nameStr');
-    }
-
-    if (code == '88') {
-      return 'all runways';
-    }
-
-    if (code == '99') {
-      return 'repeated';
-    }
-
-    return code;
   }
 
   /// Helper to set the visual range of the runway.

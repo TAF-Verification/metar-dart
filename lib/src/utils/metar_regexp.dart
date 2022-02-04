@@ -68,6 +68,14 @@ class MetarRegExp {
       r'(?<temp>\d{2})'
       r'/S(?<state>\d)$');
 
+  static final RegExp RUNWAY_STATE = RegExp(r'^R(?<name>\d{2}([RLC])?)?/('
+      r'(?<deposit>\d|/)'
+      r'(?<cont>\d|/)'
+      r'(?<depth>\d\d|//)'
+      r'(?<fric>\d\d|//)|'
+      r'(?<snoclo>SNOCLO)|'
+      r'(?<clrd>CLRD//))$');
+
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 

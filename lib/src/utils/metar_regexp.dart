@@ -66,7 +66,8 @@ class MetarRegExp {
 
   static final RegExp SEA_STATE = RegExp(r'^W(?<sign>M)?'
       r'(?<temp>\d{2})'
-      r'/S(?<state>\d)$');
+      r'/(S(?<state>\d)'
+      r'|H(?<height>\d{3}))$');
 
   static final RegExp RUNWAY_STATE = RegExp(r'^R(?<name>\d{2}([RLC])?)?/('
       r'(?<deposit>\d|/)'

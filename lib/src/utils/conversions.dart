@@ -2,13 +2,16 @@ part of utils;
 
 class Conversions {
   // Distance conversions
+  static final FT_TO_M = 0.3048;
   static final SMI_TO_KM = 1.852;
   static final KM_TO_SMI = 1 / SMI_TO_KM;
   static final KM_TO_M = 1000.0;
   static final M_TO_KM = 1 / KM_TO_M;
   static final M_TO_SMI = M_TO_KM * KM_TO_SMI;
-  static final FT_TO_M = 0.3048;
   static final M_TO_FT = 1 / FT_TO_M;
+  static final M_TO_DM = 10.0;
+  static final M_TO_CM = 100.0;
+  static final M_TO_IN = 39.3701;
 
   // Direction conversions
   static final DEGREES_TO_RADIANS = pi / 180;

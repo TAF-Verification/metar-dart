@@ -17,6 +17,7 @@ part 'distance.dart';
 part 'clouds.dart';
 part 'temperature.dart';
 part 'pressure.dart';
+part 'trend.dart';
 
 // Groups
 part 'type.dart';
@@ -35,6 +36,7 @@ part 'metar/models/recent_weather.dart';
 part 'metar/models/windshear.dart';
 part 'metar/models/sea_state.dart';
 part 'metar/models/runway_state.dart';
+part 'metar/models/trend.dart';
 
 // METAR Mixins
 part 'mixins/metar/modifier_mixin.dart';

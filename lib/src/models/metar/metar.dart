@@ -11,7 +11,7 @@ class Metar extends Report
   late MetarTime _time;
   late final int? _year, _month;
 
-  // Groups
+  // Body groups
   MetarWindVariation _windVariation = MetarWindVariation(null, null);
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
@@ -22,6 +22,9 @@ class Metar extends Report
   final _windshear = MetarWindshearList();
   MetarSeaState _seaState = MetarSeaState(null, null);
   MetarRunwayState _runwayState = MetarRunwayState(null, null);
+
+  // Trend groups
+  MetarTrend _trend = MetarTrend(null, null);
 
   Metar(
     String code, {
@@ -36,13 +39,14 @@ class Metar extends Report
 
     // Parse groups
     _parseBody();
+    _parseTrend();
   }
 
   /// Get the body part of the METAR.
   String get body => _sections[0];
 
   /// Get the trend part of the METAR.
-  String get trend => _sections[1];
+  String get trendForecast => _sections[1];
 
   /// Get the remark part of the METAR.
   String get remark => _sections[2];
@@ -150,6 +154,16 @@ class Metar extends Report
   /// Get the runway state data of the METAR.
   MetarRunwayState get runwayState => _runwayState;
 
+  void _handleTrend(String group) {
+    final match = MetarRegExp.TREND.firstMatch(group);
+    _trend = MetarTrend(group, match);
+
+    _concatenateString(_trend);
+  }
+
+  /// Get the trend data of the METAR.
+  MetarTrend get trend => _trend;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -181,6 +195,14 @@ class Metar extends Report
     ];
 
     _parse(handlers, body);
+  }
+
+  void _parseTrend() {
+    final handlers = <GroupHandler>[
+      GroupHandler(MetarRegExp.TREND, _handleTrend),
+    ];
+
+    _parse(handlers, trendForecast, sectionType: 'trend');
   }
 
   @override

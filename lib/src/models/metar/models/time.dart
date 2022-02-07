@@ -2,7 +2,7 @@ part of models;
 
 class MetarTime extends Time with GroupMixin {
   MetarTime(String? code, RegExpMatch? match, {int? year, int? month})
-      : super(null, null, year: year, month: month, minute: '00') {
+      : super(year: year, month: month, minute: '00') {
     _code = code;
 
     if (match != null) {

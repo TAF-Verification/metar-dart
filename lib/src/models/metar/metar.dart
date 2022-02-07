@@ -24,7 +24,7 @@ class Metar extends Report
   MetarRunwayState _runwayState = MetarRunwayState(null, null);
 
   // Trend groups
-  MetarTrend _trend = MetarTrend(null, null);
+  late MetarTrend _trend;
 
   Metar(
     String code, {
@@ -37,8 +37,13 @@ class Metar extends Report
     _year = year;
     _month = month;
 
-    // Parse groups
+    // Parse body groups
     _parseBody();
+
+    // Initialize trend group
+    _trend = MetarTrend(null, null, _time.time);
+
+    // Parse trend groups
     _parseTrend();
   }
 
@@ -156,13 +161,22 @@ class Metar extends Report
 
   void _handleTrend(String group) {
     final match = MetarRegExp.TREND.firstMatch(group);
-    _trend = MetarTrend(group, match);
+    _trend = MetarTrend(group, match, _time.time);
 
     _concatenateString(_trend);
   }
 
   /// Get the trend data of the METAR.
   MetarTrend get trend => _trend;
+
+  void _handleTrendTimePeriod(String group) {
+    final match = MetarRegExp.TREND_TIME_PERIOD.firstMatch(group);
+    final oldTrendAsString = _trend.toString();
+    _trend.addPeriod(group, match!);
+    final newTrendAsString = _trend.toString();
+
+    _string = _string.replaceFirst(oldTrendAsString, newTrendAsString);
+  }
 
   void _parseBody() {
     final handlers = <GroupHandler>[
@@ -200,6 +214,8 @@ class Metar extends Report
   void _parseTrend() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TREND, _handleTrend),
+      GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
+      GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
     ];
 
     _parse(handlers, trendForecast, sectionType: 'trend');

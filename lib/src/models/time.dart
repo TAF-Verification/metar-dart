@@ -4,19 +4,29 @@ part of models;
 class Time {
   late DateTime _time;
 
-  Time(String? day, String? hour, {String? minute, int? year, int? month}) {
-    final today = DateTime.now().toUtc();
+  Time(
+      {String? day,
+      String? hour,
+      String? minute,
+      int? year,
+      int? month,
+      DateTime? time}) {
+    if (time != null) {
+      _time = time;
+    } else {
+      final today = DateTime.now().toUtc();
 
-    year ??= today.year;
-    month ??= today.month;
-    day ??= '${today.day}'.padLeft(2, '0');
-    hour ??= '${today.hour}'.padLeft(2, '0');
-    minute ??= '${today.minute}'.padLeft(2, '0');
+      year ??= today.year;
+      month ??= today.month;
+      day ??= '${today.day}'.padLeft(2, '0');
+      hour ??= '${today.hour}'.padLeft(2, '0');
+      minute ??= '${today.minute}'.padLeft(2, '0');
 
-    final _month = '$month'.padLeft(2, '0');
+      final _month = '$month'.padLeft(2, '0');
 
-    final generatedDate = '$year$_month${day}T$hour${minute}00';
-    _time = DateTime.parse(generatedDate);
+      final generatedDate = '$year$_month${day}T$hour${minute}00';
+      _time = DateTime.parse(generatedDate);
+    }
   }
 
   @override

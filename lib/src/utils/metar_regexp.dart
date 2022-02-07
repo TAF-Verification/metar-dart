@@ -80,5 +80,8 @@ class MetarRegExp {
   static final RegExp TREND =
       RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
 
+  static final RegExp TREND_TIME_PERIOD =
+      RegExp(r'^(?<prefix>FM|TL|AT)' r'(?<hour>\d{2})' r'(?<min>\d{2})$');
+
   static final RegExp REMARK = RegExp(r'^(?<rmk>RMK(S)?)$');
 }

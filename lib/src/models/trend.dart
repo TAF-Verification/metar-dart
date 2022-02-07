@@ -10,12 +10,22 @@ final TREND_TRANSLATIONS = <String, String>{
 
 /// Basic structure for trend codes in the report.
 class Trend extends Group {
+  @override
+  String? _code;
   late final String? _translation;
 
   Trend(String? code, RegExpMatch? match) : super(code) {
-    if (match != null) {
-      _translation = TREND_TRANSLATIONS[match.namedGroup('trend')];
+    _code = code;
+    _translation = TREND_TRANSLATIONS[match?.namedGroup('trend')];
+  }
+
+  @override
+  String toString() {
+    if (_translation != null) {
+      return _translation!;
     }
+
+    return super.toString();
   }
 
   /// Get the translation of the trend.

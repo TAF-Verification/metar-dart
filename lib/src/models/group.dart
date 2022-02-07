@@ -8,7 +8,11 @@ abstract class Group {
 
   @override
   String toString() {
-    return _code.toString();
+    if (_code != null) {
+      return _code.toString();
+    }
+
+    return '';
   }
 
   /// Get the length of the code of the group.

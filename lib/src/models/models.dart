@@ -1,5 +1,7 @@
 library models;
 
+import 'package:tuple/tuple.dart';
+
 import '../utils/utils.dart';
 import '../database/database.dart';
 

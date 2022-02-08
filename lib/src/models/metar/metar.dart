@@ -25,6 +25,7 @@ class Metar extends Report
 
   // Trend groups
   late MetarTrend _trend;
+  MetarWind _trendWind = MetarWind(null, null);
 
   Metar(
     String code, {
@@ -178,6 +179,16 @@ class Metar extends Report
     _string = _string.replaceFirst(oldTrendAsString, newTrendAsString);
   }
 
+  void _handleTrendWind(String group) {
+    final match = MetarRegExp.WIND.firstMatch(group);
+    _trendWind = MetarWind(group, match);
+
+    _concatenateString(_trendWind);
+  }
+
+  /// Get the trend wind data of the METAR.
+  MetarWind get trendWind => _trendWind;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -216,6 +227,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.TREND, _handleTrend),
       GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
       GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
+      GroupHandler(MetarRegExp.WIND, _handleTrendWind),
     ];
 
     _parse(handlers, trendForecast, sectionType: 'trend');
@@ -227,7 +239,7 @@ class Metar extends Report
     var index = 0;
 
     section = sanitizeVisibility(section);
-    if (sectionType == 'body') {
+    if (sectionType == 'body' || sectionType == 'trend') {
       section = sanitizeWindshear(section);
     }
     section.split(' ').forEach((group) {

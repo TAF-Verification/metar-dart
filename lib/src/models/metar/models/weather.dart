@@ -49,6 +49,7 @@ Map<String, String> OTHER = {
   'FC': 'funnel cloud',
   'SS': 'sandstorm',
   'DS': 'dust storm',
+  'NSW': 'nil significant weather',
 };
 
 class MetarWeather extends Group {

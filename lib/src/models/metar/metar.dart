@@ -28,6 +28,7 @@ class Metar extends Report
   MetarWind _trendWind = MetarWind(null, null);
   MetarPrevailingVisibility _trendPrevailing =
       MetarPrevailingVisibility(null, null);
+  final _trendWeathers = GroupList<MetarWeather>(3);
 
   Metar(
     String code, {
@@ -201,6 +202,17 @@ class Metar extends Report
   /// Get the trend prevailing visibility data of the METAR.
   MetarPrevailingVisibility get trendPrevailingVisibility => _trendPrevailing;
 
+  void _handleTrendWeather(String group) {
+    final match = MetarRegExp.WEATHER.firstMatch(group);
+    final weather = MetarWeather(group, match);
+    _trendWeathers.add(weather);
+
+    _concatenateString(weather);
+  }
+
+  /// Get the trend weather data of the report if provided.
+  GroupList<MetarWeather> get trendWeathers => _trendWeathers;
+
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -241,6 +253,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
       GroupHandler(MetarRegExp.WIND, _handleTrendWind),
       GroupHandler(MetarRegExp.VISIBILITY, _handleTrendPrevailing),
+      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
     ];
 
     _parse(handlers, trendForecast, sectionType: 'trend');

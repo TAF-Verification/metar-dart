@@ -30,10 +30,6 @@ abstract class Report {
     _string += obj.toString() + '\n';
   }
 
-  /// Parse the report groups to extract relevant data.
-  void _parse(List<GroupHandler> handlers, String section,
-      {String sectionType});
-
   /// Handler to separate the sections of the report.
   void _handleSections();
 

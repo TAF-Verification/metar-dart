@@ -225,6 +225,7 @@ class Metar extends Report
   /// Get the trend cloud groups data of the METAR.
   CloudList get trendClouds => _trendClouds;
 
+  /// Parse the body section.
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
@@ -255,9 +256,18 @@ class Metar extends Report
       GroupHandler(MetarRegExp.RUNWAY_STATE, _handleRunwayState),
     ];
 
-    _parse(handlers, body);
+    var sanitizedBody = sanitizeVisibility(body);
+    sanitizedBody = sanitizeWindshear(sanitizedBody);
+
+    final unparsed = parseSection(handlers, sanitizedBody);
+    _unparsedGroups.addAll(unparsed);
   }
 
+  /// Parse the trend section.
+  ///
+  /// Raises:
+  ///     ParserError: if self.unparser_groups has items and self._truncate is True,
+  ///     raises the error.
   void _parseTrend() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TREND, _handleTrend),
@@ -274,33 +284,10 @@ class Metar extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleTrendCloud),
     ];
 
-    _parse(handlers, trendForecast, sectionType: 'trend');
-  }
+    final sanitizedTrend = sanitizeVisibility(trendForecast);
 
-  @override
-  void _parse(List<GroupHandler> handlers, String section,
-      {String sectionType = 'body'}) {
-    var index = 0;
-
-    section = sanitizeVisibility(section);
-    if (sectionType == 'body' || sectionType == 'trend') {
-      section = sanitizeWindshear(section);
-    }
-    section.split(' ').forEach((group) {
-      unparsedGroups.add(group);
-
-      for (var i = index; i < handlers.length; i++) {
-        var handler = handlers[i];
-
-        index++;
-
-        if (handler.regexp.hasMatch(group)) {
-          handler.handler(group);
-          unparsedGroups.remove(group);
-          break;
-        }
-      }
-    });
+    final unparsed = parseSection(handlers, sanitizedTrend);
+    unparsedGroups.addAll(unparsed);
 
     if (unparsedGroups.isNotEmpty && _truncate) {
       throw ParserError(

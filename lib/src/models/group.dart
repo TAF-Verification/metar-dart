@@ -1,5 +1,12 @@
 part of models;
 
+class GroupHandler {
+  final RegExp regexp;
+  final void Function(String) handler;
+
+  GroupHandler(this.regexp, this.handler);
+}
+
 /// Basic structure of a group in a aeronautical report from land stations.
 abstract class Group {
   final String? _code;

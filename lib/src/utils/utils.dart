@@ -2,7 +2,8 @@ library utils;
 
 import 'dart:math';
 
+import 'package:metar_dart/src/models/models.dart' show GroupHandler;
+
 part 'metar_regexp.dart';
 part 'conversions.dart';
-part 'sanitize_visibility.dart';
-part 'sanitize_windshear.dart';
+part 'parser.dart';

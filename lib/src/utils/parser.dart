@@ -1,21 +1,38 @@
 part of utils;
 
-String sanitizeVisibility(String report) {
+/// Sanitize the visibility in sea miles to get macth
+/// with the regular expresion of visibility in METAR like
+/// reports.
+///
+/// Args:
+///     code (String): the code or section to sanitize.
+///
+/// Returns:
+///     String: the sanitized code or section.
+String sanitizeVisibility(String code) {
   final regex = RegExp(r'\s(?<int>\d+)\s(?<frac>\d/\dSM)\s?');
 
   for (var i = 0; i < 3; i++) {
-    if (regex.hasMatch(report)) {
-      final match = regex.firstMatch(report)!;
-      report = report.replaceFirst(
+    if (regex.hasMatch(code)) {
+      final match = regex.firstMatch(code)!;
+      code = code.replaceFirst(
         regex,
         ' ${match.namedGroup('int')}_${match.namedGroup('frac')} ',
       );
     }
   }
 
-  return report;
+  return code;
 }
 
+/// Sanitize the windshear in to get macth with the
+/// regular expresion of windshear in METAR like reports.
+///
+/// Args:
+///     code (String): the code or section to sanitize.
+///
+/// Returns:
+///     String: the sanitized code or section.
 String sanitizeWindshear(String code) {
   code = code.replaceFirst(RegExp(r'WS\sALL\sRWY'), 'WS_ALL_RWY');
 

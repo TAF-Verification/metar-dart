@@ -1,9 +1,8 @@
 part of models;
 
-abstract class Report {
+abstract class Report with StringAttributeMixin {
   final bool _truncate;
   String _rawCode = '';
-  String _string = '';
   final _unparsedGroups = <String>[];
   final _sections = <String>[];
 
@@ -24,10 +23,6 @@ abstract class Report {
   @override
   String toString() {
     return _string;
-  }
-
-  void _concatenateString(Object obj) {
-    _string += obj.toString() + '\n';
   }
 
   /// Handler to separate the sections of the report.

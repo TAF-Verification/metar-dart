@@ -3,12 +3,16 @@ import 'package:test/test.dart';
 import 'package:metar_dart/metar_dart.dart';
 
 void main() {
-  test('Test the trend weather of METAR, one weather', () {
+  test('Test the weather trend weather of METAR, one weather', () {
     final code =
         'METAR UUDD 190430Z 35004MPS 9999 FEW020 M01/M03 Q1009 R32L/590240 TEMPO TL0600 5000 +SN SCT012';
     final metar = Metar(code);
-    final weathers = metar.trendWeathers;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'TEMPO TL0600 5000 +SN SCT012');
+
+    final weathers = first.weathers;
     expect(weathers.codes, ['+SN']);
     expect(weathers.toString(), 'heavy snow');
 
@@ -24,12 +28,16 @@ void main() {
     );
   });
 
-  test('Test the trend weather of METAR, two weathers', () {
+  test('Test the weather trend weather of METAR, two weathers', () {
     final code =
         'METAR MRLM 191300Z 22005KT 6000 +DZ VCSH FEW010TCU OVC070 24/23 A2991 RERA BECMG 3000 TSRA BR SCT010CB';
     final metar = Metar(code);
-    final weathers = metar.trendWeathers;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'BECMG 3000 TSRA BR SCT010CB');
+
+    final weathers = first.weathers;
     expect(weathers.codes, ['TSRA', 'BR']);
     expect(weathers.toString(), 'thunderstorm rain | mist');
 
@@ -51,12 +59,16 @@ void main() {
     );
   });
 
-  test('Test the trend weather of METAR, three weathers', () {
+  test('Test the weather trend weather of METAR, three weathers', () {
     final code =
         'METAR BIBD 191100Z 03002KT 9999 SCT008CB OVC020 04/03 Q1013 TEMPO 5000 -RA BR VCTS';
     final metar = Metar(code);
-    final weathers = metar.trendWeathers;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'TEMPO 5000 -RA BR VCTS');
+
+    final weathers = first.weathers;
     expect(weathers.codes, ['-RA', 'BR', 'VCTS']);
     expect(weathers.toString(), 'light rain | mist | nearby thunderstorm');
 
@@ -77,14 +89,23 @@ void main() {
     expect(weathers[2].precipitation, null);
     expect(weathers[2].obscuration, null);
     expect(weathers[2].other, null);
+
+    expect(
+      () => weathers[3].code,
+      throwsA(isA<RangeError>()),
+    );
   });
 
-  test('Test no trend weathers', () {
+  test('Test no weather trend weathers', () {
     final code =
         'METAR LIRG 211755Z 27003KT CAVOK 24/14 Q1020 NOSIG RMK FEW FEW200 MON NE LIB NC VIS MIN 9999 BLU';
     final metar = Metar(code);
-    final weathers = metar.trendWeathers;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'NOSIG');
+
+    final weathers = first.weathers;
     expect(weathers.codes, <String>[]);
     expect(weathers.toString(), '');
 
@@ -96,12 +117,16 @@ void main() {
     }
   });
 
-  test('Test try to get the 4th item from trend weathers', () {
+  test('Test try to get the 4th item from weather trend weathers', () {
     final code =
         'METAR SCVM 060000Z 28007KT 250V310 9999 SCT016CB 16/13 Q1014 BECMG 5000 TSRA BR VCFG';
     final metar = Metar(code);
-    final weathers = metar.trendWeathers;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'BECMG 5000 TSRA BR VCFG');
+
+    final weathers = first.weathers;
     expect(weathers.codes, <String>['TSRA', 'BR', 'VCFG']);
     expect(weathers.toString(), 'thunderstorm rain | mist | nearby fog');
 

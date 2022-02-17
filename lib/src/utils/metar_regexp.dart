@@ -77,8 +77,8 @@ class MetarRegExp {
       r'(?<snoclo>SNOCLO)|'
       r'(?<clrd>CLRD//))$');
 
-  static final RegExp TREND =
-      RegExp(r'^(?<trend>TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2})$');
+  static final RegExp CHANGE_INDICATOR =
+      RegExp(r'^TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2}(_TEMPO)?$');
 
   static final RegExp TREND_TIME_PERIOD =
       RegExp(r'^(?<prefix>FM|TL|AT)' r'(?<hour>\d{2})' r'(?<min>\d{2})$');

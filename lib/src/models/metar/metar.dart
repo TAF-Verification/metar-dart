@@ -24,12 +24,7 @@ class Metar extends Report
   MetarRunwayState _runwayState = MetarRunwayState(null, null);
 
   // Trend groups
-  late MetarTrend _trend;
-  MetarWind _trendWind = MetarWind(null, null);
-  MetarPrevailingVisibility _trendPrevailing =
-      MetarPrevailingVisibility(null, null);
-  final _trendWeathers = GroupList<MetarWeather>(3);
-  final _trendClouds = CloudList();
+  final MetarWeatherTrends _weatherTrends = MetarWeatherTrends();
 
   Metar(
     String code, {
@@ -45,18 +40,15 @@ class Metar extends Report
     // Parse body groups
     _parseBody();
 
-    // Initialize trend group
-    _trend = MetarTrend(null, null, _time.time);
-
     // Parse trend groups
-    _parseTrend();
+    _parseWeatherTrend();
   }
 
   /// Get the body part of the METAR.
   String get body => _sections[0];
 
   /// Get the trend part of the METAR.
-  String get trendForecast => _sections[1];
+  String get trend => _sections[1];
 
   /// Get the remark part of the METAR.
   String get remark => _sections[2];
@@ -164,66 +156,15 @@ class Metar extends Report
   /// Get the runway state data of the METAR.
   MetarRunwayState get runwayState => _runwayState;
 
-  void _handleTrend(String group) {
-    final match = MetarRegExp.TREND.firstMatch(group);
-    _trend = MetarTrend(group, match, _time.time);
+  void _handleWeatherTrend(String code) {
+    final wt = ChangePeriod(code, _time.time);
+    _weatherTrends.add(wt);
 
-    _concatenateString(_trend);
+    _concatenateString(wt);
   }
 
-  /// Get the trend data of the METAR.
-  MetarTrend get trend => _trend;
-
-  void _handleTrendTimePeriod(String group) {
-    final match = MetarRegExp.TREND_TIME_PERIOD.firstMatch(group);
-    final oldTrendAsString = _trend.toString();
-    _trend.addPeriod(group, match!);
-    final newTrendAsString = _trend.toString();
-
-    _string = _string.replaceFirst(oldTrendAsString, newTrendAsString);
-  }
-
-  void _handleTrendWind(String group) {
-    final match = MetarRegExp.WIND.firstMatch(group);
-    _trendWind = MetarWind(group, match);
-
-    _concatenateString(_trendWind);
-  }
-
-  /// Get the trend wind data of the METAR.
-  MetarWind get trendWind => _trendWind;
-
-  void _handleTrendPrevailing(String group) {
-    final match = MetarRegExp.VISIBILITY.firstMatch(group);
-    _trendPrevailing = MetarPrevailingVisibility(group, match);
-
-    _concatenateString(_trendPrevailing);
-  }
-
-  /// Get the trend prevailing visibility data of the METAR.
-  MetarPrevailingVisibility get trendPrevailingVisibility => _trendPrevailing;
-
-  void _handleTrendWeather(String group) {
-    final match = MetarRegExp.WEATHER.firstMatch(group);
-    final weather = MetarWeather(group, match);
-    _trendWeathers.add(weather);
-
-    _concatenateString(weather);
-  }
-
-  /// Get the trend weather data of the report if provided.
-  GroupList<MetarWeather> get trendWeathers => _trendWeathers;
-
-  void _handleTrendCloud(String group) {
-    final match = MetarRegExp.CLOUD.firstMatch(group);
-    final cloud = Cloud.fromMetar(group, match);
-    _trendClouds.add(cloud);
-
-    _concatenateString(cloud);
-  }
-
-  /// Get the trend cloud groups data of the METAR.
-  CloudList get trendClouds => _trendClouds;
+  /// Get the weather trends of the METAR if provided.
+  MetarWeatherTrends get weatherTrends => _weatherTrends;
 
   /// Parse the body section.
   void _parseBody() {
@@ -263,31 +204,23 @@ class Metar extends Report
     _unparsedGroups.addAll(unparsed);
   }
 
-  /// Parse the trend section.
+  /// Parse the weather trend section.
   ///
   /// Raises:
   ///     ParserError: if self.unparser_groups has items and self._truncate is True,
   ///     raises the error.
-  void _parseTrend() {
-    final handlers = <GroupHandler>[
-      GroupHandler(MetarRegExp.TREND, _handleTrend),
-      GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
-      GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTrendTimePeriod),
-      GroupHandler(MetarRegExp.WIND, _handleTrendWind),
-      GroupHandler(MetarRegExp.VISIBILITY, _handleTrendPrevailing),
-      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
-      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
-      GroupHandler(MetarRegExp.WEATHER, _handleTrendWeather),
-      GroupHandler(MetarRegExp.CLOUD, _handleTrendCloud),
-      GroupHandler(MetarRegExp.CLOUD, _handleTrendCloud),
-      GroupHandler(MetarRegExp.CLOUD, _handleTrendCloud),
-      GroupHandler(MetarRegExp.CLOUD, _handleTrendCloud),
-    ];
+  void _parseWeatherTrend() {
+    final _trends = splitSentence(trend, ['TEMPO', 'BECMG'], space: 'both');
 
-    final sanitizedTrend = sanitizeVisibility(trendForecast);
+    for (final trend in _trends) {
+      if (trend != '') {
+        _handleWeatherTrend(trend);
+      }
+    }
 
-    final unparsed = parseSection(handlers, sanitizedTrend);
-    unparsedGroups.addAll(unparsed);
+    for (final wt in _weatherTrends.items) {
+      _unparsedGroups.addAll(wt.unparsedGroups);
+    }
 
     if (unparsedGroups.isNotEmpty && _truncate) {
       throw ParserError(
@@ -298,7 +231,7 @@ class Metar extends Report
 
   @override
   void _handleSections() {
-    final trendRe = RegExp(MetarRegExp.TREND.pattern
+    final trendRe = RegExp(MetarRegExp.CHANGE_INDICATOR.pattern
         .replaceFirst(
           RegExp(r'\^'),
           '',

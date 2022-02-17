@@ -15,6 +15,6 @@ void main() {
     expect(time.day, 12);
     expect(time.hour, 20);
     expect(time.minute, 51);
-    expect(time.toString(), '2021-03-12 20:51:00.000');
+    expect(time.toString(), '2021-03-12 20:51:00');
   });
 }

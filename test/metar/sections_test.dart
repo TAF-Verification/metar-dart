@@ -15,7 +15,7 @@ void main() {
   test('Test the sections of the METAR', () {
     expect(metar.sections, sections);
     expect(metar.body, sections[0]);
-    expect(metar.trendForecast, sections[1]);
+    expect(metar.trend, sections[1]);
     expect(metar.remark, sections[2]);
   });
 }

@@ -1,14 +1,14 @@
 part of models;
 
 /// Basic structure for trend codes in METAR.
-class MetarTrend extends Trend {
+class MetarTrendIndicator extends ChangeIndicator {
   late final Time _initPeriod;
   late final Time _endPeriod;
   late Time _from;
   late Time _until;
   Time? _at;
 
-  MetarTrend(String? code, RegExpMatch? match, DateTime time)
+  MetarTrendIndicator(String? code, RegExpMatch? match, DateTime time)
       : super(code, match) {
     // Init period and end period of forecast
     _initPeriod = Time(time: time);

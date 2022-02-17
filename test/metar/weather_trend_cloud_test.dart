@@ -7,8 +7,12 @@ void main() {
     final code =
         'METAR BIAR 190800Z 20015KT 9999 FEW049 BKN056 10/03 Q1016 BECMG 5000 RA SCT010 BKN015';
     final metar = Metar(code);
-    final clouds = metar.trendClouds;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'BECMG 5000 RA SCT010 BKN015');
+
+    final clouds = first.clouds;
     expect(clouds.codes, <String>['SCT010', 'BKN015']);
     expect(
         clouds.toString(), 'scattered at 1000.0 feet | broken at 1500.0 feet');
@@ -42,8 +46,12 @@ void main() {
     final code =
         'METAR KMIA 191458Z 33006KT CAVOK 23/21 A3003 BECMG 5SM -TSRA BR FEW013 BKN021CB OVC040 RMK AO2 OCNL LTGICCG OHD TS OHD MOV SE P0007 T02280211';
     final metar = Metar(code);
-    final clouds = metar.trendClouds;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'BECMG 5SM -TSRA BR FEW013 BKN021CB OVC040');
+
+    final clouds = first.clouds;
     expect(clouds.codes, <String>['FEW013', 'BKN021CB', 'OVC040']);
     expect(clouds.toString(),
         'a few at 1300.0 feet | broken at 2100.0 feet of cumulonimbus | overcast at 4000.0 feet');
@@ -85,8 +93,12 @@ void main() {
   test('Test no trend clouds in METAR', () {
     final code = 'METAR MROC 190700Z 11009KT CAVOK 22/19 A2997 TEMPO 9999 RA';
     final metar = Metar(code);
-    final clouds = metar.clouds;
+    final trends = metar.weatherTrends;
 
+    final first = trends[0];
+    expect(first.code, 'TEMPO 9999 RA');
+
+    final clouds = first.clouds;
     expect(clouds.codes, <String>[]);
     expect(clouds.toString(), '');
 

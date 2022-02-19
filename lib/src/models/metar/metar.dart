@@ -231,57 +231,34 @@ class Metar extends Report
 
   @override
   void _handleSections() {
-    final trendRe = RegExp(MetarRegExp.CHANGE_INDICATOR.pattern
-        .replaceFirst(
-          RegExp(r'\^'),
-          '',
-        )
-        .replaceFirst(
-          RegExp(r'\$'),
-          '',
-        ));
+    final sections = splitSentence(
+      _rawCode,
+      <String>[
+        'NOSIG',
+        'TEMPO',
+        'BECMG',
+        'RMK',
+      ],
+      space: 'left',
+    );
 
-    final remarkRe = RegExp(MetarRegExp.REMARK.pattern
-        .replaceFirst(
-          RegExp(r'\^'),
-          '',
-        )
-        .replaceFirst(
-          RegExp(r'\$'),
-          '',
-        ));
-
-    int? trendPos, remarkPos;
-
-    trendPos = trendRe.firstMatch(_rawCode)?.start;
-    remarkPos = remarkRe.firstMatch(_rawCode)?.start;
-
-    var body = '';
-    var trend = '';
-    var remark = '';
-
-    if (trendPos == null && remarkPos != null) {
-      body = _rawCode.substring(0, remarkPos - 1);
-      remark = _rawCode.substring(remarkPos);
-    } else if (trendPos != null && remarkPos == null) {
-      body = _rawCode.substring(0, trendPos - 1);
-      trend = _rawCode.substring(trendPos);
-    } else if (trendPos == null && remarkPos == null) {
-      body = _rawCode;
-    } else {
-      if (trendPos! > remarkPos!) {
-        body = _rawCode.substring(0, remarkPos - 1);
-        remark = _rawCode.substring(remarkPos, trendPos - 1);
-        trend = _rawCode.substring(trendPos);
+    String trend = '';
+    String remark = '';
+    String body = '';
+    for (final section in sections) {
+      if (section.startsWith('TEMPO') ||
+          section.startsWith('BECMG') ||
+          section.startsWith('NOSIG')) {
+        trend += section + ' ';
+      } else if (section.startsWith('RMK')) {
+        remark = section;
       } else {
-        body = _rawCode.substring(0, trendPos - 1);
-        trend = _rawCode.substring(trendPos, remarkPos - 1);
-        remark = _rawCode.substring(remarkPos);
+        body = section;
       }
     }
 
     _sections.add(body);
-    _sections.add(trend);
+    _sections.add(trend.trim());
     _sections.add(remark);
   }
 }

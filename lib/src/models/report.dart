@@ -16,7 +16,7 @@ abstract class Report with StringAttributeMixin {
       : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
 
-    _rawCode = code.replaceAll(RegExp(r'\s{2,}'), ' ');
+    _rawCode = code.replaceAll(RegExp(r'\s{2,}|\n+|\t+'), ' ');
     _rawCode = _rawCode.replaceAll('=', '');
   }
 

@@ -21,16 +21,16 @@ String _addSpaceBoth(String word) {
 ///
 /// Args:
 ///     sentence (String): the sentence to split.
-///     words (List<String>): the list of words where the sentence will be splitted.
+///     keywords (List<String>): the list of keywords where the sentence will be splitted.
 ///     count (int, optional): Number of splits of every coincidence. Defaults to 0.
 ///     space (String, optional): take spaces in count to the left or right of every word.
 ///       Defaults to ''. Options: `left`, `right`, `both`
 ///
 /// Returns:
 ///     List<String>: the list of sentence splitted from the original.
-List<String> splitSentence(String sentence, List<String> words,
+List<String> splitSentence(String sentence, List<String> keywords,
     {bool all = false, String space = ''}) {
-  for (var word in words) {
+  for (var word in keywords) {
     switch (space) {
       case 'left':
         word = _addSpaceLeft(word);

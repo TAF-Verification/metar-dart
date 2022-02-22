@@ -61,7 +61,7 @@ class Metar extends Report
     _concatenateString(_time);
   }
 
-  /// Get the time of the group.
+  /// Get the time of the METAR.
   MetarTime get time => _time;
 
   void _handleWindVariation(String group) {

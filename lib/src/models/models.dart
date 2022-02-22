@@ -40,3 +40,6 @@ part 'metar/models/wind_variation.dart';
 part 'metar/models/wind.dart';
 part 'metar/models/windshear.dart';
 part 'metar/models/weather_trend.dart';
+
+// Taf and its models
+part 'taf/taf.dart';

@@ -6,8 +6,12 @@ class Taf extends Report {
   final List<String> _weatherChanges = <String>[];
   late MetarTime _time;
 
-  Taf(String code, {bool truncate = false}) : super(code, truncate) {
+  Taf(String code, {bool truncate = false})
+      : super(code, truncate, type: 'TAF') {
     _handleSections();
+
+    // Parse the body groups.
+    _parseBody();
   }
 
   /// Get the body part of the TAF.
@@ -32,6 +36,16 @@ class Taf extends Report {
 
   /// Get the time of the TAF.
   MetarTime get time => _time;
+
+  /// Parse the body section.
+  void _parseBody() {
+    final handlers = <GroupHandler>[
+      GroupHandler(MetarRegExp.TYPE, _handleType),
+    ];
+
+    final unparsed = parseSection(handlers, _body);
+    _unparsedGroups.addAll(unparsed);
+  }
 
   @override
   void _handleSections() {

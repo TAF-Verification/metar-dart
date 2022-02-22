@@ -7,14 +7,16 @@ abstract class Report with StringAttributeMixin {
   final _sections = <String>[];
 
   // Type group
-  Type _type = Type('METAR');
+  late Type _type;
 
   // Station group
   Station _station = Station(null, null);
 
-  Report(String code, this._truncate)
+  Report(String code, this._truncate, {String type = 'METAR'})
       : assert(code != '', 'code must be a non-empty string') {
     code = code.trim();
+
+    _type = Type(type);
 
     _rawCode = code.replaceAll(RegExp(r'\s{2,}|\n+|\t+'), ' ');
     _rawCode = _rawCode.replaceAll('=', '');

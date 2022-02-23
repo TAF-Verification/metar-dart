@@ -1,7 +1,7 @@
 part of models;
 
 /// Parser for TAF reports.
-class Taf extends Report {
+class Taf extends Report with ModifierMixin {
   late final String _body;
   final List<String> _weatherChanges = <String>[];
   late MetarTime _time;
@@ -41,6 +41,7 @@ class Taf extends Report {
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
+      GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
     ];
 
     final unparsed = parseSection(handlers, _body);

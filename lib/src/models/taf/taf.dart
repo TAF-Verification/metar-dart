@@ -42,6 +42,7 @@ class Taf extends Report with ModifierMixin {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
       GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
+      GroupHandler(MetarRegExp.STATION, _handleStation),
     ];
 
     final unparsed = parseSection(handlers, _body);

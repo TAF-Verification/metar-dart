@@ -5,9 +5,13 @@ class Taf extends Report with ModifierMixin {
   late final String _body;
   final List<String> _weatherChanges = <String>[];
   late MetarTime _time;
+  int? _year, _month;
 
-  Taf(String code, {bool truncate = false})
+  Taf(String code, {int? year, int? month, bool truncate = false})
       : super(code, truncate, type: 'TAF') {
+    _year = year;
+    _month = month;
+
     _handleSections();
 
     // Parse the body groups.
@@ -29,7 +33,7 @@ class Taf extends Report with ModifierMixin {
   @override
   void _handleTime(String group) {
     final match = MetarRegExp.TIME.firstMatch(group);
-    _time = MetarTime(group, match, year: 2021, month: 2);
+    _time = MetarTime(group, match, year: _year, month: _month);
 
     _concatenateString(_time);
   }
@@ -43,6 +47,7 @@ class Taf extends Report with ModifierMixin {
       GroupHandler(MetarRegExp.TYPE, _handleType),
       GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
       GroupHandler(MetarRegExp.STATION, _handleStation),
+      GroupHandler(MetarRegExp.TIME, _handleTime),
     ];
 
     final unparsed = parseSection(handlers, _body);

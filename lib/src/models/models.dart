@@ -43,3 +43,4 @@ part 'metar/models/weather_trend.dart';
 
 // Taf and its models
 part 'taf/taf.dart';
+part 'taf/models/missing.dart';

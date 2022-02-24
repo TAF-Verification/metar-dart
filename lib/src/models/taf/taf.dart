@@ -4,8 +4,11 @@ part of models;
 class Taf extends Report with ModifierMixin {
   late final String _body;
   final List<String> _weatherChanges = <String>[];
+
+  // Body groups
   late MetarTime _time;
   int? _year, _month;
+  Missing _missing = Missing(null);
 
   Taf(String code, {int? year, int? month, bool truncate = false})
       : super(code, truncate, type: 'TAF') {
@@ -41,13 +44,23 @@ class Taf extends Report with ModifierMixin {
   /// Get the time of the TAF.
   MetarTime get time => _time;
 
+  void _handleMissing(String group) {
+    _missing = Missing(group);
+
+    _concatenateString(_missing);
+  }
+
+  /// Get the missing data of the TAF.
+  Missing get missing => _missing;
+
   /// Parse the body section.
   void _parseBody() {
     final handlers = <GroupHandler>[
       GroupHandler(MetarRegExp.TYPE, _handleType),
-      GroupHandler(MetarRegExp.MODIFIER, _handleModifier),
+      GroupHandler(TafRegExp.AMD_COR, _handleModifier),
       GroupHandler(MetarRegExp.STATION, _handleStation),
       GroupHandler(MetarRegExp.TIME, _handleTime),
+      GroupHandler(TafRegExp.NIL, _handleMissing),
     ];
 
     final unparsed = parseSection(handlers, _body);

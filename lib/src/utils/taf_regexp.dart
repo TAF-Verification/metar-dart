@@ -9,4 +9,6 @@ class TafRegExp {
       r'(?<fmhour>[0-1]\d|2[0-3])/'
       r'(?<tlday>0[1-9]|[12][0-9]|3[01])'
       r'(?<tlhour>[0-1]\d|2[0-4])$');
+
+  static final RegExp CANCELLED = RegExp(r'^CNL$');
 }

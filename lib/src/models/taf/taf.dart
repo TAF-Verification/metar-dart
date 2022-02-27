@@ -1,12 +1,11 @@
 part of models;
 
 /// Parser for TAF reports.
-class Taf extends Report with ModifierMixin {
+class Taf extends Report with ModifierMixin, MetarTimeMixin, TafValidMixin {
   late final String _body;
   final List<String> _weatherChanges = <String>[];
 
   // Body groups
-  late MetarTime _time;
   int? _year, _month;
   Missing _missing = Missing(null);
 
@@ -61,6 +60,7 @@ class Taf extends Report with ModifierMixin {
       GroupHandler(MetarRegExp.STATION, _handleStation),
       GroupHandler(MetarRegExp.TIME, _handleTime),
       GroupHandler(TafRegExp.NIL, _handleMissing),
+      GroupHandler(TafRegExp.VALID, _handleValidPeriod),
     ];
 
     final unparsed = parseSection(handlers, _body);

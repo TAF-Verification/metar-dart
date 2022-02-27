@@ -19,10 +19,8 @@ part 'stations.dart';
 part 'string_attribute.dart';
 part 'temperature.dart';
 part 'time.dart';
-part 'wind.dart';
-
-// Groups
 part 'type.dart';
+part 'wind.dart';
 
 // Metar and its models
 part 'metar/metar.dart';
@@ -35,12 +33,13 @@ part 'metar/models/temperatures.dart';
 part 'metar/models/time.dart';
 part 'metar/models/trend_indicator.dart';
 part 'metar/models/visibility.dart';
+part 'metar/models/weather_trend.dart';
 part 'metar/models/weather.dart';
 part 'metar/models/wind_variation.dart';
 part 'metar/models/wind.dart';
 part 'metar/models/windshear.dart';
-part 'metar/models/weather_trend.dart';
 
 // Taf and its models
-part 'taf/taf.dart';
 part 'taf/models/missing.dart';
+part 'taf/models/valid.dart';
+part 'taf/taf.dart';

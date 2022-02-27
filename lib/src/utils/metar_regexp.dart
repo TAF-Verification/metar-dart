@@ -6,14 +6,15 @@ class MetarRegExp {
 
   static final RegExp STATION = RegExp(r'^(?<station>[A-Z][A-Z0-9]{3})$');
 
-  static final RegExp TIME =
-      RegExp(r'^(?<day>\d{2})' r'(?<hour>\d{2})' r'(?<min>\d{2})Z$');
+  static final RegExp TIME = RegExp(r'^(?<day>0[1-9]|[12][0-9]|3[01])'
+      r'(?<hour>[0-1]\d|2[0-4])'
+      r'(?<min>[0-5]\d)Z$');
 
   static final RegExp MODIFIER =
       RegExp(r'^(?<mod>COR(R)?|AMD|NIL|TEST|FINO|AUTO)$');
 
   static final RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|VRB)'
-      r'P?(?<speed>\d{2,3}|//)'
+      r'P?(?<speed>\d{2,3}|//|///)'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
 
@@ -80,8 +81,8 @@ class MetarRegExp {
   static final RegExp CHANGE_INDICATOR =
       RegExp(r'^TEMPO|BECMG|NOSIG|FM\d{6}|PROB\d{2}(_TEMPO)?$');
 
-  static final RegExp TREND_TIME_PERIOD =
-      RegExp(r'^(?<prefix>FM|TL|AT)' r'(?<hour>\d{2})' r'(?<min>\d{2})$');
+  static final RegExp TREND_TIME_PERIOD = RegExp(
+      r'^(?<prefix>FM|TL|AT)' r'(?<hour>[01]\d|2[0-4])' r'(?<min>[0-5]\d)$');
 
   static final RegExp REMARK = RegExp(r'^(?<rmk>RMK(S)?)$');
 }

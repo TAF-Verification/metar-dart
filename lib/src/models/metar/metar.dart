@@ -4,11 +4,11 @@ part of models;
 class Metar extends Report
     with
         ModifierMixin,
+        MetarTimeMixin,
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin {
-  late MetarTime _time;
   late final int? _year, _month;
 
   // Body groups

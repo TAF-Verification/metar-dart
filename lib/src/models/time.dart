@@ -52,3 +52,7 @@ class Time {
   /// Get the minute of the report.
   int get minute => _time.minute;
 }
+
+mixin TimeMixin on Report {
+  Time _time = Time();
+}

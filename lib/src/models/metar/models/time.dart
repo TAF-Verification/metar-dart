@@ -16,3 +16,7 @@ class MetarTime extends Time with GroupMixin {
     }
   }
 }
+
+mixin MetarTimeMixin on Report {
+  MetarTime _time = MetarTime(null, null);
+}

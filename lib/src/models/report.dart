@@ -22,11 +22,6 @@ abstract class Report with StringAttributeMixin {
     _rawCode = _rawCode.replaceAll('=', '');
   }
 
-  @override
-  String toString() {
-    return _string;
-  }
-
   /// Handler to separate the sections of the report.
   void _handleSections();
 

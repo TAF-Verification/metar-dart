@@ -9,12 +9,14 @@ class ChangePeriod extends Group
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin {
-  final DateTime _time;
+  late final Time _time;
   final _unparsedGroups = <String>[];
   late MetarTrendIndicator _changeIndicator;
-  ChangePeriod(String code, this._time) : super(code) {
+
+  ChangePeriod(String code, DateTime time) : super(code) {
+    _time = Time(time: time);
     // Groups
-    _changeIndicator = MetarTrendIndicator(null, null, _time);
+    _changeIndicator = MetarTrendIndicator(null, null, _time.time);
 
     // Parse the groups
     _parse();
@@ -25,7 +27,7 @@ class ChangePeriod extends Group
 
   void _handleChangeIndicator(String group) {
     final match = MetarRegExp.CHANGE_INDICATOR.firstMatch(group);
-    _changeIndicator = MetarTrendIndicator(group, match, _time);
+    _changeIndicator = MetarTrendIndicator(group, match, _time.time);
 
     _concatenateString(_changeIndicator);
   }

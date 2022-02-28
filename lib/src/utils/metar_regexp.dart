@@ -25,7 +25,7 @@ class MetarRegExp {
 
   static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
       r'(?<dir>[NSEW]([EW])?)?|'
-      r'(?<integer>\d{1,2})?_?(M|P)?'
+      r'(M|P)?(?<integer>\d{1,2})?_?'
       r'(?<fraction>\d/\d)?'
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');

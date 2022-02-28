@@ -16,4 +16,11 @@ class TafRegExp {
       r'P?(?<speed>\d{2,3})'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
+
+  static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4})'
+      r'(?<dir>[NSEW]([EW])?)?|'
+      r'(M|P)?(?<integer>\d{1,2})?_?'
+      r'(?<fraction>\d/\d)?'
+      r'(?<units>SM|KM|M|U)|'
+      r'(?<cavok>CAVOK)$');
 }

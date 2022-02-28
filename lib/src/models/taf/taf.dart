@@ -1,7 +1,8 @@
 part of models;
 
 /// Parser for TAF reports.
-class Taf extends Report with ModifierMixin, MetarTimeMixin, TafValidMixin {
+class Taf extends Report
+    with ModifierMixin, MetarTimeMixin, TafValidMixin, MetarWindMixin {
   late final String _body;
   final List<String> _weatherChanges = <String>[];
   int? _year, _month;
@@ -72,6 +73,7 @@ class Taf extends Report with ModifierMixin, MetarTimeMixin, TafValidMixin {
       GroupHandler(TafRegExp.NIL, _handleMissing),
       GroupHandler(TafRegExp.VALID, _handleValidPeriod),
       GroupHandler(TafRegExp.CANCELLED, _handleCancelled),
+      GroupHandler(TafRegExp.WIND, _handleWind),
     ];
 
     final unparsed = parseSection(handlers, _body);

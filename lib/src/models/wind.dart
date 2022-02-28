@@ -135,7 +135,7 @@ class Speed extends Numeric {
       code = '0' + code;
     }
 
-    assert(code.length == 3, 'wind speed code must have 2 or 3 digits length');
+    assert(code.length >= 3, 'wind speed code must have 2 or 3 digits length');
 
     _value = double.tryParse(code);
   }
@@ -192,13 +192,14 @@ class Wind {
 
   /// Helper to convert wind speed in meters per second to knots.
   String _mps2kt(String value) {
-    final valueFloat = double.tryParse(value);
+    var valueFloat = double.tryParse(value);
 
     if (valueFloat == null) {
       return '///';
     }
 
-    final valueIntAsString = valueFloat.toStringAsFixed(0).padLeft(3, '0');
+    valueFloat *= Conversions.MPS_TO_KNOT;
+    final valueIntAsString = valueFloat.toString();
 
     return valueIntAsString;
   }

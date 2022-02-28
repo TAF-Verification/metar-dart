@@ -13,7 +13,7 @@ class MetarRegExp {
   static final RegExp MODIFIER =
       RegExp(r'^(?<mod>COR(R)?|AMD|NIL|TEST|FINO|AUTO)$');
 
-  static final RegExp WIND = RegExp(r'^(?<dir>[0-3]\d{2}|///|VRB)'
+  static final RegExp WIND = RegExp(r'^(?<dir>[0-2][0-9]0|3[0-6]0|///|VRB)'
       r'P?(?<speed>\d{2,3}|//|///)'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');

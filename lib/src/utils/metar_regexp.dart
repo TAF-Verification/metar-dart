@@ -13,13 +13,15 @@ class MetarRegExp {
   static final RegExp MODIFIER =
       RegExp(r'^(?<mod>COR(R)?|AMD|NIL|TEST|FINO|AUTO)$');
 
-  static final RegExp WIND = RegExp(r'^(?<dir>[0-2][0-9]0|3[0-6]0|///|VRB)'
+  // ignore: valid_regexps
+  static final RegExp WIND = RegExp(r'^(?<dir>([0-2][0-9]|3[0-6])0|///|VRB)'
       r'P?(?<speed>\d{2,3}|//|///)'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
 
-  static final RegExp WIND_VARIATION = RegExp(r'^(?<from>\d{3})'
-      r'V(?<to>\d{3})$');
+  static final RegExp WIND_VARIATION =
+      RegExp(r'^(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
+          r'V(?<to>(0[1-9]|[12][0-9]|3[0-6])0)$');
 
   static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
       r'(?<dir>[NSEW]([EW])?)?|'

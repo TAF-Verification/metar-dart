@@ -3,6 +3,10 @@ part of models;
 /// Basic structure for temperature attributes.
 class Temperature extends Numeric {
   Temperature(String? code) : super(null) {
+    _setTemperature(code);
+  }
+
+  void _setTemperature(String? code) {
     if (code == null || <String>['///', '//'].contains(code)) {
       code = '///';
     }

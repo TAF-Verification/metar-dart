@@ -17,6 +17,8 @@ class Taf extends Report
   // Body groups
   Missing _missing = Missing(null);
   Cancelled _cancelled = Cancelled(null);
+  late TafTemperature _maxTemperature;
+  late TafTemperature _minTemperature;
 
   Taf(String code, {int? year, int? month, bool truncate = false})
       : super(code, truncate, type: 'TAF') {
@@ -24,6 +26,9 @@ class Taf extends Report
     _month = month;
 
     _handleSections();
+
+    _maxTemperature = TafTemperature(null, null, _time.time);
+    _minTemperature = TafTemperature(null, null, _time.time);
 
     // Parse the body groups.
     _parseBody();
@@ -70,6 +75,25 @@ class Taf extends Report
   /// Get the cancelled group data of the TAF.
   Cancelled get cancelled => _cancelled;
 
+  void _handleTemperature(String group) {
+    final match = TafRegExp.TEMPERATURE.firstMatch(group);
+    if (match!.namedGroup('type') == 'X') {
+      _maxTemperature = TafTemperature(group, match, _time.time);
+
+      _concatenateString(_maxTemperature);
+    } else {
+      _minTemperature = TafTemperature(group, match, _time.time);
+
+      _concatenateString(_minTemperature);
+    }
+  }
+
+  /// Get the maximum temperature expected to happen.
+  TafTemperature get maxTemperature => _maxTemperature;
+
+  /// Get the minimum temperature expected to happen.
+  TafTemperature get minTemperature => _minTemperature;
+
   /// Parse the body section.
   void _parseBody() {
     final handlers = <GroupHandler>[
@@ -89,6 +113,8 @@ class Taf extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
+      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
     ];
 
     final unparsed = parseSection(handlers, _body);

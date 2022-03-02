@@ -23,4 +23,10 @@ class TafRegExp {
       r'(?<fraction>\d/\d)?'
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
+
+  static final RegExp TEMPERATURE = RegExp(r'T(?<type>N|X)'
+      r'(?<sign>M)?'
+      r'(?<temp>\d{2})/'
+      r'(?<day>0[1-9]|[12][0-9]|3[01])'
+      r'(?<hour>[0-1]\d|2[0-3])Z');
 }

@@ -42,5 +42,6 @@ part 'metar/models/windshear.dart';
 // Taf and its models
 part 'taf/models/cancelled.dart';
 part 'taf/models/missing.dart';
+part 'taf/models/temperature.dart';
 part 'taf/models/valid.dart';
 part 'taf/taf.dart';

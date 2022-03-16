@@ -1,16 +1,23 @@
 part of models;
 
-/// Basic structure for change period of trend and forecast
-/// in METAR and TAF respectively.
-class ChangePeriod extends Group
+/// Basic structure for change periods and forecasts in METAR and TAF respectively.
+class Forecast extends Group
     with
         StringAttributeMixin,
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin {
-  late final Time _time;
   final _unparsedGroups = <String>[];
+  Forecast(String code) : super(code);
+
+  /// Get the unparsed groups of the change period.
+  List<String> get unparsedGroups => _unparsedGroups;
+}
+
+/// Basic structure for change period of trend in METAR.
+class ChangePeriod extends Forecast {
+  late final Time _time;
   late MetarTrendIndicator _changeIndicator;
 
   ChangePeriod(String code, DateTime time) : super(code) {
@@ -21,9 +28,6 @@ class ChangePeriod extends Group
     // Parse the groups
     _parse();
   }
-
-  /// Get the unparsed groups of the change period.
-  List<String> get unparsedGroups => _unparsedGroups;
 
   void _handleChangeIndicator(String group) {
     final match = MetarRegExp.CHANGE_INDICATOR.firstMatch(group);

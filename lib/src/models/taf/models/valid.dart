@@ -5,7 +5,9 @@ class Valid extends Group {
   late final Time _from;
   late final Time _until;
 
-  Valid(String? code, RegExpMatch? match, DateTime time) : super(code) {
+  Valid(String? code, this._from, this._until) : super(code);
+
+  Valid.fromTaf(String? code, RegExpMatch? match, DateTime time) : super(code) {
     time = DateTime(
       time.year,
       time.month,
@@ -87,11 +89,13 @@ class Valid extends Group {
 
 /// Mixin to add the valid period of forecast attribute and handler.
 mixin TafValidMixin on StringAttributeMixin, MetarTimeMixin {
+  /// Initialize this attribute in the constructor of the client class.
+  /// `_valid = Valid.fromTaf(null, null, _time.time);`
   late Valid _valid;
 
   void _handleValidPeriod(String group) {
     final match = TafRegExp.VALID.firstMatch(group);
-    _valid = Valid(group, match, _time.time);
+    _valid = Valid.fromTaf(group, match, _time.time);
 
     _concatenateString(_valid);
   }

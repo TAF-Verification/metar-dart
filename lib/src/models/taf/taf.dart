@@ -11,7 +11,7 @@ class Taf extends Report
         MetarWeatherMixin,
         MetarCloudMixin {
   late final String _body;
-  final List<String> _weatherChanges = <String>[];
+  final List<String> _changesCodes = <String>[];
   int? _year, _month;
 
   // Body groups
@@ -20,6 +20,9 @@ class Taf extends Report
   late TafTemperature _maxTemperature;
   late TafTemperature _minTemperature;
 
+  // Change periods
+  final _changePeriods = TafChangePeriods();
+
   Taf(String code, {int? year, int? month, bool truncate = false})
       : super(code, truncate, type: 'TAF') {
     _year = year;
@@ -27,24 +30,22 @@ class Taf extends Report
 
     _handleSections();
 
+    _valid = Valid.fromTaf(null, null, _time.time);
     _maxTemperature = TafTemperature(null, null, _time.time);
     _minTemperature = TafTemperature(null, null, _time.time);
 
     // Parse the body groups.
     _parseBody();
+
+    // Parse the change periods
+    _parseChangePeriods();
   }
 
   /// Get the body part of the TAF.
   String get body => _body;
 
   /// Get the weather changes of the TAF.
-  String get weatherChanges {
-    if (_weatherChanges.isNotEmpty) {
-      return _weatherChanges.join(' ');
-    }
-
-    return '';
-  }
+  String get weatherChanges => _sections[1];
 
   @override
   void _handleTime(String group) {
@@ -94,6 +95,16 @@ class Taf extends Report
   /// Get the minimum temperature expected to happen.
   TafTemperature get minTemperature => _minTemperature;
 
+  void _handleChangePeriod(String code) {
+    final cf = ChangeForecast(code, _valid);
+    _changePeriods.add(cf);
+
+    _concatenateString(cf);
+  }
+
+  /// Get the weather change periods data of the TAF if provided.
+  TafChangePeriods get changePeriods => _changePeriods;
+
   /// Parse the body section.
   void _parseBody() {
     final handlers = <GroupHandler>[
@@ -121,11 +132,30 @@ class Taf extends Report
     _unparsedGroups.addAll(unparsed);
   }
 
+  void _parseChangePeriods() {
+    for (final change in _changesCodes) {
+      if (change != '') {
+        _handleChangePeriod(change);
+      }
+    }
+
+    for (final cp in _changePeriods.items) {
+      _unparsedGroups.addAll(cp.unparsedGroups);
+    }
+
+    if (unparsedGroups.isNotEmpty && _truncate) {
+      throw ParserError(
+        'failed while processing ${unparsedGroups.join(" ")} from: $rawCode',
+      );
+    }
+  }
+
   @override
   void _handleSections() {
     final keywords = <String>['FM', 'TEMPO', 'BECMG', 'PROB'];
+    final sanitizedCode = sanitizeChangeIndicator(_rawCode);
     final sections = splitSentence(
-      _rawCode,
+      sanitizedCode,
       keywords,
       space: 'left',
       all: true,
@@ -133,10 +163,13 @@ class Taf extends Report
 
     _body = sections[0];
     if (sections.length > 1) {
-      _weatherChanges.addAll(sections.sublist(1));
+      _changesCodes.addAll(sections.sublist(1));
     }
 
     _sections.add(_body);
-    _sections.add(_weatherChanges.join(' '));
+    _sections.add(_changesCodes
+        .map((change) => change.replaceFirst('_', ' '))
+        .toList()
+        .join(' '));
   }
 }

@@ -29,4 +29,10 @@ class TafRegExp {
       r'(?<temp>\d{2})/'
       r'(?<day>0[1-9]|[12][0-9]|3[01])'
       r'(?<hour>[0-1]\d|2[0-3])Z');
+
+  static final RegExp CHANGE_INDICATOR = RegExp(r'^TEMPO|BECMG'
+      r'|FM(?<day>0[1-9]|[12][0-9]|3[01])'
+      r'(?<hour>[0-1]\d|2[0-3])'
+      r'(?<minute>[0-5]\d)'
+      r'|PROB[34]0(_TEMPO)?$');
 }

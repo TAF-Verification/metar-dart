@@ -9,9 +9,12 @@ class GroupHandler {
 
 /// Basic structure of a group in a aeronautical report from land stations.
 abstract class Group {
-  final String? _code;
+  late final String? _code;
 
-  Group(this._code);
+  Group(String? code) {
+    code = code?.replaceAll('_', ' ');
+    _code = code;
+  }
 
   @override
   String toString() {

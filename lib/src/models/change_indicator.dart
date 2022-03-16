@@ -10,13 +10,9 @@ final CHANGE_TRANSLATIONS = <String, String>{
 
 /// Basic structure for trend codes in the report.
 class ChangeIndicator extends Group {
-  @override
-  String? _code;
-  late final String? _translation;
+  late String? _translation;
 
   ChangeIndicator(String? code, RegExpMatch? match) : super(code) {
-    _code = code;
-
     if (match != null) {
       if (CHANGE_TRANSLATIONS.keys.contains(code)) {
         _translation = CHANGE_TRANSLATIONS[code];

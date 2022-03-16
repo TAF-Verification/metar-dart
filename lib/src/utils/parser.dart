@@ -50,6 +50,29 @@ String sanitizeWindshear(String code) {
   return code;
 }
 
+/// Sanitize the `PROB[34]0 TEMPO` to get match with the
+/// regular expression of the change indicator in TAF like reports.
+
+/// Args:
+///     code (String): the report or section to sanitize.
+
+/// Returns:
+///     String: the sanitized report or section.
+String sanitizeChangeIndicator(String code) {
+  final regex = RegExp(r'PROB(?<percent>[34]0)\sTEMPO');
+  for (var i = 0; i < 5; i++) {
+    if (regex.hasMatch(code)) {
+      final match = regex.firstMatch(code);
+      code =
+          code.replaceFirst(regex, 'PROB${match!.namedGroup("percent")}_TEMPO');
+    } else {
+      break;
+    }
+  }
+
+  return code;
+}
+
 /// Parse the groups of the section.
 ///
 /// Args:

@@ -9,7 +9,7 @@ class GroupHandler {
 
 /// Basic structure of a group in a aeronautical report from land stations.
 abstract class Group {
-  late final String? _code;
+  String? _code;
 
   Group(String? code) {
     code = code?.replaceAll('_', ' ');
@@ -90,6 +90,12 @@ class GroupList<T extends Group> {
 
   /// Get the length of the items.
   int get length => _list.length;
+
+  /// Get the first item of the list.
+  T get first => _list.first;
+
+  /// Get the last item of the list.
+  T get last => _list.last;
 
   /// Get the codes of every group found in the report as a List<String>.
   List<String?> get codes => _list.map((group) => group.code).toList();

@@ -97,6 +97,12 @@ class Taf extends Report
 
   void _handleChangePeriod(String code) {
     final cf = ChangeForecast(code, _valid);
+    if (_changePeriods.length > 0) {
+      if (cf.code!.startsWith('FM') || cf.code!.startsWith('BECMG')) {
+        _changePeriods.last.changeIndicator
+            .resetUntilPeriod(cf.changeIndicator.valid.periodUntil);
+      }
+    }
     _changePeriods.add(cf);
 
     _concatenateString(cf);

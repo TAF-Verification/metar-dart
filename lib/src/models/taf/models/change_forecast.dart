@@ -15,6 +15,14 @@ class ChangeForecast extends Forecast {
     _parse();
   }
 
+  @override
+  String toString() {
+    _string = '';
+    _concatenateString(_changeIndicator);
+
+    return _string;
+  }
+
   void _handleChangeIndicator(String group) {
     final match = TafRegExp.CHANGE_INDICATOR.firstMatch(group);
     _changeIndicator = TafChangeIndicator(group, match, _valid);
@@ -23,9 +31,15 @@ class ChangeForecast extends Forecast {
   /// Get the change indicator data of the change period.
   TafChangeIndicator get changeIndicator => _changeIndicator;
 
+  void _handleValidPeriod(String group) {
+    final match = TafRegExp.VALID.firstMatch(group);
+    _changeIndicator.setValidPeriod(group, match!, _valid.periodFrom);
+  }
+
   void _parse() {
     final handlers = <GroupHandler>[
       GroupHandler(TafRegExp.CHANGE_INDICATOR, _handleChangeIndicator),
+      GroupHandler(TafRegExp.VALID, _handleValidPeriod),
     ];
 
     final sanitizedCode = sanitizeChangeIndicator(_code!);
@@ -41,5 +55,43 @@ class TafChangePeriods extends GroupList<ChangeForecast> {
   @override
   String toString() {
     return _list.join('\n');
+  }
+
+  /// Adds weather changes to the list.
+  @override
+  void add(ChangeForecast newChange) {
+    if (_list.isNotEmpty) {
+      if (newChange.code!.startsWith('FM') ||
+          newChange.code!.startsWith('BECMG')) {
+        final tempChanges = <ChangeForecast>[];
+
+        var lastChange = _list.removeLast();
+        while (true) {
+          if (lastChange.changeIndicator.code!.startsWith('PROB') ||
+              lastChange.changeIndicator.code!.startsWith('TEMPO')) {
+            tempChanges.add(lastChange);
+            try {
+              lastChange = _list.removeLast();
+            } catch (e) {
+              break;
+            }
+          } else if (lastChange.changeIndicator.code!.startsWith('FM')) {
+            lastChange.changeIndicator
+                .resetUntilPeriod(newChange.changeIndicator.valid.periodFrom);
+            tempChanges.add(lastChange);
+            break;
+          } else {
+            tempChanges.add(lastChange);
+            break;
+          }
+        }
+
+        for (final tempChange in tempChanges.reversed) {
+          super.add(tempChange);
+        }
+      }
+    }
+
+    super.add(newChange);
   }
 }

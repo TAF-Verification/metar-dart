@@ -7,6 +7,13 @@ class Valid extends Group {
 
   Valid(String? code, this._from, this._until) : super(code);
 
+  /// Named constructor of the Valid class using a TAF like
+  /// group of valid period of time.
+  ///
+  /// Args:
+  ///   code (String?): the code of the group.
+  ///   match (RegExpMatch?): the match of the regular expression.
+  ///   time (DateTime): the initial valid time of the forecast.
   Valid.fromTaf(String? code, RegExpMatch? match, DateTime time) : super(code) {
     time = DateTime(
       time.year,

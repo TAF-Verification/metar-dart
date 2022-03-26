@@ -31,14 +31,15 @@ class TafChangeIndicator extends ChangeIndicator {
   ///
   /// Args:
   ///     match (RegExpMatch): the match of the regular expression of valid time period.
-  ///     tafTime (Time): the datetime of the TAF report.
-  void setValidPeriod(String code, RegExpMatch match, Time tafTime) {
-    _valid = Valid.fromTaf(code, match, tafTime.time);
+  ///     initTime (Time): the initial datetime of valid time of the forecast.
+  void setValidPeriod(String code, RegExpMatch match, Time initTime) {
+    _valid = Valid.fromTaf(code, match, initTime.time);
 
     if (_code!.startsWith('FM')) {
       _translation = '$_valid';
     } else {
       _translation = '$_translation $_valid';
+      _code = '$_code ${_valid.code}';
     }
   }
 
@@ -50,6 +51,7 @@ class TafChangeIndicator extends ChangeIndicator {
   ///     until (Time): the until time period that this change indicator
   ///     applies to.
   void resetUntilPeriod(Time until) {
+    until = Time(time: until.time.subtract(const Duration(hours: 1)));
     if (_code!.startsWith('FM')) {
       _valid = Valid(null, _valid.periodFrom, until);
       _translation = '$_valid';

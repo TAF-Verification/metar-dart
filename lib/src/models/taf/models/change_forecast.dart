@@ -40,6 +40,7 @@ class ChangeForecast extends Forecast {
     final handlers = <GroupHandler>[
       GroupHandler(TafRegExp.CHANGE_INDICATOR, _handleChangeIndicator),
       GroupHandler(TafRegExp.VALID, _handleValidPeriod),
+      GroupHandler(TafRegExp.WIND, _handleWind),
     ];
 
     final sanitizedCode = sanitizeChangeIndicator(_code!);

@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:metar_dart/metar_dart.dart';
 
 void main() {
-  test('Test three changes', () {
+  test('Test changes visibility from sea miles', () {
     final code = '''
     TAF KATL 282202Z 2822/0124 04006KT P6SM SKC
         FM010100 00000KT P6SM SKC

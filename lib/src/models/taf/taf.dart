@@ -159,13 +159,17 @@ class Taf extends Report
   @override
   void _handleSections() {
     final keywords = <String>['FM', 'TEMPO', 'BECMG', 'PROB'];
-    final sanitizedCode = sanitizeChangeIndicator(_rawCode);
+    var sanitizedCode = sanitizeChangeIndicator(_rawCode);
+    if (sanitizedCode.startsWith('TAF')) {
+      sanitizedCode = sanitizedCode.replaceFirst('TAF ', 'TAF_');
+    }
     final sections = splitSentence(
       sanitizedCode,
       keywords,
       space: 'left',
       all: true,
     );
+    sections[0] = sections[0].replaceFirst('TAF_', 'TAF ');
 
     _body = sections[0];
     if (sections.length > 1) {

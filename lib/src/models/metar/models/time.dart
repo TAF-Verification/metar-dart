@@ -11,7 +11,6 @@ class MetarTime extends Time with GroupMixin {
       final _minute = match.namedGroup('min');
 
       final _month = '${_time.month}'.padLeft(2, '0');
-
       _time = DateTime.parse('${_time.year}$_month${_day}T$_hour${_minute}00');
     }
   }

@@ -18,9 +18,9 @@ class Time {
 
       year ??= today.year;
       month ??= today.month;
-      day ??= '${today.day}'.padLeft(2, '0');
-      hour ??= '${today.hour}'.padLeft(2, '0');
-      minute ??= '${today.minute}'.padLeft(2, '0');
+      day ??= '01';
+      hour ??= '00';
+      minute ??= '00';
 
       final _month = '$month'.padLeft(2, '0');
 

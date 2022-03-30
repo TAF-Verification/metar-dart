@@ -43,6 +43,12 @@ class ChangeForecast extends Forecast {
       GroupHandler(TafRegExp.WIND, _handleWind),
       GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(MetarRegExp.CLOUD, _handleCloud),
     ];
 
     var sanitizedCode = sanitizeChangeIndicator(_code!);

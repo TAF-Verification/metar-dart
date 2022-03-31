@@ -12,7 +12,7 @@ class TafRegExp {
 
   static final RegExp CANCELLED = RegExp(r'^CNL$');
 
-  static final RegExp WIND = RegExp(r'^(?<dir>[0-2][0-9]0|3[0-6]0)'
+  static final RegExp WIND = RegExp(r'^(?<dir>([0-2][0-9]|3[0-6])0|VRB)'
       r'P?(?<speed>\d{2,3})'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');

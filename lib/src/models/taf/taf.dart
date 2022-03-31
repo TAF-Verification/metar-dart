@@ -17,8 +17,8 @@ class Taf extends Report
   // Body groups
   Missing _missing = Missing(null);
   Cancelled _cancelled = Cancelled(null);
-  late TafTemperature _maxTemperature;
-  late TafTemperature _minTemperature;
+  final _maxTemperatures = TafTemperatureList();
+  final _minTemperatures = TafTemperatureList();
 
   // Change periods
   final _changePeriods = TafChangePeriods();
@@ -31,8 +31,6 @@ class Taf extends Report
     _handleSections();
 
     _valid = Valid.fromTaf(null, null, _time.time);
-    _maxTemperature = TafTemperature(null, null, _time.time);
-    _minTemperature = TafTemperature(null, null, _time.time);
 
     // Parse the body groups.
     _parseBody();
@@ -78,22 +76,22 @@ class Taf extends Report
 
   void _handleTemperature(String group) {
     final match = TafRegExp.TEMPERATURE.firstMatch(group);
+    final temperature = TafTemperature(group, match, _time.time);
+
     if (match!.namedGroup('type') == 'X') {
-      _maxTemperature = TafTemperature(group, match, _time.time);
-
-      _concatenateString(_maxTemperature);
+      _maxTemperatures.add(temperature);
     } else {
-      _minTemperature = TafTemperature(group, match, _time.time);
-
-      _concatenateString(_minTemperature);
+      _minTemperatures.add(temperature);
     }
+
+    _concatenateString(temperature);
   }
 
   /// Get the maximum temperature expected to happen.
-  TafTemperature get maxTemperature => _maxTemperature;
+  TafTemperatureList get maxTemperatures => _maxTemperatures;
 
   /// Get the minimum temperature expected to happen.
-  TafTemperature get minTemperature => _minTemperature;
+  TafTemperatureList get minTemperatures => _minTemperatures;
 
   void _handleChangePeriod(String code) {
     final cf = ChangeForecast(code, _valid);
@@ -130,6 +128,8 @@ class Taf extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
+      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
       GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
       GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
     ];

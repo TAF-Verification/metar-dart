@@ -46,3 +46,8 @@ class TafTemperature extends Temperature with GroupMixin {
   /// Get the date and time the temperature is expected to happen.
   Time? get time => _time;
 }
+
+/// Basic structure for temperature lists in TAF.
+class TafTemperatureList extends GroupList<TafTemperature> {
+  TafTemperatureList() : super(2);
+}

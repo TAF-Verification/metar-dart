@@ -8,7 +8,8 @@ class Metar extends Report
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
-        MetarCloudMixin {
+        MetarCloudMixin,
+        FlightRulesMixin {
   late final int? _year, _month;
 
   // Body groups

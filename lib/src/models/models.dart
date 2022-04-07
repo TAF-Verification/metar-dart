@@ -10,6 +10,7 @@ part 'change_indicator.dart';
 part 'clouds.dart';
 part 'distance.dart';
 part 'errors.dart';
+part 'flight_rules.dart';
 part 'group.dart';
 part 'modifier.dart';
 part 'numeric.dart';

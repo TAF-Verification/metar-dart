@@ -13,7 +13,7 @@ void main() {
         BECMG 0700/0702 26006G12MPS
         BECMG 0708/0710 27007G13MPS
     ''';
-    final taf = Taf(code);
+    final taf = Taf(code, year: 2022, month: 3);
     final changes = taf.changePeriods;
 
     expect(changes.length, 3);

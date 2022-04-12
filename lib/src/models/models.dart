@@ -46,4 +46,5 @@ part 'taf/models/change_indicator.dart';
 part 'taf/models/missing.dart';
 part 'taf/models/temperature.dart';
 part 'taf/models/valid.dart';
+part 'taf/models/windshear.dart';
 part 'taf/taf.dart';

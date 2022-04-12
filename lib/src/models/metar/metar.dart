@@ -125,8 +125,8 @@ class Metar extends Report
   /// Get the recent weather data of the METAR.
   MetarRecentWeather get recentWeather => _recentWeather;
 
-  void _handleWindshear(String group) {
-    final match = MetarRegExp.WINDSHEAR.firstMatch(group);
+  void _handleWindshearRunway(String group) {
+    final match = MetarRegExp.WINDSHEAR_RUNWAY.firstMatch(group);
     final windshear = MetarWindshearRunway(group, match);
     _windshear.add(windshear);
 
@@ -190,9 +190,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.RECENT_WEATHER, _handleRecentWeather),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
       GroupHandler(MetarRegExp.SEA_STATE, _handleSeaState),
       GroupHandler(MetarRegExp.RUNWAY_STATE, _handleRunwayState),
     ];
@@ -242,9 +242,9 @@ class Metar extends Report
       space: 'left',
     );
 
-    String trend = '';
-    String remark = '';
-    String body = '';
+    var trend = '';
+    var remark = '';
+    var body = '';
     for (final section in sections) {
       if (section.startsWith('TEMPO') ||
           section.startsWith('BECMG') ||

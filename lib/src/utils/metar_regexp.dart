@@ -64,7 +64,7 @@ class MetarRegExp {
           r'(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?'
           r'(?<other>PO|SQ|FC|SS|DS)?$');
 
-  static final RegExp WINDSHEAR = RegExp(r'^WS(?<all>_ALL)?'
+  static final RegExp WINDSHEAR_RUNWAY = RegExp(r'^WS(?<all>_ALL)?'
       r'_(RWY|R(?<name>\d{2}[RCL]?))$');
 
   static final RegExp SEA_STATE = RegExp(r'^W(?<sign>M)?'

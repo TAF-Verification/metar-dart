@@ -35,4 +35,10 @@ class TafRegExp {
       r'(?<hour>[0-1]\d|2[0-3])'
       r'(?<minute>[0-5]\d)'
       r'|PROB[34]0(_TEMPO)?$');
+
+  static final RegExp WINDSHEAR = RegExp(r'^WS(?<height>([0-9][0-9][0-9]))/'
+      r'(?<dir>([0-2][0-9]|3[0-6])0|///|VRB)'
+      r'P?(?<speed>\d{2,3}|//|///)'
+      r'(G(P)?(?<gust>\d{2,3}))?'
+      r'(?<units>KT|MPS)$');
 }

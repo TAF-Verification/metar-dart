@@ -49,6 +49,7 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
     var sanitizedCode = sanitizeChangeIndicator(_code!);

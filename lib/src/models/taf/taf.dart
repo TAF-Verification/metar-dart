@@ -9,7 +9,8 @@ class Taf extends Report
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
-        MetarCloudMixin {
+        MetarCloudMixin,
+        TafWindshearMixin {
   late final String _body;
   final List<String> _changesCodes = <String>[];
   int? _year, _month;
@@ -132,6 +133,7 @@ class Taf extends Report
       GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
       GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
       GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
+      GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
     final unparsed = parseSection(handlers, _body);

@@ -32,13 +32,14 @@ void main() {
 
   test('Test TAF Wind Shear', () {
     final code = '''
-      KMEM 081503Z 0815/0912 20006KT P6SM SCT100 BKN250
+      KMEM 081503Z 0815/0912 20006KT P6SM SCT100 BKN250 WS020/20045KT
       FM082100 21006KT P6SM VCSH SCT050 BKN200
       FM090000 18005KT P6SM -RA OVC015
       FM090200 18010KT 2SM -RA BR BKN008 OVC015 WS020/20045KT=
     ''';
     final taf = Taf(code);
     final wind = taf.wind;
+    final windshear = taf.windshears.first;
 
     expect(wind.code, '20006KT');
     expect(wind.cardinalDirection, 'SSW');
@@ -52,6 +53,10 @@ void main() {
     expect(wind.gustInMps, null);
     expect(wind.gustInMiph, null);
     expect(wind.toString(), 'SSW (200.0°) 6.0 kt');
+    expect(windshear.heightInFeet, 2000);
+    expect(
+        windshear.toString(), 'wind-shear at 2000 feet, SSW (200.0°) 45.0 kt');
+    expect(windshear.wind.toString(), 'SSW (200.0°) 45.0 kt');
 
     final forecasts = taf.changePeriods;
     expect(forecasts.length, 3);
@@ -92,10 +97,10 @@ void main() {
 
     expect(forecast2.clouds[0].toString(), 'broken at 800.0 feet');
     expect(forecast2.clouds[1].toString(), 'overcast at 1500.0 feet');
-    final windshear = forecast2.windshears.first;
-    expect(windshear.heightInFeet, 2000);
-    expect(
-        windshear.toString(), 'wind-shear at 2000 feet, SSW (200.0°) 45.0 kt');
+    final windshearF2 = forecast2.windshears.first;
+    expect(windshearF2.heightInFeet, 2000);
+    expect(windshearF2.toString(),
+        'wind-shear at 2000 feet, SSW (200.0°) 45.0 kt');
     expect(forecast2.windshears.first.toString(),
         'wind-shear at 2000 feet, SSW (200.0°) 45.0 kt');
   });

@@ -47,6 +47,7 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
@@ -64,7 +65,7 @@ class ChangeForecast extends Forecast {
 
 /// Basic structure for weather change periods in TAF.
 class TafChangePeriods extends GroupList<ChangeForecast> {
-  TafChangePeriods() : super(8);
+  TafChangePeriods() : super(20);
 
   @override
   String toString() {

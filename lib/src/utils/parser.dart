@@ -83,12 +83,18 @@ String sanitizeChangeIndicator(String code) {
 /// Returns:
 ///     unparsed_groups (List<String>): the not matched groups with anyone
 ///     of the regular expresions stored in `handlers`.
-List<String> parseSection(List<GroupHandler> handlers, String section) {
+List<String> parseSection(
+  List<GroupHandler> handlers,
+  String section, {
+  required Null Function(String warning) onWarning,
+}) {
   final unparsedGroups = <String>[];
   var index = 0;
 
   section.split(' ').forEach((group) {
     unparsedGroups.add(group);
+
+    var found = false;
 
     for (var i = index; i < handlers.length; i++) {
       var handler = handlers[i];
@@ -97,8 +103,13 @@ List<String> parseSection(List<GroupHandler> handlers, String section) {
       if (handler.regexp.hasMatch(group)) {
         handler.handler(group);
         unparsedGroups.remove(group);
+        found = true;
         break;
       }
+    }
+
+    if (!found) {
+      onWarning('TAF Group not found: $group');
     }
   });
 

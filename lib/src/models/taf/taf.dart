@@ -21,6 +21,8 @@ class Taf extends Report
   final _maxTemperatures = TafTemperatureList();
   final _minTemperatures = TafTemperatureList();
 
+  List<String> warnings = [];
+
   // Change periods
   final _changePeriods = TafChangePeriods();
 
@@ -95,7 +97,13 @@ class Taf extends Report
   TafTemperatureList get minTemperatures => _minTemperatures;
 
   void _handleChangePeriod(String code) {
-    final cf = ChangeForecast(code, _valid);
+    final cf = ChangeForecast(
+      code,
+      _valid,
+      onWarning: (warning) {
+        warnings.add(warning);
+      },
+    );
     if (_changePeriods.length > 0) {
       if (cf.code!.startsWith('FM') || cf.code!.startsWith('BECMG')) {
         _changePeriods.last.changeIndicator
@@ -136,7 +144,9 @@ class Taf extends Report
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
-    final unparsed = parseSection(handlers, _body);
+    final unparsed = parseSection(handlers, _body, onWarning: (warning) {
+      warnings.add(warning);
+    });
     _unparsedGroups.addAll(unparsed);
   }
 

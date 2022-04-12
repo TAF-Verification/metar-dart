@@ -21,7 +21,10 @@ class ChangePeriod extends Forecast {
   late final Time _time;
   late MetarTrendIndicator _changeIndicator;
 
-  ChangePeriod(String code, DateTime time) : super(code) {
+  final Null Function(String warning) onWarning;
+
+  ChangePeriod(String code, DateTime time, {required this.onWarning})
+      : super(code) {
     _time = Time(time: time);
     // Groups
     _changeIndicator = MetarTrendIndicator(null, null, _time.time);
@@ -66,7 +69,8 @@ class ChangePeriod extends Forecast {
     ];
 
     final sanitizedCode = sanitizeVisibility(_code!);
-    final unparsed = parseSection(handlers, sanitizedCode);
+    final unparsed =
+        parseSection(handlers, sanitizedCode, onWarning: onWarning);
     _unparsedGroups.addAll(unparsed);
   }
 }

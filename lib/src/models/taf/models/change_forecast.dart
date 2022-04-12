@@ -4,7 +4,9 @@ part of models;
 class ChangeForecast extends Forecast {
   late final Valid _valid;
   late TafChangeIndicator _changeIndicator;
-  ChangeForecast(String code, Valid valid) : super(code) {
+  final Null Function(String warning) onWarning;
+  ChangeForecast(String code, Valid valid, {required this.onWarning})
+      : super(code) {
     // Initialize valid period of the forecasts
     _valid = valid;
 
@@ -54,7 +56,8 @@ class ChangeForecast extends Forecast {
 
     var sanitizedCode = sanitizeChangeIndicator(_code!);
     sanitizedCode = sanitizeVisibility(sanitizedCode);
-    final unparsed = parseSection(handlers, sanitizedCode);
+    final unparsed =
+        parseSection(handlers, sanitizedCode, onWarning: onWarning);
     _unparsedGroups.addAll(unparsed);
   }
 }

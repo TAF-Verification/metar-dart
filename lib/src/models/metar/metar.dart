@@ -26,11 +26,14 @@ class Metar extends Report
   // Trend groups
   final MetarWeatherTrends _weatherTrends = MetarWeatherTrends();
 
+  final DateTime? observedAt;
+
   Metar(
     String code, {
     int? year,
     int? month,
     bool truncate = false,
+    this.observedAt,
   }) : super(code, truncate) {
     _handleSections();
 

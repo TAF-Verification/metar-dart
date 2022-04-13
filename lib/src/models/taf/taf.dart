@@ -138,7 +138,8 @@ class Taf extends Report
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
-    final body = sanitizeWindToken(_body);
+    var body = sanitizeWindToken(_body);
+    body = sanitizeVisibility(body);
 
     final unparsed = parseSection(handlers, body, onWarning: (warning) {
       warnings.add(warning);

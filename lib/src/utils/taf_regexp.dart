@@ -46,4 +46,7 @@ class TafRegExp {
       RegExp(r'^(5(?<turbType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
   static final RegExp ICING =
       RegExp(r'^(6(?<icingType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
+
+  static final RegExp AMMENDMENTS = RegExp(
+      r'^(LAST_NO_AMDS_AFT_(?<afterd>\d{2})(?<afterh>\d{2})_NEXT(?<nextd>\d{2})(?<nexth>\d{2}))|AFT_(?<afterd2>\d{2})(?<afterh2>\d{2})');
 }

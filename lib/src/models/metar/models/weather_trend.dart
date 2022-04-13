@@ -13,7 +13,7 @@ class Forecast extends Group
         PressureMixin,
         TafTemperatureMixin,
         TafIcingMixin,
-        TafAmmendmentsMixin {
+        TafAmendmentsMixin {
   final _unparsedGroups = <String>[];
   Forecast(String code) : super(code);
 

@@ -1,22 +1,28 @@
 part of models;
 
 /// Basic structure for valid time groups in change periods and forecasts.
-class TafAmmendments extends Group {
-  TafAmmendments(String? code) : super(code);
+class TafAmendments extends Group {
+  TafAmendments(String? code) : super(code);
 
   DateTime? after, next;
+  bool nextNotSked = false;
 
-  /// Named constructor of the TafAmmendments clas
+  /// Named constructor of the TafAmendments clas
   ///
   /// Args:
   ///   code (String?): the code of the group.
   ///   match (RegExpMatch?): the match of the regular expression.
-  TafAmmendments.fromTaf(String? code, RegExpMatch? match) : super(code) {
+  TafAmendments.fromTaf(String? code, RegExpMatch? match) : super(code) {
     if (match != null) {
       final afterd = match.namedGroup('afterd') ?? match.namedGroup('afterd2');
       final afterh = match.namedGroup('afterh') ?? match.namedGroup('afterh2');
       final nextd = match.namedGroup('nextd');
       final nexth = match.namedGroup('nextd');
+
+      if (match.input == 'AMD_NOT_SKED' || (afterd == null && nexth == null)) {
+        nextNotSked = true;
+        return;
+      }
 
       after = DateTime(
         DateTime.now().year,
@@ -40,10 +46,13 @@ class TafAmmendments extends Group {
 
   @override
   String toString() {
-    if (next != null) {
-      return 'No ammendments between ${after!.hour}:00 UTC on the ${after!.day}${daySuffix(after!.day)} and ${next!.hour}:00 UTC on the ${next!.day}${daySuffix(next!.day)}';
+    if (nextNotSked) {
+      return 'AMD_NOT_SKED';
     }
-    return 'No ammendments after ${after!.hour}:00 UTC on the ${after!.day}${daySuffix(after!.day)}';
+    if (next != null) {
+      return 'No amendments between ${after!.hour}:00 UTC on the ${after!.day}${daySuffix(after!.day)} and ${next!.hour}:00 UTC on the ${next!.day}${daySuffix(next!.day)}';
+    }
+    return 'No amendments after ${after!.hour}:00 UTC on the ${after!.day}${daySuffix(after!.day)}';
   }
 
   String daySuffix(int day) {
@@ -65,21 +74,22 @@ class TafAmmendments extends Group {
 }
 
 /// Mixin to add the valid period of forecast attribute and handler.
-mixin TafAmmendmentsMixin on StringAttributeMixin {
-  late final TafAmmendments _ammendment;
+mixin TafAmendmentsMixin on StringAttributeMixin {
+  late final TafAmendments _amendment;
 
-  void _handleAmmendment(String group) {
-    final match = TafRegExp.AMMENDMENTS.firstMatch(group);
-    _ammendment = TafAmmendments.fromTaf(group, match);
-    _concatenateString(_ammendment);
+  void _handleAmendment(String group) {
+    final match = TafRegExp.AMENDMENTS.firstMatch(group);
+    _amendment = TafAmendments.fromTaf(group, match);
+    _concatenateString(_amendment);
   }
 
-  TafAmmendments get ammendment => _ammendment;
+  TafAmendments get ammendment => _amendment;
 }
 
-String sanitizeAmmendments(String code) {
+String sanitizeAmendments(String code) {
   return code
       .replaceAll(' LAST NO AMDS AFT ', ' LAST_NO_AMDS_AFT_')
       .replaceAll(' AFT ', ' AFT_')
-      .replaceAll(' NEXT ', '_NEXT_');
+      .replaceAll(' NEXT ', '_NEXT_')
+      .replaceAll(' AMD NOT SKED', ' AMD_NOT_SKED');
 }

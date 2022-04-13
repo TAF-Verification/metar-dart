@@ -49,5 +49,5 @@ part 'taf/models/valid.dart';
 part 'taf/models/windshear.dart';
 part 'taf/models/turbulence.dart';
 part 'taf/models/icing.dart';
-part 'taf/models/ammendments.dart';
+part 'taf/models/amendments.dart';
 part 'taf/taf.dart';

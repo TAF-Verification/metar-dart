@@ -8,7 +8,10 @@ class Forecast extends Group
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin,
-        TafWindshearMixin {
+        TafWindshearMixin,
+        TafTurbulenceMixin,
+        PressureMixin,
+        TafTemperatureMixin {
   final _unparsedGroups = <String>[];
   Forecast(String code) : super(code);
 

@@ -27,7 +27,6 @@ void main() {
     expect(taf.warnings.length, 0);
     expect(taf.changePeriods[1].prevailingVisibility.inMeters, 5000);
 
-    // TODO: still failing
     final code4 =
         'TAF KADW 121700Z 1217/1323 29010G15KT 9999 SCT020 BKN040 OVC085 QNH3004INS TEMPO 1217/1221 29015G25KT 510002 BECMG 1220/1221 VRB06KT 9999 SCT030 BKN050 QNH3003INS BECMG 1315/1316 20010G15KT 9999 FEW060 SCT150 BKN200 QNH2992INS BECMG 1320/1321 21020G30KT 9999 FEW050 FEW110 BKN160 510003 QNH2990INS TX24/1317Z TN13/1308Z';
     taf = Taf(code4);
@@ -570,21 +569,21 @@ void main() {
       'TAF LFSB 121700Z 1218/1318 15003KT CAVOK PROB30 TEMPO 1312/1318 34010KT FEW050TCU',
     ];
 
-    var c = 0;
-    var e = 0;
-    var a = 0;
+    var warnings = 0;
+    var errors = 0;
+    var correct = 0;
     for (final taf in tafs) {
       try {
         final tafO = Taf(taf);
         if (tafO.warnings.isNotEmpty) {
-          c++;
+          warnings++;
         } else {
-          a++;
+          correct++;
         }
       } catch (er) {
-        e++;
+        errors++;
       }
     }
-    expect('$a/$c/$e', 0);
+    expect('$correct/$warnings/$errors', '${tafs.length}/0/0');
   }));
 }

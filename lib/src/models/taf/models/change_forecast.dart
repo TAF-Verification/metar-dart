@@ -52,6 +52,16 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 

@@ -41,4 +41,7 @@ class TafRegExp {
       r'P?(?<speed>\d{2,3}|//|///)'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
+
+  static final RegExp TURBULENCE =
+      RegExp(r'^(5(?<turbType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
 }

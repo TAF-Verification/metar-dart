@@ -8,7 +8,9 @@ class Metar extends Report
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
-        MetarCloudMixin {
+        MetarCloudMixin,
+        PressureMixin,
+        MetarTemperatureMixin {
   late final int? _year, _month;
 
   // Body groups
@@ -16,8 +18,6 @@ class Metar extends Report
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
   final _runwayRanges = GroupList<MetarRunwayRange>(3);
-  MetarTemperatures _temperatures = MetarTemperatures(null, null);
-  MetarPressure _pressure = MetarPressure(null, null);
   MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
   final _windshear = MetarWindshearList();
   MetarSeaState _seaState = MetarSeaState(null, null);
@@ -99,26 +99,6 @@ class Metar extends Report
 
   /// Get the runway ranges data of the METAR if provided.
   GroupList<MetarRunwayRange> get runwayRanges => _runwayRanges;
-
-  void _handleTemperatures(String group) {
-    final match = MetarRegExp.TEMPERATURES.firstMatch(group);
-    _temperatures = MetarTemperatures(group, match);
-
-    _concatenateString(_temperatures);
-  }
-
-  /// Get the temperatures data of the METAR.
-  MetarTemperatures get temperatures => _temperatures;
-
-  void _handlePressure(String group) {
-    final match = MetarRegExp.PRESSURE.firstMatch(group);
-    _pressure = MetarPressure(group, match);
-
-    _concatenateString(_pressure);
-  }
-
-  /// Get the pressure of the METAR.
-  MetarPressure get pressure => _pressure;
 
   void _handleRecentWeather(String group) {
     final match = MetarRegExp.RECENT_WEATHER.firstMatch(group);

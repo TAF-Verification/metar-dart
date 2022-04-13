@@ -27,3 +27,16 @@ class MetarPressure extends Pressure with GroupMixin {
     }
   }
 }
+
+mixin PressureMixin on StringAttributeMixin {
+  late MetarPressure _pressure = MetarPressure(null, null);
+
+  void _handlePressure(String group) {
+    final match = MetarRegExp.PRESSURE.firstMatch(group);
+    _pressure = MetarPressure(group, match);
+
+    _concatenateString(_pressure);
+  }
+
+  MetarPressure get pressure => _pressure;
+}

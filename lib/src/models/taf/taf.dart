@@ -10,7 +10,9 @@ class Taf extends Report
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin,
-        TafWindshearMixin {
+        TafWindshearMixin,
+        PressureMixin,
+        TafTemperatureMixin {
   late final String _body;
   final List<String> _changesCodes = <String>[];
   int? _year, _month;
@@ -18,8 +20,6 @@ class Taf extends Report
   // Body groups
   Missing _missing = Missing(null);
   Cancelled _cancelled = Cancelled(null);
-  final _maxTemperatures = TafTemperatureList();
-  final _minTemperatures = TafTemperatureList();
 
   List<String> warnings = [];
 
@@ -77,25 +77,6 @@ class Taf extends Report
   /// Get the cancelled group data of the TAF.
   Cancelled get cancelled => _cancelled;
 
-  void _handleTemperature(String group) {
-    final match = TafRegExp.TEMPERATURE.firstMatch(group);
-    final temperature = TafTemperature(group, match, _time.time);
-
-    if (match!.namedGroup('type') == 'X') {
-      _maxTemperatures.add(temperature);
-    } else {
-      _minTemperatures.add(temperature);
-    }
-
-    _concatenateString(temperature);
-  }
-
-  /// Get the maximum temperature expected to happen.
-  TafTemperatureList get maxTemperatures => _maxTemperatures;
-
-  /// Get the minimum temperature expected to happen.
-  TafTemperatureList get minTemperatures => _minTemperatures;
-
   void _handleChangePeriod(String code) {
     final cf = ChangeForecast(
       code,
@@ -137,10 +118,15 @@ class Taf extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
-      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
-      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
-      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
-      GroupHandler(TafRegExp.TEMPERATURE, _handleTemperature),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _time.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _time.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _time.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _time.time)),
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 

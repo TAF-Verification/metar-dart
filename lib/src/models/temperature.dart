@@ -51,3 +51,17 @@ class Temperature extends Numeric {
   double? get inRankine =>
       converted(conversionFunction: Conversions.celsiusToRankine);
 }
+
+mixin MetarTemperatureMixin on StringAttributeMixin {
+  late MetarTemperatures _temperatures = MetarTemperatures(null, null);
+
+  void _handleTemperatures(String group) {
+    final match = MetarRegExp.TEMPERATURES.firstMatch(group);
+    _temperatures = MetarTemperatures(group, match);
+
+    _concatenateString(_temperatures);
+  }
+
+  /// Get the temperatures data of the METAR.
+  MetarTemperatures get temperatures => _temperatures;
+}

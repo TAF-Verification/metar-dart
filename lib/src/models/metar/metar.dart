@@ -10,11 +10,11 @@ class Metar extends Report
         MetarWeatherMixin,
         MetarCloudMixin,
         PressureMixin,
-        MetarTemperatureMixin {
+        MetarTemperatureMixin,
+        MetarWindVariationMixin {
   late final int? _year, _month;
 
-  // Body groups
-  MetarWindVariation _windVariation = MetarWindVariation(null, null);
+  // Body group
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
   final _runwayRanges = GroupList<MetarRunwayRange>(3);
@@ -68,16 +68,6 @@ class Metar extends Report
 
   /// Get the time of the METAR.
   MetarTime get time => _time;
-
-  void _handleWindVariation(String group) {
-    final match = MetarRegExp.WIND_VARIATION.firstMatch(group);
-    _windVariation = MetarWindVariation(group, match);
-
-    _concatenateString(_windVariation);
-  }
-
-  /// Get the wind variation directions of the METAR.
-  MetarWindVariation get windVariation => _windVariation;
 
   void _handleMinimumVisibility(String group) {
     final match = MetarRegExp.VISIBILITY.firstMatch(group);
@@ -258,4 +248,8 @@ class Metar extends Report
     _sections.add(trend.trim());
     _sections.add(remark);
   }
+}
+
+String sanitizeWindToken(String code) {
+  return code.replaceAll(' WND ', ' WND_');
 }

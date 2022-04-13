@@ -12,7 +12,7 @@ class TafRegExp {
 
   static final RegExp CANCELLED = RegExp(r'^CNL$');
 
-  static final RegExp WIND = RegExp(r'^(?<dir>([0-2][0-9]|3[0-6])0|VRB)'
+  static final RegExp WIND = RegExp(r'^(WND_)?(?<dir>([0-2][0-9]|3[0-6])0|VRB)'
       r'P?(?<speed>\d{2,3})'
       r'(G(P)?(?<gust>\d{2,3}))?'
       r'(?<units>KT|MPS)$');
@@ -44,4 +44,6 @@ class TafRegExp {
 
   static final RegExp TURBULENCE =
       RegExp(r'^(5(?<turbType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
+  static final RegExp ICING =
+      RegExp(r'^(6(?<icingType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
 }

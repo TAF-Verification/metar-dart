@@ -20,7 +20,7 @@ class MetarRegExp {
       r'(?<units>KT|MPS)$');
 
   static final RegExp WIND_VARIATION =
-      RegExp(r'^(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
+      RegExp(r'^(WND_)?(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
           r'V(?<to>(0[1-9]|[12][0-9]|3[0-6])0)$');
 
   static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
@@ -40,7 +40,7 @@ class MetarRegExp {
 
   static final RegExp WEATHER = RegExp(r'^((?<int>(-|\+|VC))?'
       r'(?<desc>MI|PR|BC|DR|BL|SH|TS|FZ)?'
-      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
+      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)(?<prec2>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?|'
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 

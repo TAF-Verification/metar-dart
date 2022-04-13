@@ -9,6 +9,7 @@ class ChangeForecast extends Forecast {
       : super(code) {
     // Initialize valid period of the forecasts
     _valid = valid;
+    _code = code;
 
     // Groups
     _changeIndicator = TafChangeIndicator(null, null, valid);
@@ -53,7 +54,10 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(TafRegExp.ICING, _handleIcing),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(TafRegExp.WIND, _handleWind),
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
       GroupHandler(TafRegExp.TEMPERATURE,
@@ -67,6 +71,7 @@ class ChangeForecast extends Forecast {
 
     var sanitizedCode = sanitizeChangeIndicator(_code!);
     sanitizedCode = sanitizeVisibility(sanitizedCode);
+    sanitizedCode = sanitizeWindToken(sanitizedCode);
     final unparsed =
         parseSection(handlers, sanitizedCode, onWarning: onWarning);
     _unparsedGroups.addAll(unparsed);

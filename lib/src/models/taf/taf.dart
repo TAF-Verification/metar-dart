@@ -12,7 +12,10 @@ class Taf extends Report
         MetarCloudMixin,
         TafWindshearMixin,
         PressureMixin,
-        TafTemperatureMixin {
+        TafTemperatureMixin,
+        MetarWindVariationMixin,
+        TafTurbulenceMixin,
+        TafIcingMixin {
   late final String _body;
   final List<String> _changesCodes = <String>[];
   int? _year, _month;
@@ -78,6 +81,7 @@ class Taf extends Report
   Cancelled get cancelled => _cancelled;
 
   void _handleChangePeriod(String code) {
+    code = sanitizeWindToken(code);
     final cf = ChangeForecast(
       code,
       _valid,
@@ -118,7 +122,11 @@ class Taf extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(TafRegExp.ICING, _handleIcing),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _time.time)),
       GroupHandler(TafRegExp.TEMPERATURE,
@@ -130,7 +138,9 @@ class Taf extends Report
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
-    final unparsed = parseSection(handlers, _body, onWarning: (warning) {
+    final body = sanitizeWindToken(_body);
+
+    final unparsed = parseSection(handlers, body, onWarning: (warning) {
       warnings.add(warning);
     });
     _unparsedGroups.addAll(unparsed);
@@ -161,6 +171,7 @@ class Taf extends Report
     if (sanitizedCode.startsWith('TAF')) {
       sanitizedCode = sanitizedCode.replaceFirst('TAF ', 'TAF_');
     }
+
     final sections = splitSentence(
       sanitizedCode,
       keywords,

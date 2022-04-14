@@ -116,7 +116,6 @@ class Taf extends Report
   Cancelled get cancelled => _cancelled;
 
   void _handleChangePeriod(String code) {
-    code = sanitizeWindToken(code);
     final cf = ChangeForecast(code, _valid);
     if (_changePeriods.length > 0) {
       if (cf.code!.startsWith('FM') || cf.code!.startsWith('BECMG')) {

@@ -63,9 +63,12 @@ class MetarWeather extends Group {
     if (match != null) {
       _intensity = INTENSITY[match.namedGroup('int')];
       _description = DESCRIPTION[match.namedGroup('desc')];
+      final prec = match.namedGroup('prec');
       final prec2 = PRECIPITATION[match.namedGroup('prec2')];
-      _precipitation =
-          '${PRECIPITATION[match.namedGroup('prec')]}${prec2 == null ? '' : ' $prec2'}';
+      if (prec != null || prec2 != null) {
+        _precipitation =
+            '${PRECIPITATION[prec]}${prec2 == null ? '' : ' $prec2'}';
+      }
       _obscuration = OBSCURATION[match.namedGroup('obsc')];
       _other = OTHER[match.namedGroup('other')];
     }

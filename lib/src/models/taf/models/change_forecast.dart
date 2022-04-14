@@ -7,7 +7,6 @@ class ChangeForecast extends Forecast {
   ChangeForecast(String code, Valid valid) : super(code) {
     // Initialize valid period of the forecasts
     _valid = valid;
-    _code = code;
 
     // Groups
     _changeIndicator = TafChangeIndicator(null, null, valid);

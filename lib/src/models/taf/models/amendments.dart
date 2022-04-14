@@ -54,23 +54,6 @@ class TafAmendments extends Group {
     }
     return 'No amendments after ${after!.hour}:00 UTC on the ${after!.day}${daySuffix(after!.day)}';
   }
-
-  String daySuffix(int day) {
-    switch (day) {
-      case 1:
-      case 21:
-      case 31:
-        return 'st';
-      case 2:
-      case 22:
-        return 'nd';
-      case 3:
-      case 23:
-        return 'rd';
-      default:
-        return 'th';
-    }
-  }
 }
 
 /// Mixin to add the valid period of forecast attribute and handler.

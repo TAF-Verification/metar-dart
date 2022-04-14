@@ -47,6 +47,7 @@ class MetarRegExp {
   static final RegExp CLOUD =
       RegExp(r'^(?<cover>VV|SKC|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
           r'(?<height>\d{3}|///)?'
+          r'([0-9])?'
           r'(?<type>TCU|CB|///)?$');
 
   static final RegExp TEMPERATURES = RegExp(r'^(?<tsign>M|-)?'

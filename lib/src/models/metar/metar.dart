@@ -28,8 +28,6 @@ class Metar extends Report
 
   final DateTime? observedAt;
 
-  List<String> warnings = [];
-
   Metar(
     String code, {
     int? year,
@@ -132,13 +130,7 @@ class Metar extends Report
   MetarRunwayState get runwayState => _runwayState;
 
   void _handleWeatherTrend(String code) {
-    final wt = ChangePeriod(
-      code,
-      _time.time,
-      onWarning: (warning) {
-        warnings.add(warning);
-      },
-    );
+    final wt = ChangePeriod(code, _time.time);
     _weatherTrends.add(wt);
 
     _concatenateString(wt);
@@ -181,13 +173,7 @@ class Metar extends Report
     var sanitizedBody = sanitizeVisibility(body);
     sanitizedBody = sanitizeWindshear(sanitizedBody);
 
-    final unparsed = parseSection(
-      handlers,
-      sanitizedBody,
-      onWarning: (warning) {
-        warnings.add(warning);
-      },
-    );
+    final unparsed = parseSection(handlers, sanitizedBody);
     _unparsedGroups.addAll(unparsed);
   }
 

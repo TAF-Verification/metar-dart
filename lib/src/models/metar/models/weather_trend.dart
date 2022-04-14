@@ -13,7 +13,8 @@ class Forecast extends Group
         PressureMixin,
         TafTemperatureMixin,
         TafIcingMixin,
-        TafAmendmentsMixin {
+        TafAmendmentsMixin,
+        MetarWindVariationMixin {
   final _unparsedGroups = <String>[];
   Forecast(String code) : super(code);
 
@@ -26,10 +27,7 @@ class ChangePeriod extends Forecast {
   late final Time _time;
   late MetarTrendIndicator _changeIndicator;
 
-  final Null Function(String warning) onWarning;
-
-  ChangePeriod(String code, DateTime time, {required this.onWarning})
-      : super(code) {
+  ChangePeriod(String code, DateTime time) : super(code) {
     _time = Time(time: time);
     // Groups
     _changeIndicator = MetarTrendIndicator(null, null, _time.time);
@@ -74,8 +72,7 @@ class ChangePeriod extends Forecast {
     ];
 
     final sanitizedCode = sanitizeVisibility(_code!);
-    final unparsed =
-        parseSection(handlers, sanitizedCode, onWarning: onWarning);
+    final unparsed = parseSection(handlers, sanitizedCode);
     _unparsedGroups.addAll(unparsed);
   }
 }

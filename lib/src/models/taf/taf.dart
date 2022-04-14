@@ -15,7 +15,8 @@ class Taf extends Report
         TafTemperatureMixin,
         MetarWindVariationMixin,
         TafTurbulenceMixin,
-        TafIcingMixin {
+        TafIcingMixin,
+        TafAmendmentsMixin {
   late final String _body;
   final List<String> _changesCodes = <String>[];
   int? _year, _month;
@@ -23,14 +24,14 @@ class Taf extends Report
   // Body groups
   Missing _missing = Missing(null);
   Cancelled _cancelled = Cancelled(null);
-
-  List<String> warnings = [];
+  DateTime? _correctionTime, _amendedTime;
+  AutomatedSensorMetwatch? _automatedSensorMetwatch;
 
   // Change periods
   final _changePeriods = TafChangePeriods();
 
   Taf(String code, {int? year, int? month, bool truncate = false})
-      : super(code, truncate, type: 'TAF') {
+      : super(removeUnnecessaryTokens(code), truncate, type: 'TAF') {
     _year = year;
     _month = month;
 
@@ -77,18 +78,46 @@ class Taf extends Report
     _concatenateString(_cancelled);
   }
 
+  /// Get correction time of the TAF
+  DateTime? get correctionTime => _correctionTime;
+  DateTime? get amendedTime => _amendedTime;
+  void _handleCorrection(String group) {
+    final match = TafRegExp.CORRECTION.firstMatch(group);
+
+    if (match != null) {
+      final mod = match.namedGroup('mod');
+      final h = int.tryParse(match.namedGroup('h') ?? '');
+      final m = int.tryParse(match.namedGroup('m') ?? '');
+      final n = DateTime.now().toUtc();
+      if (h == null || m == null) return;
+      if (mod == 'COR') {
+        _correctionTime = DateTime(n.year, n.month, n.day, h, m);
+        _concatenateString('Corrected forecast at $_correctionTime\n');
+      } else if (mod == 'AMD') {
+        _amendedTime = DateTime(n.year, n.month, n.day, h, m);
+        _concatenateString('Amended forecast at $_correctionTime\n');
+      }
+    }
+  }
+
+  /// Get Automated sensor metwatch times
+  AutomatedSensorMetwatch? get automatedSensorMetwatch =>
+      _automatedSensorMetwatch;
+  void _handleAutomatedSensorMetwatch(String group) {
+    final match = TafRegExp.AUTOMATED_SENSOR_METWATCH.firstMatch(group);
+
+    if (match != null) {
+      _automatedSensorMetwatch = AutomatedSensorMetwatch(group, match);
+      _concatenateString(_automatedSensorMetwatch!);
+    }
+  }
+
   /// Get the cancelled group data of the TAF.
   Cancelled get cancelled => _cancelled;
 
   void _handleChangePeriod(String code) {
     code = sanitizeWindToken(code);
-    final cf = ChangeForecast(
-      code,
-      _valid,
-      onWarning: (warning) {
-        warnings.add(warning);
-      },
-    );
+    final cf = ChangeForecast(code, _valid);
     if (_changePeriods.length > 0) {
       if (cf.code!.startsWith('FM') || cf.code!.startsWith('BECMG')) {
         _changePeriods.last.changeIndicator
@@ -130,6 +159,7 @@ class Taf extends Report
       GroupHandler(TafRegExp.ICING, _handleIcing),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(TafRegExp.WIND, _handleWind),
       GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _time.time)),
@@ -140,14 +170,17 @@ class Taf extends Report
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _time.time)),
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(TafRegExp.CORRECTION, _handleCorrection),
+      GroupHandler(
+          TafRegExp.AUTOMATED_SENSOR_METWATCH, _handleAutomatedSensorMetwatch),
+      GroupHandler(TafRegExp.AMENDMENTS, _handleAmendment),
     ];
 
     var body = sanitizeWindToken(_body);
     body = sanitizeVisibility(body);
+    body = sanitizeAmendments(body);
 
-    final unparsed = parseSection(handlers, body, onWarning: (warning) {
-      warnings.add(warning);
-    });
+    final unparsed = parseSection(handlers, body);
     _unparsedGroups.addAll(unparsed);
   }
 
@@ -185,15 +218,67 @@ class Taf extends Report
     );
     sections[0] = sections[0].replaceFirst('TAF_', 'TAF ');
 
-    _body = sections[0];
+    var b = '';
     if (sections.length > 1) {
       _changesCodes.addAll(sections.sublist(1));
+
+      // Extract final info from the change periods and append it to the body
+      b = _extractInfoFromChangePeriods(b, _changesCodes);
     }
+    _body = '${sections[0]}$b';
 
     _sections.add(_body);
     _sections.add(_changesCodes
         .map((change) => change.replaceFirst('_', ' '))
         .toList()
         .join(' '));
+  }
+
+  static String removeUnnecessaryTokens(String code) {
+    return code.replaceAll(RegExp(r' (FN|FS)\d{5}'), '');
+  }
+
+  String _extractInfoFromChangePeriods(String b, List<String> changesCodes) {
+    final l = _changesCodes.length - 1;
+    if (_changesCodes[l].contains(TafRegExp.CORRECTION_UNSANITIZED)) {
+      final lastFor = _changesCodes[l];
+      final match = TafRegExp.CORRECTION_UNSANITIZED.firstMatch(lastFor)!;
+      b +=
+          ' ${match.namedGroup('mod')}_${match.namedGroup('h')}${match.namedGroup('m')}';
+      _changesCodes[l] = lastFor
+          .replaceFirst(TafRegExp.CORRECTION_UNSANITIZED, '')
+          .trimRight();
+    }
+
+    if (_changesCodes[l]
+        .contains(TafRegExp.AUTOMATED_SENSOR_METWATCH_UNSANITIZED)) {
+      final lastFor = _changesCodes[l];
+      final match =
+          TafRegExp.AUTOMATED_SENSOR_METWATCH_UNSANITIZED.firstMatch(lastFor)!;
+      b +=
+          ' AUTOMATED_SENSOR_METWATCH_${match.namedGroup('f')}_TIL_${match.namedGroup('t')}';
+      _changesCodes[l] = lastFor
+          .replaceFirst(TafRegExp.AUTOMATED_SENSOR_METWATCH_UNSANITIZED, '')
+          .trimRight();
+    }
+
+    return b;
+  }
+}
+
+String daySuffix(int day) {
+  switch (day) {
+    case 1:
+    case 21:
+    case 31:
+      return 'st';
+    case 2:
+    case 22:
+      return 'nd';
+    case 3:
+    case 23:
+      return 'rd';
+    default:
+      return 'th';
   }
 }

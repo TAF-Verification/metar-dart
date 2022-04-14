@@ -50,4 +50,5 @@ part 'taf/models/windshear.dart';
 part 'taf/models/turbulence.dart';
 part 'taf/models/icing.dart';
 part 'taf/models/amendments.dart';
+part 'taf/models/automated_sensor_metwatch.dart';
 part 'taf/taf.dart';

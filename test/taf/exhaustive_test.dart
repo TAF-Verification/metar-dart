@@ -2,21 +2,6 @@ import 'package:metar_dart/metar_dart.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('warnings test', () {
-    final code =
-        '''TAF MMPQ 221654Z 2218/2318 10015KT P6SM SCT020 FM230300 13010KT P6SM BKN010 TEMPO 2308/2312 3SM -RA BKN005 D2DS FM231500 12010KT 4SM HZ SCT010 333''';
-    final taf = Taf(code);
-    expect(taf.warnings.first, 'TAF Group not found: D2DS');
-    expect(taf.warnings[1], 'TAF Group not found: 333');
-  });
-
-  test('test faling case', (() {
-    final code =
-        'KHPN 121720Z 1218/1318 31011G18KT P6SM SCT060 FM122100 31009KT P6SM FEW060 FM130100 VRB03KT P6SM FEW050 FM131500 14007KT P6SM BKN050 AMD NOT SKED';
-    var taf = Taf(code);
-    expect(taf.warnings.length, 0);
-  }));
-
   test('exhaustive', (() {
     final tafs = [
       'TAF GABS 121730Z 1218/1324 13010G20KT 9999 TS SCT030 FEW033CB TEMPO 1218/1220 4000 RA BKN030 FEW033CB BECMG 1220/1222 NSW FEW033 PROB40 TEMPO 1314/1318 TS SCT030 FEW040CB',
@@ -559,7 +544,7 @@ void main() {
     for (final taf in tafs) {
       try {
         final tafO = Taf(taf);
-        if (tafO.warnings.isNotEmpty) {
+        if (tafO.unparsedGroups.isNotEmpty) {
           warnings++;
         } else {
           correct++;

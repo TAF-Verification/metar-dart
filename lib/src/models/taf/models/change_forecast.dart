@@ -4,9 +4,7 @@ part of models;
 class ChangeForecast extends Forecast {
   late final Valid _valid;
   late TafChangeIndicator _changeIndicator;
-  final Null Function(String warning) onWarning;
-  ChangeForecast(String code, Valid valid, {required this.onWarning})
-      : super(code) {
+  ChangeForecast(String code, Valid valid) : super(code) {
     // Initialize valid period of the forecasts
     _valid = valid;
     _code = code;
@@ -63,6 +61,7 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(TafRegExp.WIND, _handleWind),
+      GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(TafRegExp.AMENDMENTS, _handleAmendment),
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
@@ -72,6 +71,7 @@ class ChangeForecast extends Forecast {
           (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
       GroupHandler(TafRegExp.TEMPERATURE,
           (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.AMENDMENTS, _handleAmendment),
       GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
@@ -79,8 +79,7 @@ class ChangeForecast extends Forecast {
     sanitizedCode = sanitizeVisibility(sanitizedCode);
     sanitizedCode = sanitizeWindToken(sanitizedCode);
     sanitizedCode = sanitizeAmendments(sanitizedCode);
-    final unparsed =
-        parseSection(handlers, sanitizedCode, onWarning: onWarning);
+    final unparsed = parseSection(handlers, sanitizedCode);
     _unparsedGroups.addAll(unparsed);
   }
 }

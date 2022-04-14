@@ -24,7 +24,7 @@ class TafRegExp {
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
 
-  static final RegExp TEMPERATURE = RegExp(r'T(?<type>N|X)'
+  static final RegExp TEMPERATURE = RegExp(r'T(?<type>N|X)?'
       r'(?<sign>M)?'
       r'(?<temp>\d{2})/'
       r'(?<day>0[1-9]|[12][0-9]|3[01])'
@@ -47,6 +47,17 @@ class TafRegExp {
   static final RegExp ICING =
       RegExp(r'^(6(?<icingType>[0-9])(?<base>\d\d\d)(?<thickness>\d))');
 
-  static final RegExp AMMENDMENTS = RegExp(
-      r'^(LAST_NO_AMDS_AFT_(?<afterd>\d{2})(?<afterh>\d{2})_NEXT(?<nextd>\d{2})(?<nexth>\d{2}))|AFT_(?<afterd2>\d{2})(?<afterh2>\d{2})|AMD_NOT_SKED');
+  static final RegExp AMENDMENTS = RegExp(
+      r'(LAST_NO_AMDS_AFT_(?<afterd>\d{2})(?<afterh>\d{2})_NEXT_(?<nextd>\d{2})(?<nexth>\d{2}))|AFT_(?<afterd2>\d{2})(?<afterh2>\d{2})|AMD_NOT_SKED');
+
+  static final RegExp CORRECTION =
+      RegExp(r'^(?<mod>COR|AMD)_(?<h>\d{2})(?<m>\d{2})( |$)');
+  static final RegExp CORRECTION_UNSANITIZED =
+      RegExp(r'(?<mod>COR|AMD) (?<h>\d{2})(?<m>\d{2})( |$)');
+
+  static final RegExp AUTOMATED_SENSOR_METWATCH = RegExp(
+      r'^AUTOMATED_SENSOR_METWATCH_(?<df>\d{2})(?<hf>\d{2})_TIL_(?<dt>\d{2})(?<ht>\d{2})');
+
+  static final RegExp AUTOMATED_SENSOR_METWATCH_UNSANITIZED =
+      RegExp(r' AUTOMATED SENSOR METWATCH (?<f>\d{4}) TIL (?<t>\d{4})');
 }

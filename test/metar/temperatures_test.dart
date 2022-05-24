@@ -57,4 +57,16 @@ void main() {
     expect(temperatures.dewpointInRankine, null);
     expect(temperatures.toString(), '');
   });
+
+  test('Test example of temperatures in METAR', () {
+    final code = 'FAVV 240800Z AUTO 21005KT //// // ////// 15/07 Q1029';
+    final metar = Metar(code);
+    final temperatures = metar.temperatures;
+    final pressure = metar.pressure;
+
+    expect(temperatures.code, '15/07');
+    expect(temperatures.temperatureInCelsius, 15.0);
+    expect(temperatures.dewpointInCelsius, 7.0);
+    expect(pressure.inHPa, 1029.0);
+  });
 }

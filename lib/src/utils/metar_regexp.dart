@@ -45,7 +45,7 @@ class MetarRegExp {
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
   static final RegExp CLOUD =
-      RegExp(r'^(?<cover>VV|SKC|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
+      RegExp(r'^(?<cover>VV|SKC|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///|//)'
           r'(?<height>\d{3}|///)?'
           r'([0-9])?'
           r'(?<type>TCU|CB|///)?$');

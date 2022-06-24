@@ -1,6 +1,6 @@
 part of models;
 
-abstract class Report with StringAttributeMixin {
+abstract class Report with StringAttributeMixin, TimeMixin {
   final bool _truncate;
   String _rawCode = '';
   final _unparsedGroups = <String>[];
@@ -44,6 +44,9 @@ abstract class Report with StringAttributeMixin {
   Station get station => _station;
 
   void _handleTime(String group);
+
+  /// Get the time of the report.
+  Time get time => _time;
 
   /// Get the raw code as its received in the instance.
   String get rawCode => _rawCode;

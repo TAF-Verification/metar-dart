@@ -1,16 +1,18 @@
 part of models;
 
 /// Basic structure for time code groups in reports from land stations.
-class Time {
+class Time extends Group {
   late DateTime _time;
 
   Time(
-      {String? day,
+      {String? code,
+      String? day,
       String? hour,
       String? minute,
       int? year,
       int? month,
-      DateTime? time}) {
+      DateTime? time})
+      : super(code) {
     if (time != null) {
       _time = time;
     } else {
@@ -27,6 +29,22 @@ class Time {
       final generatedDate = '$year$_month${day}T$hour${minute}00';
       _time = DateTime.parse(generatedDate);
     }
+  }
+
+  factory Time.fromMetar(String? code, RegExpMatch match,
+      {int? year, int? month}) {
+    final minute = match.namedGroup('min');
+    final hour = match.namedGroup('hour');
+    final day = match.namedGroup('day');
+
+    return Time(
+      code: code,
+      minute: minute,
+      hour: hour,
+      day: day,
+      month: month,
+      year: year,
+    );
   }
 
   @override
@@ -53,6 +71,6 @@ class Time {
   int get minute => _time.minute;
 }
 
-mixin TimeMixin on Report {
+mixin TimeMixin {
   Time _time = Time();
 }

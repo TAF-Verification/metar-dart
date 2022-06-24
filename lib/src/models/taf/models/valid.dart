@@ -95,7 +95,7 @@ class Valid extends Group {
 }
 
 /// Mixin to add the valid period of forecast attribute and handler.
-mixin TafValidMixin on StringAttributeMixin, MetarTimeMixin {
+mixin TafValidMixin on StringAttributeMixin, TimeMixin {
   /// Initialize this attribute in the constructor of the client class.
   /// `_valid = Valid.fromTaf(null, null, _time.time);`
   late Valid _valid;

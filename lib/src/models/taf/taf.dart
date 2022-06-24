@@ -4,7 +4,6 @@ part of models;
 class Taf extends Report
     with
         ModifierMixin,
-        MetarTimeMixin,
         TafValidMixin,
         MetarWindMixin,
         MetarPrevailingMixin,
@@ -48,14 +47,11 @@ class Taf extends Report
 
   @override
   void _handleTime(String group) {
-    final match = MetarRegExp.TIME.firstMatch(group);
-    _time = MetarTime(group, match, year: _year, month: _month);
+    final match = MetarRegExp.TIME.firstMatch(group)!;
+    _time = Time.fromMetar(group, match, year: _year, month: _month);
 
     _concatenateString(_time);
   }
-
-  /// Get the time of the TAF.
-  MetarTime get time => _time;
 
   void _handleMissing(String group) {
     _missing = Missing(group);

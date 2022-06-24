@@ -31,7 +31,6 @@ part 'metar/models/runway_range.dart';
 part 'metar/models/runway_state.dart';
 part 'metar/models/sea_state.dart';
 part 'metar/models/temperatures.dart';
-part 'metar/models/time.dart';
 part 'metar/models/trend_indicator.dart';
 part 'metar/models/visibility.dart';
 part 'metar/models/weather_trend.dart';

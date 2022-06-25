@@ -47,6 +47,16 @@ class MetarWindshearRunway extends Group {
 
   /// Get the name of the runway with windshear.
   String? get name => _name;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = {
+      'all': all,
+      'name': name,
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }
 
 /// Basic structure for windshear groups in METAR.

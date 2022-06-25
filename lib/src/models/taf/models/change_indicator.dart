@@ -60,4 +60,11 @@ class TafChangeIndicator extends ChangeIndicator {
 
   /// Get the valid period of the change indicator.
   Valid get valid => _valid;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({'valid': valid.toMap()});
+    return map;
+  }
 }

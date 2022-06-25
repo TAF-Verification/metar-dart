@@ -14,6 +14,19 @@ class Forecast extends Group
 
   /// Get the unparsed groups of the change period.
   List<String> get unparsedGroups => _unparsedGroups;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = {
+      'wind': _wind.toMap(),
+      'prevailing_visibility': _prevailing.toMap(),
+      'weathers': weathers.items.map((weather) => weather.toMap()).toList(),
+      'clouds': clouds.items.map((cloud) => cloud.toMap()).toList(),
+      'flight_rules': flightRules,
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }
 
 /// Basic structure for change period of trend in METAR.

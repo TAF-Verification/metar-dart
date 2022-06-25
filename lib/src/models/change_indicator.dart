@@ -39,4 +39,13 @@ class ChangeIndicator extends Group {
 
   /// Get the translation of the change indicator.
   String? get translation => _translation;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'translation': _translation,
+    });
+    return map.cast<String, String?>();
+  }
 }

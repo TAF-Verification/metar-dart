@@ -92,6 +92,16 @@ class Valid extends Group {
 
   /// Get the time period `until` of the forecast.
   Time get periodUntil => _until;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'from_': periodFrom.toMap(),
+      'until': periodUntil.toMap(),
+    });
+    return map;
+  }
 }
 
 /// Mixin to add the valid period of forecast attribute and handler.

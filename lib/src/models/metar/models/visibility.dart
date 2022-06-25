@@ -94,6 +94,16 @@ class MetarMinimumVisibility extends Group {
   /// Get the visibility direction in gradians.
   double? get directionInGradians =>
       _direction.converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'visibility': _visibility.toMap(),
+      'direction': _direction.toMap(),
+    });
+    return map;
+  }
 }
 
 /// Basic structure for prevailing visibility in reports from land stations.
@@ -118,6 +128,13 @@ class MetarPrevailingVisibility extends MetarMinimumVisibility {
     }
 
     return super.toString();
+  }
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({'cavok': cavok});
+    return map;
   }
 }
 

@@ -12,4 +12,13 @@ class Missing extends Modifier {
 
   /// Get if the TAF is missing.
   bool get isMissing => _missing;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = <String, Object?>{
+      'is_missing': isMissing,
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }

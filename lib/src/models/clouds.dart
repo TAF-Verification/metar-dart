@@ -149,6 +149,19 @@ class Cloud extends Group {
 
   /// Get the height of the cloud base in feet.
   double? get heightInFeet => _height.inFeet;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = {
+      'cover': cover,
+      'oktas': oktas,
+      'height_units': 'meters',
+      'height': heightInMeters,
+      'type': cloudType,
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }
 
 class CloudList extends GroupList<Cloud> {

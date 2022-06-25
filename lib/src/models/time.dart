@@ -69,6 +69,13 @@ class Time extends Group {
 
   /// Get the minute of the report.
   int get minute => _time.minute;
+
+  @override
+  Map<String, String?> toMap() {
+    final map = super.toMap();
+    map.addAll({'datetime': time.toString()});
+    return map.cast<String, String?>();
+  }
 }
 
 mixin TimeMixin {

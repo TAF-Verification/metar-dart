@@ -96,6 +96,19 @@ class MetarWeather extends Group {
 
   /// Get the other parameter of the weather.
   String? get other => _other;
+
+  @override
+  Map<String, String?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'intensity': intensity,
+      'description': description,
+      'precipitation': precipitation,
+      'obscuration': obscuration,
+      'other': other,
+    });
+    return map.cast<String, String?>();
+  }
 }
 
 mixin MetarWeatherMixin on StringAttributeMixin {

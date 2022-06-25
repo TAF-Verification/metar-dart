@@ -36,6 +36,16 @@ abstract class Group {
 
   /// Get the code of the group.
   String? get code => _code;
+
+  /// Returns the object data as a map like `Map<String, dynamic>`.
+  Map<String, Object?> toMap() {
+    return {'code': _code};
+  }
+
+  /// Returns the object data as a string in JSON format.
+  String toJSON() {
+    return jsonEncode(toMap());
+  }
 }
 
 mixin GroupMixin implements Group {

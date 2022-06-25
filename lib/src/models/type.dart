@@ -20,4 +20,11 @@ class Type extends Group {
 
   /// Get the type of the report.
   String get type => _type;
+
+  @override
+  Map<String, String?> toMap() {
+    final map = super.toMap();
+    map.addAll({'type': type});
+    return map.cast<String, String?>();
+  }
 }

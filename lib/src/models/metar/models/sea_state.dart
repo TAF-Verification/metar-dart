@@ -108,4 +108,15 @@ class MetarSeaState extends Group {
   /// Get the height of the significant wave in inches.
   double? get heightInInches =>
       _height.converted(conversionDouble: Conversions.M_TO_IN);
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = {
+      'state': state,
+      'temperature': _temperature.toMap(),
+      'height': _height.toMap(),
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }

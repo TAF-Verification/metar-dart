@@ -50,4 +50,9 @@ class Temperature extends Numeric {
   /// Get the temperature in Rankine.
   double? get inRankine =>
       converted(conversionFunction: Conversions.celsiusToRankine);
+
+  @override
+  Map<String, Object?> toMap() {
+    return {'units': 'celsius', 'temperature': inCelsius};
+  }
 }

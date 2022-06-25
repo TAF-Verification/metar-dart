@@ -231,4 +231,19 @@ class MetarRunwayState extends Group {
 
     return clrdText + ' on runway $_name';
   }
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = {
+      'name': name,
+      'deposits': deposits,
+      'contamination': contamination,
+      'deposits_depth': depositsDepth,
+      'surface_friction': surfaceFriction,
+      'snoclo': snoclo,
+      'clrd': clrd,
+    };
+    map.addAll(super.toMap());
+    return map;
+  }
 }

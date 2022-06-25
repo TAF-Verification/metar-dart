@@ -52,4 +52,14 @@ class MetarWindVariation extends Group {
   /// Get the `to` direction in gradians.
   double? get toInGradians =>
       _to.converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'from_': _from.toMap(),
+      'to': _to.toMap(),
+    });
+    return map;
+  }
 }

@@ -122,6 +122,16 @@ class Direction extends Numeric {
   /// Get the direction in gradians.
   double? get inGradians =>
       converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
+
+  @override
+  Map<String, Object?> toMap() {
+    return {
+      'cardinal': cardinal,
+      'variable': variable,
+      'units': 'degrees',
+      'direction': inDegrees,
+    };
+  }
 }
 
 /// Basic structure for speed attributes.
@@ -160,6 +170,14 @@ class Speed extends Numeric {
 
   /// Get the speed in miles per hour.
   double? get inMiph => converted(conversionDouble: Conversions.KNOT_TO_MIPH);
+
+  @override
+  Map<String, Object?> toMap() {
+    return {
+      'units': 'knot',
+      'speed': inKnot,
+    };
+  }
 }
 
 /// Basic structure for wind groups in report from land stations.
@@ -242,4 +260,16 @@ class Wind {
 
   // Get the wind gusts in miles per hour.
   double? get gustInMiph => _gust.inMiph;
+
+  Map<String, Map<String, Object?>> toMap() {
+    return {
+      'direction': _direction.toMap(),
+      'speed': _speed.toMap(),
+      'gust': _gust.toMap(),
+    };
+  }
+
+  String toJSON() {
+    return jsonEncode(toMap());
+  }
 }

@@ -20,4 +20,11 @@ class Cancelled extends Group {
 
   /// Get if the TAF is cancelled.
   bool get isCancelled => _isCancelled;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({'is_cancelled': isCancelled});
+    return map;
+  }
 }

@@ -31,4 +31,12 @@ abstract class Numeric {
 
   /// Get the value as a float.
   double? get value => _value;
+
+  /// Returns the numeric value data as a map like `Map<String, dynamic>`.
+  Map<String, Object?> toMap();
+
+  /// Returns the object data as a string in JSON format.
+  String toJSON() {
+    return jsonEncode(toMap());
+  }
 }

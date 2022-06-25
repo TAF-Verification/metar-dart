@@ -1,5 +1,7 @@
 library models;
 
+import 'dart:convert';
+
 import 'package:tuple/tuple.dart';
 
 import '../utils/utils.dart';

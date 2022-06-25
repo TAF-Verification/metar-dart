@@ -27,6 +27,15 @@ class Modifier extends Group {
 
   /// Get the modifier description of the report.
   String? get modifier => _modifier;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      'modifier': modifier,
+    });
+    return map.cast<String, String?>();
+  }
 }
 
 mixin ModifierMixin on Report {

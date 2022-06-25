@@ -45,6 +45,14 @@ class TafTemperature extends Temperature with GroupMixin {
 
   /// Get the date and time the temperature is expected to happen.
   Time? get time => _time;
+
+  @override
+  Map<String, Object?> toMap() {
+    final map = super.toMap();
+    map.addAll({'code': _code});
+    map.addAll(time == null ? {'datetime': null} : time!.toMap());
+    return map;
+  }
 }
 
 /// Basic structure for temperature lists in TAF.

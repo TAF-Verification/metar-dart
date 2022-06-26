@@ -65,8 +65,8 @@ class Station extends Group {
   String? get country => getCountry(_station[7]);
 
   @override
-  Map<String, String?> toMap() {
-    final map = super.toMap();
+  Map<String, String?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'name': name,
       'icao': icao,

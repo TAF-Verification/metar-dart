@@ -54,11 +54,11 @@ class MetarWindVariation extends Group {
       _to.converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
-      'from_': _from.toMap(),
-      'to': _to.toMap(),
+      'from_': _from.asMap(),
+      'to': _to.asMap(),
     });
     return map;
   }

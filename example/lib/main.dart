@@ -11,14 +11,19 @@ void main() {
 
   /// Get the features of the report
   /// Take care with posible null values depending of every report
-  print(metar.type);
+  print(metar.type_);
   print(metar.station.name);
   print(metar.time);
   print(metar.wind.directionInDegrees);
+  print(metar.flightRules);
 
   /// You can see a resume of the METAR with the toString() method
   print(metar.toString());
 
-  /// Transforming the METAR as a Json format
-  // print(metar.toJson());
+  /// You can convert the METAR data as a Map with the asMap() method
+  print(metar.asMap());
+
+  /// You can convert the METAR data as a String in JSON format with
+  /// the toJSON() method
+  print(metar.toJSON());
 }

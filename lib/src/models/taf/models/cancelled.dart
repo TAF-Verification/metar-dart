@@ -22,8 +22,8 @@ class Cancelled extends Group {
   bool get isCancelled => _isCancelled;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({'is_cancelled': isCancelled});
     return map;
   }

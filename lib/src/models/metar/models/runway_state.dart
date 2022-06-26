@@ -233,7 +233,7 @@ class MetarRunwayState extends Group {
   }
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
       'name': name,
       'deposits': deposits,
@@ -243,7 +243,7 @@ class MetarRunwayState extends Group {
       'snoclo': snoclo,
       'clrd': clrd,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

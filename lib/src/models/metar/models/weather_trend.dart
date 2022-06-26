@@ -16,15 +16,15 @@ class Forecast extends Group
   List<String> get unparsedGroups => _unparsedGroups;
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
-      'wind': _wind.toMap(),
-      'prevailing_visibility': _prevailing.toMap(),
-      'weathers': weathers.items.map((weather) => weather.toMap()).toList(),
-      'clouds': clouds.items.map((cloud) => cloud.toMap()).toList(),
+      'wind': _wind.asMap(),
+      'prevailing_visibility': _prevailing.asMap(),
+      'weathers': weathers.items.map((weather) => weather.asMap()).toList(),
+      'clouds': clouds.items.map((cloud) => cloud.asMap()).toList(),
       'flight_rules': flightRules,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

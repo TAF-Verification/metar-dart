@@ -71,8 +71,8 @@ class Time extends Group {
   int get minute => _time.minute;
 
   @override
-  Map<String, String?> toMap() {
-    final map = super.toMap();
+  Map<String, String?> asMap() {
+    final map = super.asMap();
     map.addAll({'datetime': time.toString()});
     return map.cast<String, String?>();
   }

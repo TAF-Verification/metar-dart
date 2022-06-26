@@ -258,4 +258,29 @@ class Metar extends Report
     _sections.add(trend.trim());
     _sections.add(remark);
   }
+
+  @override
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
+    map.addAll({
+      'modifier': modifier.asMap(),
+      'wind': wind.asMap(),
+      'wind_variation': windVariation.asMap(),
+      'prevailing_visibility': prevailingVisibility.asMap(),
+      'minimum_visibility': minimumVisibility.asMap(),
+      'runway_ranges': runwayRanges.asMap(),
+      'weathers': weathers.asMap(),
+      'clouds': clouds.asMap(),
+      'temperatures': temperatures.asMap(),
+      'pressure': pressure.asMap(),
+      'recent_weather': recentWeather.asMap(),
+      'windshear': windshear.asMap(),
+      'sea_state': seaState.asMap(),
+      'runway_state': runwayState.asMap(),
+      'flight_rules': flightRules,
+      'weather_trends': weatherTrends.asMap(),
+      'remark': remark,
+    });
+    return map;
+  }
 }

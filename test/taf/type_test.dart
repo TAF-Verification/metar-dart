@@ -10,11 +10,11 @@ void main() {
         BECMG 2306/2308 28007MPS
         BECMG 2315/2317 28002MPS
     ''';
-    final metar = Taf(code);
+    final taf = Taf(code);
 
-    expect(metar.type.code, 'TAF');
-    expect(metar.type.type, 'Terminal Aerodrome Forecast');
-    expect(metar.type.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(taf.type_.code, 'TAF');
+    expect(taf.type_.type, 'Terminal Aerodrome Forecast');
+    expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
   });
 
   test('Test TAF report type, second sample', () {
@@ -24,11 +24,11 @@ void main() {
         TEMPO 2308/2312 3SM -RA BKN005
         FM231500 12010KT 4SM HZ SCT010
     ''';
-    final metar = Taf(code);
+    final taf = Taf(code);
 
-    expect(metar.type.code, 'TAF');
-    expect(metar.type.type, 'Terminal Aerodrome Forecast');
-    expect(metar.type.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(taf.type_.code, 'TAF');
+    expect(taf.type_.type, 'Terminal Aerodrome Forecast');
+    expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
   });
 
   test('Test TAF report type by default', () {
@@ -37,10 +37,10 @@ void main() {
         BECMG 2215/2217 07006KT
         BECMG 2300/2303 25004KT
     ''';
-    final metar = Taf(code);
+    final taf = Taf(code);
 
-    expect(metar.type.code, 'TAF');
-    expect(metar.type.type, 'Terminal Aerodrome Forecast');
-    expect(metar.type.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(taf.type_.code, 'TAF');
+    expect(taf.type_.type, 'Terminal Aerodrome Forecast');
+    expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
   });
 }

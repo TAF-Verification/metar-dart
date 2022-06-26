@@ -49,12 +49,12 @@ class MetarWindshearRunway extends Group {
   String? get name => _name;
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
       'all': all,
       'name': name,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

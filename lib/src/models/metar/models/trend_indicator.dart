@@ -81,16 +81,16 @@ class MetarTrendIndicator extends ChangeIndicator {
   Time? get periodAt => _at;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'forecast_period': {
-        'init': forecastPeriod.item1.toMap(),
-        'end': forecastPeriod.item2.toMap(),
+        'init': forecastPeriod.item1.asMap(),
+        'end': forecastPeriod.item2.asMap(),
       },
-      'from_': periodFrom.toMap(),
-      'until': periodUntil.toMap(),
-      'at': periodAt != null ? periodAt!.toMap() : null,
+      'from_': periodFrom.asMap(),
+      'until': periodUntil.asMap(),
+      'at': periodAt != null ? periodAt!.asMap() : null,
     });
     return map;
   }

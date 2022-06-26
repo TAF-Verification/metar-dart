@@ -110,13 +110,13 @@ class MetarSeaState extends Group {
       _height.converted(conversionDouble: Conversions.M_TO_IN);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
       'state': state,
-      'temperature': _temperature.toMap(),
-      'height': _height.toMap(),
+      'temperature': _temperature.asMap(),
+      'height': _height.asMap(),
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

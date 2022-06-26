@@ -34,7 +34,7 @@ class Pressure extends Numeric {
   double? get inAtm => converted(conversionDouble: Conversions.HPA_TO_ATM);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {
       'units': 'hectopascals',
       'pressure': inHPa,

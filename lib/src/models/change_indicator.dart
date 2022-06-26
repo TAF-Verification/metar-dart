@@ -41,8 +41,8 @@ class ChangeIndicator extends Group {
   String? get translation => _translation;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'translation': _translation,
     });

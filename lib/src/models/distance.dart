@@ -35,7 +35,7 @@ class Distance extends Numeric {
   double? get inFeet => converted(conversionDouble: Conversions.M_TO_FT);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {
       'units': 'meters',
       'distance': inMeters,

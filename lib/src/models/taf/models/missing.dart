@@ -14,11 +14,11 @@ class Missing extends Modifier {
   bool get isMissing => _missing;
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = <String, Object?>{
       'is_missing': isMissing,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

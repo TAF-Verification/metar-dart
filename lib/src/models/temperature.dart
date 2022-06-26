@@ -52,7 +52,7 @@ class Temperature extends Numeric {
       converted(conversionFunction: Conversions.celsiusToRankine);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {'units': 'celsius', 'temperature': inCelsius};
   }
 }

@@ -29,8 +29,8 @@ class Modifier extends Group {
   String? get modifier => _modifier;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'modifier': modifier,
     });

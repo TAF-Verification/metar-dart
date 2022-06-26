@@ -32,7 +32,7 @@ abstract class Report with StringAttributeMixin, TimeMixin {
   }
 
   /// Get the type of the report.
-  Type get type => _type;
+  Type get type_ => _type;
 
   void _handleStation(String group) {
     _station = Station(group, 'ICAO');
@@ -56,4 +56,21 @@ abstract class Report with StringAttributeMixin, TimeMixin {
 
   /// Get the report separated in its sections as a list of strings.
   List<String> get sections => _sections;
+
+  /// Returns the report data as a map like `Map<String, Object?>`.
+  Map<String, Object?> asMap() {
+    return <String, Object?>{
+      'code': rawCode,
+      'sections': sections,
+      'unparsed_groups': unparsedGroups,
+      'type_': type_.asMap(),
+      'station': station.asMap(),
+      'time': time.asMap(),
+    };
+  }
+
+  /// Returns the report data as a string in JSON format.
+  String toJSON() {
+    return jsonEncode(asMap());
+  }
 }

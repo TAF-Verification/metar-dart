@@ -94,11 +94,11 @@ class Valid extends Group {
   Time get periodUntil => _until;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
-      'from_': periodFrom.toMap(),
-      'until': periodUntil.toMap(),
+      'from_': periodFrom.asMap(),
+      'until': periodUntil.asMap(),
     });
     return map;
   }

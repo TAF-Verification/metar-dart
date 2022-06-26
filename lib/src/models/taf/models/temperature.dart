@@ -47,10 +47,10 @@ class TafTemperature extends Temperature with GroupMixin {
   Time? get time => _time;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({'code': _code});
-    map.addAll(time == null ? {'datetime': null} : time!.toMap());
+    map.addAll(time == null ? {'datetime': null} : time!.asMap());
     return map;
   }
 }

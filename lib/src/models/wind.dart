@@ -124,7 +124,7 @@ class Direction extends Numeric {
       converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {
       'cardinal': cardinal,
       'variable': variable,
@@ -172,7 +172,7 @@ class Speed extends Numeric {
   double? get inMiph => converted(conversionDouble: Conversions.KNOT_TO_MIPH);
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {
       'units': 'knot',
       'speed': inKnot,
@@ -261,15 +261,15 @@ class Wind {
   // Get the wind gusts in miles per hour.
   double? get gustInMiph => _gust.inMiph;
 
-  Map<String, Map<String, Object?>> toMap() {
+  Map<String, Map<String, Object?>> asMap() {
     return {
-      'direction': _direction.toMap(),
-      'speed': _speed.toMap(),
-      'gust': _gust.toMap(),
+      'direction': _direction.asMap(),
+      'speed': _speed.asMap(),
+      'gust': _gust.asMap(),
     };
   }
 
   String toJSON() {
-    return jsonEncode(toMap());
+    return jsonEncode(asMap());
   }
 }

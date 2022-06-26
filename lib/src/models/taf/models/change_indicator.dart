@@ -62,9 +62,9 @@ class TafChangeIndicator extends ChangeIndicator {
   Valid get valid => _valid;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
-    map.addAll({'valid': valid.toMap()});
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
+    map.addAll({'valid': valid.asMap()});
     return map;
   }
 }

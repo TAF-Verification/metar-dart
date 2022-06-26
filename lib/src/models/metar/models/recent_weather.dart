@@ -43,8 +43,8 @@ class MetarRecentWeather extends Group {
   String? get precipitation => _precipitation;
 
   @override
-  Map<String, String?> toMap() {
-    final map = super.toMap();
+  Map<String, String?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'description': description,
       'obscuration': obscuration,

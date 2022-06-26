@@ -38,13 +38,13 @@ abstract class Group {
   String? get code => _code;
 
   /// Returns the object data as a map like `Map<String, dynamic>`.
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     return {'code': _code};
   }
 
   /// Returns the object data as a string in JSON format.
   String toJSON() {
-    return jsonEncode(toMap());
+    return jsonEncode(asMap());
   }
 }
 
@@ -112,4 +112,30 @@ class GroupList<T extends Group> {
 
   /// Get the groups found in report as a List<Group>.
   List<T> get items => _list;
+
+  /// Returns the items data as a map like `Map<String, Object?>`.
+  Map<String, Object?> asMap() {
+    final map = <String, Object?>{};
+    const LABELS = <String>[
+      'first',
+      'second',
+      'third',
+      'fourth',
+      'fifth',
+      'sixth',
+      'seventh',
+      'eighth',
+      'nineth',
+      'tenth',
+    ];
+    for (var i = 0; i < _list.length; i++) {
+      map['${LABELS[i]}'] = _list[i].asMap();
+    }
+    return map;
+  }
+
+  /// Returns the items data as a string in JSON format.
+  String toJSON() {
+    return jsonEncode(asMap());
+  }
 }

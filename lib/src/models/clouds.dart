@@ -151,7 +151,7 @@ class Cloud extends Group {
   double? get heightInFeet => _height.inFeet;
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
       'cover': cover,
       'oktas': oktas,
@@ -159,7 +159,7 @@ class Cloud extends Group {
       'height': heightInMeters,
       'type': cloudType,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

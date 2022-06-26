@@ -64,11 +64,11 @@ class MetarTemperatures extends Group {
   double? get dewpointInRankine => _dewpoint.inRankine;
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
-      'temperature': _temperature.toMap(),
-      'dewpoint': _dewpoint.toMap(),
+      'temperature': _temperature.asMap(),
+      'dewpoint': _dewpoint.asMap(),
     });
     return map;
   }

@@ -96,11 +96,11 @@ class MetarMinimumVisibility extends Group {
       _direction.converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({
-      'visibility': _visibility.toMap(),
-      'direction': _direction.toMap(),
+      'visibility': _visibility.asMap(),
+      'direction': _direction.asMap(),
     });
     return map;
   }
@@ -131,8 +131,8 @@ class MetarPrevailingVisibility extends MetarMinimumVisibility {
   }
 
   @override
-  Map<String, Object?> toMap() {
-    final map = super.toMap();
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
     map.addAll({'cavok': cavok});
     return map;
   }

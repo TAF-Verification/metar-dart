@@ -141,16 +141,16 @@ class MetarRunwayRange extends Group {
   String? get trend => _trend;
 
   @override
-  Map<String, Object?> toMap() {
+  Map<String, Object?> asMap() {
     final map = {
       'name': name,
       'rvr_low': _rvrLow,
-      'low_range': _lowRange.toMap(),
+      'low_range': _lowRange.asMap(),
       'rvr_high': _rvrHigh,
-      'high_range': _highRange.toMap(),
+      'high_range': _highRange.asMap(),
       'trend': trend,
     };
-    map.addAll(super.toMap());
+    map.addAll(super.asMap());
     return map;
   }
 }

@@ -98,8 +98,8 @@ class MetarWeather extends Group {
   String? get other => _other;
 
   @override
-  Map<String, String?> toMap() {
-    final map = super.toMap();
+  Map<String, String?> asMap() {
+    final map = super.asMap();
     map.addAll({
       'intensity': intensity,
       'description': description,

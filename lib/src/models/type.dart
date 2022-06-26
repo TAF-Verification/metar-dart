@@ -22,8 +22,8 @@ class Type extends Group {
   String get type => _type;
 
   @override
-  Map<String, String?> toMap() {
-    final map = super.toMap();
+  Map<String, String?> asMap() {
+    final map = super.asMap();
     map.addAll({'type': type});
     return map.cast<String, String?>();
   }

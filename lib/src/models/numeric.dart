@@ -33,10 +33,10 @@ abstract class Numeric {
   double? get value => _value;
 
   /// Returns the numeric value data as a map like `Map<String, dynamic>`.
-  Map<String, Object?> toMap();
+  Map<String, Object?> asMap();
 
   /// Returns the object data as a string in JSON format.
   String toJSON() {
-    return jsonEncode(toMap());
+    return jsonEncode(asMap());
   }
 }

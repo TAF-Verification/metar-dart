@@ -179,4 +179,23 @@ class Taf extends Report
         .toList()
         .join(' '));
   }
+
+  @override
+  Map<String, Object?> asMap() {
+    final map = super.asMap();
+    map.addAll({
+      'modifier': modifier.asMap(),
+      'missing': missing.asMap(),
+      'valid': valid.asMap(),
+      'cancelled': cancelled.asMap(),
+      'wind': wind.asMap(),
+      'prevailing_visibility': prevailingVisibility.asMap(),
+      'weathers': weathers.asMap(),
+      'clouds': clouds.asMap(),
+      'max_temperatures': maxTemperatures.asMap(),
+      'min_temperatures': minTemperatures.asMap(),
+      'change_periods': changePeriods.asMap(),
+    });
+    return map;
+  }
 }

@@ -15,6 +15,18 @@ void main() {
     final weathers = first.weathers;
     expect(weathers.codes, ['+SN']);
     expect(weathers.toString(), 'heavy snow');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': '+SN',
+            'intensity': 'heavy',
+            'description': null,
+            'precipitation': 'snow',
+            'obscuration': null,
+            'other': null
+          }
+        }));
 
     expect(weathers[0].intensity, 'heavy');
     expect(weathers[0].description, null);
@@ -40,6 +52,26 @@ void main() {
     final weathers = first.weathers;
     expect(weathers.codes, ['TSRA', 'BR']);
     expect(weathers.toString(), 'thunderstorm rain | mist');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': 'TSRA',
+            'intensity': null,
+            'description': 'thunderstorm',
+            'precipitation': 'rain',
+            'obscuration': null,
+            'other': null
+          },
+          'second': {
+            'code': 'BR',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'mist',
+            'other': null
+          }
+        }));
 
     expect(weathers[0].intensity, null);
     expect(weathers[0].description, 'thunderstorm');
@@ -71,6 +103,34 @@ void main() {
     final weathers = first.weathers;
     expect(weathers.codes, ['-RA', 'BR', 'VCTS']);
     expect(weathers.toString(), 'light rain | mist | nearby thunderstorm');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': '-RA',
+            'intensity': 'light',
+            'description': null,
+            'precipitation': 'rain',
+            'obscuration': null,
+            'other': null
+          },
+          'second': {
+            'code': 'BR',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'mist',
+            'other': null
+          },
+          'third': {
+            'code': 'VCTS',
+            'intensity': 'nearby',
+            'description': 'thunderstorm',
+            'precipitation': null,
+            'obscuration': null,
+            'other': null
+          }
+        }));
 
     expect(weathers[0].intensity, 'light');
     expect(weathers[0].description, null);
@@ -108,6 +168,7 @@ void main() {
     final weathers = first.weathers;
     expect(weathers.codes, <String>[]);
     expect(weathers.toString(), '');
+    expect(weathers.asMap(), equals(<String, Object?>{}));
 
     for (var i = 0; i < 3; i++) {
       expect(
@@ -129,6 +190,34 @@ void main() {
     final weathers = first.weathers;
     expect(weathers.codes, <String>['TSRA', 'BR', 'VCFG']);
     expect(weathers.toString(), 'thunderstorm rain | mist | nearby fog');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': 'TSRA',
+            'intensity': null,
+            'description': 'thunderstorm',
+            'precipitation': 'rain',
+            'obscuration': null,
+            'other': null
+          },
+          'second': {
+            'code': 'BR',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'mist',
+            'other': null
+          },
+          'third': {
+            'code': 'VCFG',
+            'intensity': 'nearby',
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'fog',
+            'other': null
+          }
+        }));
 
     expect(
       () => weathers[3].code,

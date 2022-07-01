@@ -21,6 +21,18 @@ void main() {
       state.toString(),
       'aerodrome is closed due to extreme deposit of snow',
     );
+    expect(
+        state.asMap(),
+        equals(<String, Object?>{
+          'name': '09 left',
+          'deposits': null,
+          'contamination': null,
+          'deposits_depth': null,
+          'surface_friction': null,
+          'snoclo': true,
+          'clrd': null,
+          'code': 'R09L/SNOCLO',
+        }));
   });
 
   test('Test the runway state CLRD of METAR', () {
@@ -44,6 +56,18 @@ void main() {
       state.toString(),
       'contaminations have ceased to exists on runway 25 center',
     );
+    expect(
+        state.asMap(),
+        equals(<String, Object?>{
+          'name': '25 center',
+          'deposits': null,
+          'contamination': null,
+          'deposits_depth': null,
+          'surface_friction': null,
+          'snoclo': false,
+          'clrd': 'contaminations have ceased to exists on runway 25 center',
+          'code': 'R25C/CLRD//',
+        }));
   });
 
   test('Test the runway state of METAR', () {
@@ -64,6 +88,18 @@ void main() {
       state.toString(),
       '09 left, deposits of 76 mm of wet snow, contamination 11%-25% of runway, estimated surface friction 0.50',
     );
+    expect(
+        state.asMap(),
+        equals(<String, Object?>{
+          'name': '09 left',
+          'deposits': 'wet snow',
+          'contamination': '11%-25% of runway',
+          'deposits_depth': '76 mm',
+          'surface_friction': '0.50',
+          'snoclo': false,
+          'clrd': null,
+          'code': 'R09L/527650',
+        }));
   });
 
   test('Test no runway state', () {
@@ -81,5 +117,17 @@ void main() {
     expect(state.snoclo, false);
     expect(state.clrd, null);
     expect(state.toString(), '');
+    expect(
+        state.asMap(),
+        equals(<String, Object?>{
+          'name': null,
+          'deposits': null,
+          'contamination': null,
+          'deposits_depth': null,
+          'surface_friction': null,
+          'snoclo': false,
+          'clrd': null,
+          'code': null,
+        }));
   });
 }

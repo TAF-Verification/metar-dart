@@ -24,6 +24,14 @@ void main() {
     expect(seaState.heightInDecimeters, null);
     expect(seaState.heightInFeet, null);
     expect(seaState.heightInInches, null);
+    expect(
+        seaState.asMap(),
+        equals(<String, Object?>{
+          'state': 'rough',
+          'temperature': {'units': 'celsius', 'temperature': 20.0},
+          'height': {'units': 'meters', 'distance': null},
+          'code': 'W20/S5',
+        }));
   });
 
   test('Test the sea state of METAR. Negative temperature', () {
@@ -45,6 +53,14 @@ void main() {
     expect(seaState.heightInDecimeters, null);
     expect(seaState.heightInFeet, null);
     expect(seaState.heightInInches, null);
+    expect(
+        seaState.asMap(),
+        equals(<String, Object?>{
+          'state': 'very high',
+          'temperature': {'units': 'celsius', 'temperature': -1.0},
+          'height': {'units': 'meters', 'distance': null},
+          'code': 'WM01/S8',
+        }));
   });
 
   test('Test the sea state of METAR. With significant wave height', () {
@@ -66,6 +82,14 @@ void main() {
     expect(seaState.heightInDecimeters, 8.0);
     expect(seaState.heightInFeet, closeTo(2.62467, 0.000002));
     expect(seaState.heightInInches, closeTo(31.49608, 0.000001));
+    expect(
+        seaState.asMap(),
+        equals(<String, Object?>{
+          'state': null,
+          'temperature': {'units': 'celsius', 'temperature': 15.0},
+          'height': {'units': 'meters', 'distance': 0.8},
+          'code': 'W15/H008',
+        }));
   });
 
   test('Test no sea state', () {
@@ -86,5 +110,13 @@ void main() {
     expect(seaState.heightInDecimeters, null);
     expect(seaState.heightInFeet, null);
     expect(seaState.heightInInches, null);
+    expect(
+        seaState.asMap(),
+        equals(<String, Object?>{
+          'state': null,
+          'temperature': {'units': 'celsius', 'temperature': null},
+          'height': {'units': 'meters', 'distance': null},
+          'code': null,
+        }));
   });
 }

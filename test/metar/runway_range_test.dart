@@ -27,6 +27,17 @@ void main() {
       ranges.toString(),
       'runway 07 left below of 150.0 m varying to 600.0 m, increasing',
     );
+    expect(
+        ranges[0].asMap(),
+        equals(<String, Object?>{
+          'name': '07 left',
+          'rvr_low': 'below of',
+          'low_range': {'units': 'meters', 'distance': 150.0},
+          'rvr_high': null,
+          'high_range': {'units': 'meters', 'distance': 600.0},
+          'trend': 'increasing',
+          'code': 'R07L/M0150V0600U',
+        }));
 
     expect(
       () => ranges[1].code,
@@ -58,6 +69,17 @@ void main() {
       ranges.toString(),
       'runway 25 center above of 150.0 m, decreasing',
     );
+    expect(
+        ranges[0].asMap(),
+        equals(<String, Object?>{
+          'name': '25 center',
+          'rvr_low': 'above of',
+          'low_range': {'units': 'meters', 'distance': 150.0},
+          'rvr_high': null,
+          'high_range': {'units': 'meters', 'distance': null},
+          'trend': 'decreasing',
+          'code': 'R25C/P0150D',
+        }));
 
     expect(
       () => ranges[1].code,
@@ -89,6 +111,17 @@ void main() {
       ranges[0].toString(),
       'runway 07 left below of 150.0 m varying to 600.0 m, increasing',
     );
+    expect(
+        ranges[0].asMap(),
+        equals(<String, Object?>{
+          'name': '07 left',
+          'rvr_low': 'below of',
+          'low_range': {'units': 'meters', 'distance': 150.0},
+          'rvr_high': null,
+          'high_range': {'units': 'meters', 'distance': 600.0},
+          'trend': 'increasing',
+          'code': 'R07L/M0150V0600U',
+        }));
 
     expect(ranges[1].code, 'R25C/P0150D');
     expect(ranges[1].lowInMeters, 150.0);
@@ -106,6 +139,17 @@ void main() {
       ranges[1].toString(),
       'runway 25 center above of 150.0 m, decreasing',
     );
+    expect(
+        ranges[1].asMap(),
+        equals(<String, Object?>{
+          'name': '25 center',
+          'rvr_low': 'above of',
+          'low_range': {'units': 'meters', 'distance': 150.0},
+          'rvr_high': null,
+          'high_range': {'units': 'meters', 'distance': null},
+          'trend': 'decreasing',
+          'code': 'R25C/P0150D',
+        }));
 
     expect(
       () => ranges[2].code,
@@ -118,6 +162,10 @@ void main() {
         'METAR SCFA 121300Z 21008KT 9999 3000W TSRA FEW020 20/13 Q1014 NOSIG';
     final metar = Metar(code);
     final ranges = metar.runwayRanges;
+
+    expect(ranges.codes, equals(<String>[]));
+    expect(ranges.toString(), '');
+    expect(ranges.asMap(), equals(<String, Object?>{}));
 
     for (var i = 0; i < 3; i++) {
       expect(
@@ -134,6 +182,42 @@ void main() {
     final ranges = metar.runwayRanges;
 
     expect(ranges.codes, ['R07L/M0150V0600U', 'R25C/P0150D', 'R25L/P0500N']);
+    expect(
+        ranges.toString(),
+        'runway 07 left below of 150.0 m varying to 600.0 m, increasing '
+        '| runway 25 center above of 150.0 m, decreasing '
+        '| runway 25 left above of 500.0 m, no change');
+    expect(
+        ranges.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'name': '07 left',
+            'rvr_low': 'below of',
+            'low_range': {'units': 'meters', 'distance': 150.0},
+            'rvr_high': null,
+            'high_range': {'units': 'meters', 'distance': 600.0},
+            'trend': 'increasing',
+            'code': 'R07L/M0150V0600U',
+          },
+          'second': {
+            'name': '25 center',
+            'rvr_low': 'above of',
+            'low_range': {'units': 'meters', 'distance': 150.0},
+            'rvr_high': null,
+            'high_range': {'units': 'meters', 'distance': null},
+            'trend': 'decreasing',
+            'code': 'R25C/P0150D',
+          },
+          'third': {
+            'name': '25 left',
+            'rvr_low': 'above of',
+            'low_range': {'units': 'meters', 'distance': 500.0},
+            'rvr_high': null,
+            'high_range': {'units': 'meters', 'distance': null},
+            'trend': 'no change',
+            'code': 'R25L/P0500N',
+          }
+        }));
 
     expect(
       () => ranges[3].code,

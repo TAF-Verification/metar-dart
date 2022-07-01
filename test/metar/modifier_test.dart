@@ -12,6 +12,12 @@ void main() {
     expect(modifier.code, 'AUTO');
     expect(modifier.modifier, 'Automatic report');
     expect(modifier.toString(), 'automatic report');
+    expect(
+        modifier.asMap(),
+        equals(<String, String?>{
+          'code': 'AUTO',
+          'modifier': 'Automatic report',
+        }));
   });
 
   test('Test NIL report modifier', () {
@@ -22,6 +28,12 @@ void main() {
     expect(modifier.code, 'NIL');
     expect(modifier.modifier, 'Missing report');
     expect(modifier.toString(), 'missing report');
+    expect(
+        modifier.asMap(),
+        equals(<String, String?>{
+          'code': 'NIL',
+          'modifier': 'Missing report',
+        }));
   });
 
   test('Test COR report modifier', () {
@@ -33,6 +45,12 @@ void main() {
     expect(modifier.code, 'COR');
     expect(modifier.modifier, 'Correction');
     expect(modifier.toString(), 'correction');
+    expect(
+        modifier.asMap(),
+        equals(<String, String?>{
+          'code': 'COR',
+          'modifier': 'Correction',
+        }));
   });
 
   test('Test no modifier', () {
@@ -44,5 +62,11 @@ void main() {
     expect(modifier.code, null);
     expect(modifier.modifier, null);
     expect(modifier.toString(), '');
+    expect(
+        modifier.asMap(),
+        equals(<String, String?>{
+          'code': null,
+          'modifier': null,
+        }));
   });
 }

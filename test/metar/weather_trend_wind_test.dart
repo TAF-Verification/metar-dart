@@ -30,6 +30,19 @@ void main() {
     expect(first.wind.gustInKnot, 22.0);
     expect(first.wind.gustInKph, 40.744);
     expect(first.wind.gustInMps, 11.31777768);
+    expect(
+        first.wind.asMap(),
+        equals(<String, Object?>{
+          'direction': {
+            'cardinal': 'E',
+            'variable': false,
+            'units': 'degrees',
+            'direction': 90.0
+          },
+          'speed': {'units': 'knot', 'speed': 12.0},
+          'gust': {'units': 'knot', 'speed': 22.0},
+          'code': '09012G22KT'
+        }));
 
     expect(
       () => trends[1].code,
@@ -61,6 +74,19 @@ void main() {
     expect(first.wind.gustInKnot, null);
     expect(first.wind.gustInKnot, null);
     expect(first.wind.gustInMps, null);
+    expect(
+        first.wind.asMap(),
+        equals(<String, Object?>{
+          'direction': {
+            'cardinal': 'NNW',
+            'variable': false,
+            'units': 'degrees',
+            'direction': 340.0
+          },
+          'speed': {'units': 'knot', 'speed': 12.0},
+          'gust': {'units': 'knot', 'speed': null},
+          'code': '34012KT'
+        }));
 
     expect(
       () => trends[1].code,
@@ -94,6 +120,19 @@ void main() {
     expect(first.wind.gustInKnot, null);
     expect(first.wind.gustInMps, null);
     expect(first.wind.toString(), '');
+    expect(
+        first.wind.asMap(),
+        equals(<String, Object?>{
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'speed': {'units': 'knot', 'speed': null},
+          'gust': {'units': 'knot', 'speed': null},
+          'code': null
+        }));
 
     expect(
       () => trends[1].code,

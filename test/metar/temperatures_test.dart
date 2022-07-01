@@ -20,6 +20,13 @@ void main() {
     expect(temperatures.dewpointInFahrenheit, 35.6);
     expect(temperatures.dewpointInRankine, closeTo(495.27, delta));
     expect(temperatures.toString(), 'temperature: 4.0°C | dewpoint: 2.0°C');
+    expect(
+        temperatures.asMap(),
+        equals(<String, Object?>{
+          'code': '04/02',
+          'temperature': {'units': 'celsius', 'temperature': 4.0},
+          'dewpoint': {'units': 'celsius', 'temperature': 2.0},
+        }));
   });
 
   test('Test the negative temperatures of METAR', () {
@@ -38,6 +45,13 @@ void main() {
     expect(temperatures.dewpointInFahrenheit, closeTo(24.8, delta));
     expect(temperatures.dewpointInRankine, closeTo(484.47, delta));
     expect(temperatures.toString(), 'temperature: -1.0°C | dewpoint: -4.0°C');
+    expect(
+        temperatures.asMap(),
+        equals(<String, Object?>{
+          'code': 'M01/M04',
+          'temperature': {'units': 'celsius', 'temperature': -1.0},
+          'dewpoint': {'units': 'celsius', 'temperature': -4.0},
+        }));
   });
 
   test('Test no temperatures in METAR', () {
@@ -56,5 +70,12 @@ void main() {
     expect(temperatures.dewpointInFahrenheit, null);
     expect(temperatures.dewpointInRankine, null);
     expect(temperatures.toString(), '');
+    expect(
+        temperatures.asMap(),
+        equals(<String, Object?>{
+          'code': '/////',
+          'temperature': {'units': 'celsius', 'temperature': null},
+          'dewpoint': {'units': 'celsius', 'temperature': null},
+        }));
   });
 }

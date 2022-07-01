@@ -29,6 +29,15 @@ class MetarWind extends Wind with GroupMixin {
       _code = code;
     }
   }
+
+  @override
+  Map<String, Object?> asMap() {
+    final map = super.asMap().cast<String, Object?>();
+    map.addAll({
+      'code': _code,
+    });
+    return map;
+  }
 }
 
 /// Mixin to add a METAR wind group attribute to the report.

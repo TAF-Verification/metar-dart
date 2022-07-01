@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:test/test.dart';
 
 import 'package:metar_dart/metar_dart.dart';
@@ -20,6 +22,16 @@ void main() {
     expect(clouds[0].heightInKilometers, 1.49352);
     expect(clouds[0].heightInSeaMiles, 0.8064362850971921);
     expect(clouds[0].cloudType, null);
+    expect(
+        clouds[0].asMap(),
+        equals(<String, Object?>{
+          'cover': 'a few',
+          'oktas': '1-2',
+          'height_units': 'meters',
+          'height': 1493.52,
+          'type': null,
+          'code': 'FEW049'
+        }));
 
     expect(clouds[1].code, 'BKN056');
     expect(clouds[1].cover, 'broken');
@@ -29,6 +41,16 @@ void main() {
     expect(clouds[1].heightInKilometers, 1.7068800000000002);
     expect(clouds[1].heightInSeaMiles, 0.9216414686825053);
     expect(clouds[1].cloudType, null);
+    expect(
+        clouds[1].asMap(),
+        equals(<String, Object?>{
+          'cover': 'broken',
+          'oktas': '5-7',
+          'height_units': 'meters',
+          'height': 1706.88,
+          'type': null,
+          'code': 'BKN056'
+        }));
 
     expect(
       () => clouds[2].code,
@@ -55,6 +77,16 @@ void main() {
     expect(clouds[0].heightInKilometers, 0.39624000000000004);
     expect(clouds[0].heightInSeaMiles, 0.21395248380129586);
     expect(clouds[0].cloudType, null);
+    expect(
+        clouds[0].asMap(),
+        equals(<String, Object?>{
+          'cover': 'a few',
+          'oktas': '1-2',
+          'height_units': 'meters',
+          'height': 396.24,
+          'type': null,
+          'code': 'FEW013'
+        }));
 
     expect(clouds[1].code, 'BKN021CB');
     expect(clouds[1].cover, 'broken');
@@ -64,6 +96,16 @@ void main() {
     expect(clouds[1].heightInKilometers, 0.6400800000000001);
     expect(clouds[1].heightInSeaMiles, 0.34561555075593947);
     expect(clouds[1].cloudType, 'cumulonimbus');
+    expect(
+        clouds[1].asMap(),
+        equals(<String, Object?>{
+          'cover': 'broken',
+          'oktas': '5-7',
+          'height_units': 'meters',
+          'height': 640.08,
+          'type': 'cumulonimbus',
+          'code': 'BKN021CB'
+        }));
 
     expect(clouds[2].code, 'OVC040');
     expect(clouds[2].cover, 'overcast');
@@ -73,6 +115,16 @@ void main() {
     expect(clouds[2].heightInKilometers, 1.2192);
     expect(clouds[2].heightInSeaMiles, 0.6583153347732181);
     expect(clouds[2].cloudType, null);
+    expect(
+        clouds[2].asMap(),
+        equals(<String, Object?>{
+          'cover': 'overcast',
+          'oktas': '8',
+          'height_units': 'meters',
+          'height': 1219.2,
+          'type': null,
+          'code': 'OVC040'
+        }));
 
     expect(
       () => clouds[3].code,
@@ -113,6 +165,16 @@ void main() {
     expect(clouds[0].heightInKilometers, null);
     expect(clouds[0].heightInSeaMiles, null);
     expect(clouds[0].cloudType, null);
+    expect(
+        clouds[0].asMap(),
+        equals(<String, Object?>{
+          'cover': 'indefinite ceiling',
+          'oktas': 'undefined',
+          'height_units': 'meters',
+          'height': null,
+          'type': null,
+          'code': 'VV///'
+        }));
 
     for (var i = 1; i < 3; i++) {
       expect(
@@ -139,6 +201,16 @@ void main() {
     expect(clouds[0].heightInKilometers, 0.1524);
     expect(clouds[0].heightInSeaMiles, 0.08228941684665227);
     expect(clouds[0].cloudType, null);
+    expect(
+        clouds[0].asMap(),
+        equals(<String, Object?>{
+          'cover': 'indefinite ceiling',
+          'oktas': 'undefined',
+          'height_units': 'meters',
+          'height': 152.4,
+          'type': null,
+          'code': 'VV005'
+        }));
 
     for (var i = 1; i < 3; i++) {
       expect(

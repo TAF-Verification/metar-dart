@@ -22,6 +22,19 @@ void main() {
       expect(wind.gustInKph, 40.744);
       expect(wind.gustInMps, 11.31777768);
       expect(wind.toString(), 'E (90.0°) 12.0 kt gust of 22.0 kt');
+      expect(
+          wind.asMap(),
+          equals(<String, Object?>{
+            'direction': {
+              'cardinal': 'E',
+              'variable': false,
+              'units': 'degrees',
+              'direction': 90.0
+            },
+            'speed': {'units': 'knot', 'speed': 12.0},
+            'gust': {'units': 'knot', 'speed': 22.0},
+            'code': '09012G22KT'
+          }));
     });
 
     test('Test the wind of METAR without gust', () {
@@ -42,6 +55,19 @@ void main() {
       expect(wind.gustInKnot, null);
       expect(wind.gustInMps, null);
       expect(wind.toString(), 'NNW (340.0°) 12.0 kt');
+      expect(
+          wind.asMap(),
+          equals(<String, Object?>{
+            'direction': {
+              'cardinal': 'NNW',
+              'variable': false,
+              'units': 'degrees',
+              'direction': 340.0
+            },
+            'speed': {'units': 'knot', 'speed': 12.0},
+            'gust': {'units': 'knot', 'speed': null},
+            'code': '34012KT'
+          }));
     });
 
     test('Test the variable wind of METAR', () {
@@ -62,6 +88,19 @@ void main() {
       expect(wind.gustInKnot, null);
       expect(wind.gustInMps, null);
       expect(wind.toString(), 'variable wind 2.0 kt');
+      expect(
+          wind.asMap(),
+          equals(<String, Object?>{
+            'direction': {
+              'cardinal': null,
+              'variable': true,
+              'units': 'degrees',
+              'direction': null
+            },
+            'speed': {'units': 'knot', 'speed': 2.0},
+            'gust': {'units': 'knot', 'speed': null},
+            'code': 'VRB02KT'
+          }));
     });
 
     test('Test no wind in METAR', () {
@@ -82,6 +121,19 @@ void main() {
       expect(wind.gustInKnot, null);
       expect(wind.gustInMps, null);
       expect(wind.toString(), '');
+      expect(
+          wind.asMap(),
+          equals(<String, Object?>{
+            'direction': {
+              'cardinal': null,
+              'variable': false,
+              'units': 'degrees',
+              'direction': null
+            },
+            'speed': {'units': 'knot', 'speed': null},
+            'gust': {'units': 'knot', 'speed': null},
+            'code': '/////KT'
+          }));
     });
   });
 
@@ -102,6 +154,23 @@ void main() {
       expect(windVariation.toInGradians, 22.222222199999997);
       expect(windVariation.toInRadians, 0.3490658503988659);
       expect(windVariation.toCardinalDirection, 'NNE');
+      expect(
+          windVariation.asMap(),
+          equals(<String, Object?>{
+            'code': '310V020',
+            'from_': {
+              'cardinal': 'NW',
+              'variable': false,
+              'units': 'degrees',
+              'direction': 310.0
+            },
+            'to': {
+              'cardinal': 'NNE',
+              'variable': false,
+              'units': 'degrees',
+              'direction': 20.0
+            }
+          }));
     });
 
     test('Wind variation present', () {
@@ -119,6 +188,23 @@ void main() {
       expect(windVariation.toInGradians, null);
       expect(windVariation.toInRadians, null);
       expect(windVariation.toCardinalDirection, null);
+      expect(
+          windVariation.asMap(),
+          equals(<String, Object?>{
+            'code': null,
+            'from_': {
+              'cardinal': null,
+              'variable': false,
+              'units': 'degrees',
+              'direction': null
+            },
+            'to': {
+              'cardinal': null,
+              'variable': false,
+              'units': 'degrees',
+              'direction': null
+            }
+          }));
     });
   });
 }

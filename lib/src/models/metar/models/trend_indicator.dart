@@ -82,8 +82,7 @@ class MetarTrendIndicator extends ChangeIndicator {
 
   @override
   Map<String, Object?> asMap() {
-    final map = super.asMap();
-    map.addAll({
+    final map = <String, Object?>{
       'forecast_period': {
         'init': forecastPeriod.item1.asMap(),
         'end': forecastPeriod.item2.asMap(),
@@ -91,7 +90,8 @@ class MetarTrendIndicator extends ChangeIndicator {
       'from_': periodFrom.asMap(),
       'until': periodUntil.asMap(),
       'at': periodAt != null ? periodAt!.asMap() : null,
-    });
+    };
+    map.addAll(super.asMap());
     return map;
   }
 }

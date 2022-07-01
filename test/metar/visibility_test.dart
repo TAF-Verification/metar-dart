@@ -19,6 +19,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '10.0 km');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': '9999',
+          'visibility': {'units': 'meters', 'distance': 10000.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false,
+        }));
   });
 
   test('Test the prevailing visibility from sea miles', () {
@@ -37,6 +50,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '2.3 km');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': '1 1/4SM',
+          'visibility': {'units': 'meters', 'distance': 2315.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false,
+        }));
   });
 
   test('Test the prevailing visibility from sea miles only fractional', () {
@@ -55,6 +81,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '0.9 km');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': '1/2SM',
+          'visibility': {'units': 'meters', 'distance': 926.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false,
+        }));
   });
 
   test('Test the prevailing visibility from kilometers', () {
@@ -72,6 +111,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '5.0 km');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': '5KM',
+          'visibility': {'units': 'meters', 'distance': 5000.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false,
+        }));
   });
 
   test('Test the prevailing visibility from CAVOK', () {
@@ -90,6 +142,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), 'Ceiling and Visibility OK');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': 'CAVOK',
+          'visibility': {'units': 'meters', 'distance': 10000.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': true,
+        }));
   });
 
   test('Test no visibility in METAR', () {
@@ -108,6 +173,19 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': null,
+          'visibility': {'units': 'meters', 'distance': null},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false,
+        }));
   });
 
   test('Test the minimum visibility of METAR', () {
@@ -125,6 +203,18 @@ void main() {
     expect(minimumVisibility.directionInDegrees, 315.0);
     expect(minimumVisibility.directionInRadians, 5.497787143782138);
     expect(minimumVisibility.toString(), '2.1 km to NW (315.0°)');
+    expect(
+        minimumVisibility.asMap(),
+        equals(<String, Object?>{
+          'code': '2100NW',
+          'visibility': {'units': 'meters', 'distance': 2100.0},
+          'direction': {
+            'cardinal': 'NW',
+            'variable': false,
+            'units': 'degrees',
+            'direction': 315.0
+          },
+        }));
   });
 
   test('Test the no minimum visibility', () {
@@ -142,5 +232,17 @@ void main() {
     expect(minimumVisibility.directionInDegrees, null);
     expect(minimumVisibility.directionInRadians, null);
     expect(minimumVisibility.toString(), '');
+    expect(
+        minimumVisibility.asMap(),
+        equals(<String, Object?>{
+          'code': null,
+          'visibility': {'units': 'meters', 'distance': null},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          }
+        }));
   });
 }

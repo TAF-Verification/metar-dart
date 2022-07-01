@@ -15,6 +15,13 @@ void main() {
     expect(windshear[0].code, 'WS R07');
     expect(windshear[0].name, '07');
     expect(windshear[0].all, false);
+    expect(
+        windshear[0].asMap(),
+        equals(<String, Object?>{
+          'all': false,
+          'name': '07',
+          'code': 'WS R07',
+        }));
 
     expect(
       () => windshear[1].code,
@@ -34,9 +41,24 @@ void main() {
     expect(windshear[0].code, 'WS R07L');
     expect(windshear[0].name, '07 left');
     expect(windshear[0].all, false);
+    expect(
+        windshear[0].asMap(),
+        equals(<String, Object?>{
+          'all': false,
+          'name': '07 left',
+          'code': 'WS R07L',
+        }));
+
     expect(windshear[1].code, 'WS R25C');
     expect(windshear[1].name, '25 center');
     expect(windshear[1].all, false);
+    expect(
+        windshear[1].asMap(),
+        equals(<String, Object?>{
+          'all': false,
+          'name': '25 center',
+          'code': 'WS R25C',
+        }));
 
     expect(
       () => windshear[2].code,
@@ -56,6 +78,13 @@ void main() {
     expect(windshear[0].code, 'WS ALL RWY');
     expect(windshear[0].name, null);
     expect(windshear[0].all, true);
+    expect(
+        windshear[0].asMap(),
+        equals(<String, Object?>{
+          'all': true,
+          'name': null,
+          'code': 'WS ALL RWY',
+        }));
 
     expect(
       () => windshear[1].code,
@@ -72,6 +101,7 @@ void main() {
     expect(windshear.codes, <String>[]);
     expect(windshear.toString(), '');
     expect(windshear.all_runways, false);
+    expect(windshear.asMap(), equals(<String, Object?>{}));
 
     for (var i = 0; i < 3; i++) {
       expect(

@@ -17,6 +17,26 @@ void main() {
     expect(
         clouds.toString(), 'scattered at 1000.0 feet | broken at 1500.0 feet');
     expect(clouds.ceiling, true);
+    expect(
+        clouds.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'cover': 'scattered',
+            'oktas': '3-4',
+            'height_units': 'meters',
+            'height': 304.8,
+            'type': null,
+            'code': 'SCT010'
+          },
+          'second': {
+            'cover': 'broken',
+            'oktas': '5-7',
+            'height_units': 'meters',
+            'height': 457.2,
+            'type': null,
+            'code': 'BKN015'
+          }
+        }));
 
     expect(clouds[0].code, 'SCT010');
     expect(clouds[0].cover, 'scattered');
@@ -56,6 +76,34 @@ void main() {
     expect(clouds.toString(),
         'a few at 1300.0 feet | broken at 2100.0 feet of cumulonimbus | overcast at 4000.0 feet');
     expect(clouds.ceiling, false);
+    expect(
+        clouds.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'cover': 'a few',
+            'oktas': '1-2',
+            'height_units': 'meters',
+            'height': 396.24,
+            'type': null,
+            'code': 'FEW013'
+          },
+          'second': {
+            'cover': 'broken',
+            'oktas': '5-7',
+            'height_units': 'meters',
+            'height': 640.08,
+            'type': 'cumulonimbus',
+            'code': 'BKN021CB'
+          },
+          'third': {
+            'cover': 'overcast',
+            'oktas': '8',
+            'height_units': 'meters',
+            'height': 1219.2,
+            'type': null,
+            'code': 'OVC040'
+          }
+        }));
 
     expect(clouds[0].code, 'FEW013');
     expect(clouds[0].cover, 'a few');
@@ -101,6 +149,7 @@ void main() {
     final clouds = first.clouds;
     expect(clouds.codes, <String>[]);
     expect(clouds.toString(), '');
+    expect(clouds.asMap(), equals(<String, Object?>{}));
 
     for (var i = 0; i < 4; i++) {
       expect(

@@ -17,6 +17,16 @@ void main() {
     expect(weathers[0].precipitation, 'snow');
     expect(weathers[0].obscuration, null);
     expect(weathers[0].other, null);
+    expect(
+        weathers[0].asMap(),
+        equals(<String, String?>{
+          'code': '-SN',
+          'intensity': 'light',
+          'description': null,
+          'precipitation': 'snow',
+          'obscuration': null,
+          'other': null
+        }));
 
     expect(
       () => weathers[1].code,
@@ -38,12 +48,32 @@ void main() {
     expect(weathers[0].precipitation, 'drizzle');
     expect(weathers[0].obscuration, null);
     expect(weathers[0].other, null);
+    expect(
+        weathers[0].asMap(),
+        equals(<String, String?>{
+          'code': 'DZ',
+          'intensity': null,
+          'description': null,
+          'precipitation': 'drizzle',
+          'obscuration': null,
+          'other': null
+        }));
 
     expect(weathers[1].intensity, 'nearby');
     expect(weathers[1].description, 'showers');
     expect(weathers[1].precipitation, null);
     expect(weathers[1].obscuration, null);
     expect(weathers[1].other, null);
+    expect(
+        weathers[1].asMap(),
+        equals(<String, String?>{
+          'code': 'VCSH',
+          'intensity': 'nearby',
+          'description': 'showers',
+          'precipitation': null,
+          'obscuration': null,
+          'other': null
+        }));
 
     expect(
       () => weathers[2].code,
@@ -65,18 +95,48 @@ void main() {
     expect(weathers[0].precipitation, 'rain');
     expect(weathers[0].obscuration, null);
     expect(weathers[0].other, null);
+    expect(
+        weathers[0].asMap(),
+        equals(<String, String?>{
+          'code': 'RA',
+          'intensity': null,
+          'description': null,
+          'precipitation': 'rain',
+          'obscuration': null,
+          'other': null
+        }));
 
     expect(weathers[1].intensity, null);
     expect(weathers[1].description, null);
     expect(weathers[1].precipitation, null);
     expect(weathers[1].obscuration, 'mist');
     expect(weathers[1].other, null);
+    expect(
+        weathers[1].asMap(),
+        equals(<String, String?>{
+          'code': 'BR',
+          'intensity': null,
+          'description': null,
+          'precipitation': null,
+          'obscuration': 'mist',
+          'other': null
+        }));
 
     expect(weathers[2].intensity, 'nearby');
     expect(weathers[2].description, 'thunderstorm');
     expect(weathers[2].precipitation, null);
     expect(weathers[2].obscuration, null);
     expect(weathers[2].other, null);
+    expect(
+        weathers[2].asMap(),
+        equals(<String, String?>{
+          'code': 'VCTS',
+          'intensity': 'nearby',
+          'description': 'thunderstorm',
+          'precipitation': null,
+          'obscuration': null,
+          'other': null
+        }));
   });
 
   test('Test no weathers', () {
@@ -87,6 +147,7 @@ void main() {
 
     expect(weathers.codes, <String>[]);
     expect(weathers.toString(), '');
+    expect(weathers.asMap(), equals(<String, Object?>{}));
 
     for (var i = 0; i < 3; i++) {
       expect(
@@ -104,6 +165,34 @@ void main() {
 
     expect(weathers.codes, <String>['RA', 'BR', 'VCTS']);
     expect(weathers.toString(), 'rain | mist | nearby thunderstorm');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': 'RA',
+            'intensity': null,
+            'description': null,
+            'precipitation': 'rain',
+            'obscuration': null,
+            'other': null
+          },
+          'second': {
+            'code': 'BR',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'mist',
+            'other': null
+          },
+          'third': {
+            'code': 'VCTS',
+            'intensity': 'nearby',
+            'description': 'thunderstorm',
+            'precipitation': null,
+            'obscuration': null,
+            'other': null
+          }
+        }));
 
     expect(
       () => weathers[3].code,

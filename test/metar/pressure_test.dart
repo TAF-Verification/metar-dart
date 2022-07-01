@@ -16,6 +16,12 @@ void main() {
     expect(pressure.inBar, closeTo(1.013, delta));
     expect(pressure.inAtm, closeTo(0.99975, 0.00001));
     expect(pressure.toString(), '1013.0 hPa');
+    expect(
+        pressure.asMap(),
+        equals(<String, Object?>{
+          'units': 'hectopascals',
+          'pressure': 1013.0,
+        }));
   });
 
   test('Test the pressure of METAR from inHg', () {
@@ -30,6 +36,12 @@ void main() {
     expect(pressure.inBar, closeTo(1.02438, 0.00001));
     expect(pressure.inAtm, closeTo(1.01099, 0.00001));
     expect(pressure.toString(), '1024.4 hPa');
+    expect(
+        pressure.asMap(),
+        equals(<String, Object?>{
+          'units': 'hectopascals',
+          'pressure': 1024.381984422621,
+        }));
   });
 
   test('Test no pressure data', () {
@@ -45,5 +57,11 @@ void main() {
     expect(pressure.inBar, null);
     expect(pressure.inAtm, null);
     expect(pressure.toString(), '');
+    expect(
+        pressure.asMap(),
+        equals(<String, Object?>{
+          'units': 'hectopascals',
+          'pressure': null,
+        }));
   });
 }

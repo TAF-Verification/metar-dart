@@ -15,6 +15,15 @@ void main() {
     expect(recentWeather.obscuration, null);
     expect(recentWeather.other, null);
     expect(recentWeather.toString(), 'rain');
+    expect(
+        recentWeather.asMap(),
+        equals(<String, String?>{
+          'code': 'RERA',
+          'description': null,
+          'obscuration': null,
+          'other': null,
+          'precipitation': 'rain',
+        }));
   });
 
   test('Test the recent weather of METAR. Sample No. 1', () {
@@ -29,6 +38,15 @@ void main() {
     expect(recentWeather.obscuration, null);
     expect(recentWeather.other, null);
     expect(recentWeather.toString(), 'thunderstorm hail');
+    expect(
+        recentWeather.asMap(),
+        equals(<String, String?>{
+          'code': 'RETSGR',
+          'description': 'thunderstorm',
+          'obscuration': null,
+          'other': null,
+          'precipitation': 'hail',
+        }));
   });
 
   test('Test no recent weather.', () {
@@ -43,5 +61,14 @@ void main() {
     expect(recentWeather.obscuration, null);
     expect(recentWeather.other, null);
     expect(recentWeather.toString(), '');
+    expect(
+        recentWeather.asMap(),
+        equals(<String, String?>{
+          'code': null,
+          'description': null,
+          'obscuration': null,
+          'other': null,
+          'precipitation': null,
+        }));
   });
 }

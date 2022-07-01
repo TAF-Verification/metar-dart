@@ -261,7 +261,7 @@ class Wind {
   // Get the wind gusts in miles per hour.
   double? get gustInMiph => _gust.inMiph;
 
-  Map<String, Map<String, Object?>> asMap() {
+  Map<String, Object?> asMap() {
     return {
       'direction': _direction.asMap(),
       'speed': _speed.asMap(),

@@ -31,6 +31,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 6);
     expect(first.changeIndicator.periodUntil.minute, 0);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-05 04:00:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-05 06:00:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-05 04:00:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-05 06:00:00.000'},
+          'at': null,
+          'code': 'NOSIG',
+          'translation': 'no significant changes'
+        }));
 
     expect(
       () => trends[1].code,
@@ -66,6 +79,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 15);
     expect(first.changeIndicator.periodUntil.minute, 47);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-05 13:47:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-05 15:47:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-05 13:47:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-05 15:47:00.000'},
+          'at': null,
+          'code': 'TEMPO',
+          'translation': 'temporary'
+        }));
 
     expect(
       () => trends[1].code,
@@ -99,6 +125,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 11);
     expect(first.changeIndicator.periodUntil.minute, 30);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-04 09:30:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-04 11:30:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-04 09:30:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-04 11:30:00.000'},
+          'at': null,
+          'code': 'BECMG',
+          'translation': 'becoming'
+        }));
 
     expect(
       () => trends[1].code,
@@ -133,6 +172,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 15);
     expect(first.changeIndicator.periodUntil.minute, 50);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-06 13:50:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-06 15:50:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-06 14:10:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-06 15:50:00.000'},
+          'at': null,
+          'code': 'BECMG FM1410',
+          'translation': 'becoming'
+        }));
 
     expect(
       () => trends[1].code,
@@ -167,6 +219,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 1);
     expect(first.changeIndicator.periodUntil.minute, 0);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-06 23:35:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-07 01:35:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-07 01:00:00.000'},
+          'at': null,
+          'code': 'TEMPO FM0000 TL0100',
+          'translation': 'temporary'
+        }));
 
     expect(
       () => trends[1].code,
@@ -205,6 +270,19 @@ void main() {
     expect(first.changeIndicator.periodAt?.day, 7);
     expect(first.changeIndicator.periodAt?.hour, 0);
     expect(first.changeIndicator.periodAt?.minute, 30);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-07 02:00:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-07 02:00:00.000'},
+          'at': {'code': null, 'datetime': '2022-02-07 00:30:00.000'},
+          'code': 'BECMG AT0030',
+          'translation': 'becoming'
+        }));
 
     expect(
       () => trends[1].code,
@@ -242,6 +320,19 @@ void main() {
     expect(first.changeIndicator.periodUntil.hour, 3);
     expect(first.changeIndicator.periodUntil.minute, 0);
     expect(first.changeIndicator.periodAt, null);
+    expect(
+        first.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-15 01:00:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-15 03:00:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-15 01:30:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-15 03:00:00.000'},
+          'at': null,
+          'code': 'BECMG FM0130',
+          'translation': 'becoming'
+        }));
 
     final second = trends[1];
     expect(second.code, 'TEMPO FM0215 TL0245 BKN010');
@@ -258,6 +349,19 @@ void main() {
     expect(second.changeIndicator.periodUntil.hour, 2);
     expect(second.changeIndicator.periodUntil.minute, 45);
     expect(second.changeIndicator.periodAt, null);
+    expect(
+        second.changeIndicator.asMap(),
+        equals(<String, Object?>{
+          'forecast_period': {
+            'init': {'code': null, 'datetime': '2022-02-15 01:00:00.000'},
+            'end': {'code': null, 'datetime': '2022-02-15 03:00:00.000'}
+          },
+          'from_': {'code': null, 'datetime': '2022-02-15 02:15:00.000'},
+          'until': {'code': null, 'datetime': '2022-02-15 02:45:00.000'},
+          'at': null,
+          'code': 'TEMPO FM0215 TL0245',
+          'translation': 'temporary'
+        }));
 
     expect(
       () => trends[2].code,
@@ -272,6 +376,7 @@ void main() {
 
     expect(trends.codes, <String>[]);
     expect(trends.toString(), '');
+    expect(trends.asMap(), equals(<String, Object?>{}));
 
     expect(
       () => trends[0].code,

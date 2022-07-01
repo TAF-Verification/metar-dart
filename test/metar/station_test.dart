@@ -22,5 +22,18 @@ void main() {
       station.toString(),
       'Name: NY NYC/JFK ARPT | Coordinates: 40.38N 073.46W | Elevation: 9 m MSL | Country: United States of America (the)',
     );
+    expect(
+        station.asMap(),
+        equals(<String, String?>{
+          'code': 'KJFK',
+          'name': 'NY NYC/JFK ARPT',
+          'icao': 'KJFK',
+          'iata': 'JFK',
+          'synop': '74486',
+          'latitude': '40.38N',
+          'longitude': '073.46W',
+          'elevation': '9',
+          'country': 'United States of America (the)',
+        }));
   });
 }

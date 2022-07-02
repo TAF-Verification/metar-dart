@@ -25,5 +25,18 @@ void main() {
     expect(wind.gustInMps, closeTo(9.0, 2e-15));
     expect(wind.gustInMiph, 20.13243645902753);
     expect(wind.toString(), 'WSW (240.0°) 7.8 kt gust of 17.5 kt');
+    expect(
+        wind.asMap(),
+        equals(<String, Object?>{
+          'direction': {
+            'cardinal': 'WSW',
+            'variable': false,
+            'units': 'degrees',
+            'direction': 240.0
+          },
+          'speed': {'units': 'knot', 'speed': 7.775378036936312},
+          'gust': {'units': 'knot', 'speed': 17.494600583106703},
+          'code': '24004G09MPS'
+        }));
   });
 }

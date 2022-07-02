@@ -24,6 +24,19 @@ void main() {
     expect(visibility0.directionInDegrees, null);
     expect(visibility0.directionInRadians, null);
     expect(visibility0.toString(), '11.1 km');
+    expect(
+        visibility0.asMap(),
+        equals(<String, Object?>{
+          'code': 'P6SM',
+          'visibility': {'units': 'meters', 'distance': 11112.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false
+        }));
 
     final visibility1 = changes[1].prevailingVisibility;
     expect(visibility1.code, '1 1/4SM');
@@ -36,6 +49,19 @@ void main() {
     expect(visibility1.directionInDegrees, null);
     expect(visibility1.directionInRadians, null);
     expect(visibility1.toString(), '2.3 km');
+    expect(
+        visibility1.asMap(),
+        equals(<String, Object?>{
+          'code': '1 1/4SM',
+          'visibility': {'units': 'meters', 'distance': 2315.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false
+        }));
 
     final visibility2 = changes[2].prevailingVisibility;
     expect(visibility2.code, '1/2SM');
@@ -48,5 +74,18 @@ void main() {
     expect(visibility2.directionInDegrees, null);
     expect(visibility2.directionInRadians, null);
     expect(visibility2.toString(), '0.9 km');
+    expect(
+        visibility2.asMap(),
+        equals(<String, Object?>{
+          'code': '1/2SM',
+          'visibility': {'units': 'meters', 'distance': 926.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false
+        }));
   });
 }

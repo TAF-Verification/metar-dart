@@ -17,6 +17,34 @@ void main() {
     expect(clouds.toString(),
         'a few at 1600.0 feet of towering cumulus | scattered at 9000.0 feet | broken at 26000.0 feet');
     expect(clouds.ceiling, false);
+    expect(
+        clouds.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'cover': 'a few',
+            'oktas': '1-2',
+            'height_units': 'meters',
+            'height': 487.68,
+            'type': 'towering cumulus',
+            'code': 'FEW016TCU'
+          },
+          'second': {
+            'cover': 'scattered',
+            'oktas': '3-4',
+            'height_units': 'meters',
+            'height': 2743.2,
+            'type': null,
+            'code': 'SCT090'
+          },
+          'third': {
+            'cover': 'broken',
+            'oktas': '5-7',
+            'height_units': 'meters',
+            'height': 7924.8,
+            'type': null,
+            'code': 'BKN260'
+          }
+        }));
 
     expect(clouds[0].code, 'FEW016TCU');
     expect(clouds[0].cover, 'a few');

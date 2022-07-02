@@ -17,6 +17,26 @@ void main() {
 
     expect(weathers.codes, ['+RA', 'BR']);
     expect(weathers.toString(), 'heavy rain | mist');
+    expect(
+        weathers.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': '+RA',
+            'intensity': 'heavy',
+            'description': null,
+            'precipitation': 'rain',
+            'obscuration': null,
+            'other': null
+          },
+          'second': {
+            'code': 'BR',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': 'mist',
+            'other': null
+          }
+        }));
 
     expect(weathers[0].intensity, 'heavy');
     expect(weathers[0].description, null);

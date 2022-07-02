@@ -18,6 +18,16 @@ void main() {
 
     expect(maxTemps.codes, <String>['TX07/0305Z']);
     expect(maxTemps.toString(), '7.0°C at 2020-05-03 05:00:00');
+    expect(
+        maxTemps.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'units': 'celsius',
+            'temperature': 7.0,
+            'code': null,
+            'datetime': '2020-05-03 05:00:00.000'
+          }
+        }));
 
     final firstMax = maxTemps[0];
     expect(firstMax.code, 'TX07/0305Z');
@@ -35,6 +45,16 @@ void main() {
 
     expect(minTemps.codes, <String>['TNM03/0321Z']);
     expect(minTemps.toString(), '-3.0°C at 2020-05-03 21:00:00');
+    expect(
+        minTemps.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'units': 'celsius',
+            'temperature': -3.0,
+            'code': null,
+            'datetime': '2020-05-03 21:00:00.000'
+          }
+        }));
 
     final firstMin = minTemps[0];
     expect(firstMin.code, 'TNM03/0321Z');
@@ -58,6 +78,22 @@ void main() {
     expect(maxTemps.codes, <String>['TX30/3019Z', 'TX28/3117Z']);
     expect(maxTemps.toString(),
         '30.0°C at 2020-05-30 19:00:00 | 28.0°C at 2020-05-31 17:00:00');
+    expect(
+        maxTemps.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'units': 'celsius',
+            'temperature': 30.0,
+            'code': null,
+            'datetime': '2020-05-30 19:00:00.000'
+          },
+          'second': {
+            'units': 'celsius',
+            'temperature': 28.0,
+            'code': null,
+            'datetime': '2020-05-31 17:00:00.000'
+          }
+        }));
 
     final firstMax = maxTemps[0];
     expect(firstMax.code, 'TX30/3019Z');
@@ -82,7 +118,10 @@ void main() {
     ''';
     final taf = Taf(code, year: _year, month: _month);
     final maxTemps = taf.maxTemperatures;
+    expect(maxTemps.asMap(), equals(<String, Object?>{}));
+
     final minTemps = taf.minTemperatures;
+    expect(minTemps.asMap(), equals(<String, Object?>{}));
 
     expect(() => maxTemps[0].code, throwsA(isA<RangeError>()));
     expect(() => minTemps[0].code, throwsA(isA<RangeError>()));

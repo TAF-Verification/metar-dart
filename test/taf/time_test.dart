@@ -20,5 +20,11 @@ void main() {
     expect(time.hour, 20);
     expect(time.minute, 0);
     expect(time.toString(), '2022-01-23 20:00:00');
+    expect(
+        time.asMap(),
+        equals(<String, String?>{
+          'code': '232000Z',
+          'datetime': '2022-01-23 20:00:00.000',
+        }));
   });
 }

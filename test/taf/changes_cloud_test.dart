@@ -20,6 +20,26 @@ void main() {
     expect(clouds0.toString(),
         'scattered at 2000.0 feet of towering cumulus | broken at 3000.0 feet');
     expect(clouds0.ceiling, false);
+    expect(
+        clouds0.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'cover': 'scattered',
+            'oktas': '3-4',
+            'height_units': 'meters',
+            'height': 609.6,
+            'type': 'towering cumulus',
+            'code': 'SCT020TCU'
+          },
+          'second': {
+            'cover': 'broken',
+            'oktas': '5-7',
+            'height_units': 'meters',
+            'height': 914.4,
+            'type': null,
+            'code': 'BKN030'
+          }
+        }));
 
     expect(clouds0[0].code, 'SCT020TCU');
     expect(clouds0[0].cover, 'scattered');
@@ -48,6 +68,18 @@ void main() {
     expect(clouds1.codes, ['BKN010']);
     expect(clouds1.toString(), 'broken at 1000.0 feet');
     expect(clouds1.ceiling, true);
+    expect(
+        clouds1.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'cover': 'broken',
+            'oktas': '5-7',
+            'height_units': 'meters',
+            'height': 304.8,
+            'type': null,
+            'code': 'BKN010'
+          }
+        }));
 
     expect(clouds1[0].code, 'BKN010');
     expect(clouds1[0].cover, 'broken');

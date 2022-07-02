@@ -23,5 +23,18 @@ void main() {
     expect(visibility.directionInDegrees, null);
     expect(visibility.directionInRadians, null);
     expect(visibility.toString(), '11.1 km');
+    expect(
+        visibility.asMap(),
+        equals(<String, Object?>{
+          'code': 'P6SM',
+          'visibility': {'units': 'meters', 'distance': 11112.0},
+          'direction': {
+            'cardinal': null,
+            'variable': false,
+            'units': 'degrees',
+            'direction': null
+          },
+          'cavok': false
+        }));
   });
 }

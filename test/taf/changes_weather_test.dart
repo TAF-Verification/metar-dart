@@ -16,6 +16,18 @@ void main() {
     final weathers0 = changes[0].weathers;
     expect(weathers0.codes, ['DS']);
     expect(weathers0.toString(), 'dust storm');
+    expect(
+        weathers0.asMap(),
+        equals(<String, Object?>{
+          'first': {
+            'code': 'DS',
+            'intensity': null,
+            'description': null,
+            'precipitation': null,
+            'obscuration': null,
+            'other': 'dust storm'
+          }
+        }));
 
     expect(weathers0[0].intensity, null);
     expect(weathers0[0].description, null);
@@ -29,6 +41,7 @@ void main() {
     );
 
     final weathers1 = changes[1].weathers;
+    expect(weathers1.asMap(), equals(<String, Object?>{}));
     expect(
       () => weathers1[0].code,
       throwsA(isA<RangeError>()),

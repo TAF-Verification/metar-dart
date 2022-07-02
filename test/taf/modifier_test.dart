@@ -17,6 +17,12 @@ void main() {
     expect(modifier.code, 'AMD');
     expect(modifier.modifier, 'Amendment');
     expect(modifier.toString(), 'amendment');
+    expect(
+        modifier.asMap(),
+        equals(<String, Object?>{
+          'code': 'AMD',
+          'modifier': 'Amendment',
+        }));
   });
 
   test('Test COR report modifier', () {
@@ -33,6 +39,12 @@ void main() {
     expect(modifier.code, 'COR');
     expect(modifier.modifier, 'Correction');
     expect(modifier.toString(), 'correction');
+    expect(
+        modifier.asMap(),
+        equals(<String, Object?>{
+          'code': 'COR',
+          'modifier': 'Correction',
+        }));
   });
 
   test('Test no modifier', () {
@@ -47,5 +59,11 @@ void main() {
     expect(modifier.code, null);
     expect(modifier.modifier, null);
     expect(modifier.toString(), '');
+    expect(
+        modifier.asMap(),
+        equals(<String, Object?>{
+          'code': null,
+          'modifier': null,
+        }));
   });
 }

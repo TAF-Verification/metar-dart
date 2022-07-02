@@ -15,6 +15,12 @@ void main() {
     expect(taf.type_.code, 'TAF');
     expect(taf.type_.type, 'Terminal Aerodrome Forecast');
     expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(
+        taf.type_.asMap(),
+        equals(<String, String?>{
+          'code': 'TAF',
+          'type': 'Terminal Aerodrome Forecast'
+        }));
   });
 
   test('Test TAF report type, second sample', () {
@@ -29,6 +35,12 @@ void main() {
     expect(taf.type_.code, 'TAF');
     expect(taf.type_.type, 'Terminal Aerodrome Forecast');
     expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(
+        taf.type_.asMap(),
+        equals(<String, String?>{
+          'code': 'TAF',
+          'type': 'Terminal Aerodrome Forecast'
+        }));
   });
 
   test('Test TAF report type by default', () {
@@ -42,5 +54,11 @@ void main() {
     expect(taf.type_.code, 'TAF');
     expect(taf.type_.type, 'Terminal Aerodrome Forecast');
     expect(taf.type_.toString(), 'Terminal Aerodrome Forecast (TAF)');
+    expect(
+        taf.type_.asMap(),
+        equals(<String, String?>{
+          'code': 'TAF',
+          'type': 'Terminal Aerodrome Forecast'
+        }));
   });
 }

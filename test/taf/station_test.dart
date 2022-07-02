@@ -27,5 +27,18 @@ void main() {
       station.toString(),
       'Name: QUITO/NEW INTL | Coordinates: 00.07S 078.21W | Elevation: 2400 m MSL | Country: Ecuador',
     );
+    expect(
+        station.asMap(),
+        equals(<String, String?>{
+          'code': 'SEQM',
+          'name': 'QUITO/NEW INTL',
+          'icao': 'SEQM',
+          'iata': 'null',
+          'synop': 'null',
+          'latitude': '00.07S',
+          'longitude': '078.21W',
+          'elevation': '2400',
+          'country': 'Ecuador'
+        }));
   });
 }

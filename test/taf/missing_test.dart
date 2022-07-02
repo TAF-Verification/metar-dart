@@ -12,6 +12,13 @@ void main() {
     expect(missing.modifier, 'Missing report');
     expect(missing.isMissing, true);
     expect(missing.toString(), 'missing report');
+    expect(
+        missing.asMap(),
+        equals(<String, Object?>{
+          'is_missing': true,
+          'code': 'NIL',
+          'modifier': 'Missing report'
+        }));
   });
 
   test('Test no missing TAF', () {
@@ -30,5 +37,12 @@ void main() {
     expect(missing.modifier, null);
     expect(missing.isMissing, false);
     expect(missing.toString(), '');
+    expect(
+        missing.asMap(),
+        equals(<String, Object?>{
+          'is_missing': false,
+          'code': null,
+          'modifier': null
+        }));
   });
 }

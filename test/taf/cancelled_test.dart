@@ -10,6 +10,12 @@ void main() {
     expect(taf.cancelled.code, 'CNL');
     expect(taf.cancelled.isCancelled, true);
     expect(taf.cancelled.toString(), 'cancelled');
+    expect(
+        taf.cancelled.asMap(),
+        equals(<String, Object?>{
+          'code': 'CNL',
+          'is_cancelled': true,
+        }));
   });
 
   test('Test no cancelled TAF', () {
@@ -24,5 +30,11 @@ void main() {
     expect(taf.cancelled.code, null);
     expect(taf.cancelled.isCancelled, false);
     expect(taf.cancelled.toString(), '');
+    expect(
+        taf.cancelled.asMap(),
+        equals(<String, Object?>{
+          'code': null,
+          'is_cancelled': false,
+        }));
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:test/test.dart';
 
 import 'package:metar_dart/metar_dart.dart';

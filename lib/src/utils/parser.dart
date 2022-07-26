@@ -72,35 +72,3 @@ String sanitizeChangeIndicator(String code) {
 
   return code;
 }
-
-/// Parse the groups of the section.
-///
-/// Args:
-///     handlers (List<GroupHandler>): handler list to manage and match.
-///     section (String): the section containing all the groups to parse separated
-///     by spaces.
-///
-/// Returns:
-///     unparsed_groups (List<String>): the not matched groups with anyone
-///     of the regular expresions stored in `handlers`.
-List<String> parseSection(List<GroupHandler> handlers, String section) {
-  final unparsedGroups = <String>[];
-  var index = 0;
-
-  section.split(' ').forEach((group) {
-    unparsedGroups.add(group);
-
-    for (var i = index; i < handlers.length; i++) {
-      var handler = handlers[i];
-      index++;
-
-      if (handler.regexp.hasMatch(group)) {
-        handler.handler(group);
-        unparsedGroups.remove(group);
-        break;
-      }
-    }
-  });
-
-  return unparsedGroups;
-}

@@ -6,10 +6,10 @@ final Map<String, String> TYPES = <String, String>{
   'TAF': 'Terminal Aerodrome Forecast',
 };
 
-class Type extends Group {
+class ReportType extends Group {
   late final String _type;
 
-  Type(String code) : super(code) {
+  ReportType(String code) : super(code) {
     _type = TYPES[code]!;
   }
 

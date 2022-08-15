@@ -37,6 +37,9 @@ class Metar extends Report
     _year = year;
     _month = month;
 
+    // Initialize Time group
+    _time = Time.fromMetar(year: year, month: month);
+
     // Parse body groups
     _parseBody();
 
@@ -56,7 +59,8 @@ class Metar extends Report
   @override
   void _handleTime(String group) {
     final match = MetarRegExp.TIME.firstMatch(group)!;
-    _time = Time.fromMetar(group, match, year: _year, month: _month);
+    _time =
+        Time.fromMetar(code: group, match: match, year: _year, month: _month);
 
     _concatenateString(_time);
   }

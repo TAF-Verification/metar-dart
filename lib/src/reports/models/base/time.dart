@@ -31,11 +31,21 @@ class Time extends Group {
     }
   }
 
-  factory Time.fromMetar(String? code, RegExpMatch match,
-      {int? year, int? month}) {
-    final minute = match.namedGroup('min');
-    final hour = match.namedGroup('hour');
-    final day = match.namedGroup('day');
+  factory Time.fromMetar({
+    String? code,
+    RegExpMatch? match,
+    int? year,
+    int? month,
+  }) {
+    String? minute;
+    String? hour;
+    String? day;
+
+    if (match != null) {
+      minute = match.namedGroup('min');
+      hour = match.namedGroup('hour');
+      day = match.namedGroup('day');
+    }
 
     return Time(
       code: code,
@@ -73,7 +83,7 @@ class Time extends Group {
   @override
   Map<String, String?> asMap() {
     final map = super.asMap();
-    map.addAll({'datetime': time.toString()});
+    map.addAll({'datetime': toString()});
     return map.cast<String, String?>();
   }
 }

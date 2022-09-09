@@ -190,6 +190,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.RECENT_WEATHER, _handleRecentWeather),
       GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
       GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),

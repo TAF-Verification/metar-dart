@@ -44,6 +44,27 @@ void main() {
         }));
   });
 
+  test('Test two pressures of METAR from hPa and inHg', () {
+    final code =
+        'METAR METAR MSSS 091250Z 00000KT 5000 BR FEW040CB 22/21 Q1013 A2993';
+    final metar = Metar(code);
+    final pressure = metar.pressure;
+
+    expect(pressure.code, 'A2993');
+    expect(pressure.inHPa, closeTo(1013.54, 0.05));
+    expect(pressure.inInHg, closeTo(29.93, 0.004));
+    expect(pressure.inMbar, closeTo(1013.54, 0.05));
+    expect(pressure.inBar, closeTo(1.013, delta));
+    expect(pressure.inAtm, closeTo(1.00292, 0.003));
+    expect(pressure.toString(), '1013.5 hPa');
+    expect(
+        pressure.asMap(),
+        equals(<String, Object?>{
+          'units': 'hectopascals',
+          'pressure': 1013.5455469014561,
+        }));
+  });
+
   test('Test no pressure data', () {
     final code =
         r'SPECI KMIA 152353Z 00000KT 10SM FEW024 BKN150 BKN250 27/23 A//// RMK AO2 RAB2254E04 SLP127 P0000 60029 T02670233 10317 20256 50004 $';

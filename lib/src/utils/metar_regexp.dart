@@ -23,12 +23,12 @@ class MetarRegExp {
       RegExp(r'^(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
           r'V(?<to>(0[1-9]|[12][0-9]|3[0-6])0)$');
 
-  static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
+  static final RegExp VISIBILITY = RegExp(r'^((?<vis>\d{4}|//\//)'
       r'(?<dir>[NSEW]([EW])?)?|'
       r'(M|P)?(?<integer>\d{1,2})?_?'
       r'(?<fraction>\d/\d)?'
       r'(?<units>SM|KM|M|U)|'
-      r'(?<cavok>CAVOK)$');
+      r'(?<cavok>CAVOK))$');
 
   static final RegExp MINIMUM_VISIBILITY =
       RegExp(r'^(?<vis>\d{4}|//\//)' r'(?<dir>[NSEW]([EW])?)?$');

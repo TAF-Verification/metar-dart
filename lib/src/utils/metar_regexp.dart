@@ -30,6 +30,9 @@ class MetarRegExp {
       r'(?<units>SM|KM|M|U)|'
       r'(?<cavok>CAVOK)$');
 
+  static final RegExp MINIMUM_VISIBILITY =
+      RegExp(r'^(?<vis>\d{4}|//\//)' r'(?<dir>[NSEW]([EW])?)?$');
+
   static final RegExp RUNWAY_RANGE = RegExp(r'^R(?<name>\d{2}[RLC]?)/'
       r'(?<rvrlow>[MP])?'
       r'(?<low>\d{2,4})'

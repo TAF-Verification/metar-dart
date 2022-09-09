@@ -177,7 +177,7 @@ class Metar extends Report
       GroupHandler(MetarRegExp.WIND, _handleWind),
       GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
       GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
-      GroupHandler(MetarRegExp.VISIBILITY, _handleMinimumVisibility),
+      GroupHandler(MetarRegExp.MINIMUM_VISIBILITY, _handleMinimumVisibility),
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),
       GroupHandler(MetarRegExp.RUNWAY_RANGE, _handleRunwayRange),

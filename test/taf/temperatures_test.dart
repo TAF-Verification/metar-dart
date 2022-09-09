@@ -25,7 +25,7 @@ void main() {
             'units': 'celsius',
             'temperature': 7.0,
             'code': null,
-            'datetime': '2020-05-03 05:00:00.000'
+            'datetime': '2020-05-03 05:00:00'
           }
         }));
 
@@ -52,7 +52,7 @@ void main() {
             'units': 'celsius',
             'temperature': -3.0,
             'code': null,
-            'datetime': '2020-05-03 21:00:00.000'
+            'datetime': '2020-05-03 21:00:00'
           }
         }));
 
@@ -85,13 +85,13 @@ void main() {
             'units': 'celsius',
             'temperature': 30.0,
             'code': null,
-            'datetime': '2020-05-30 19:00:00.000'
+            'datetime': '2020-05-30 19:00:00'
           },
           'second': {
             'units': 'celsius',
             'temperature': 28.0,
             'code': null,
-            'datetime': '2020-05-31 17:00:00.000'
+            'datetime': '2020-05-31 17:00:00'
           }
         }));
 

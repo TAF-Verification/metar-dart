@@ -35,8 +35,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '2506/2606',
-          'from_': {'code': null, 'datetime': '2019-03-25 06:00:00.000'},
-          'until': {'code': null, 'datetime': '2019-03-26 06:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-03-25 06:00:00'},
+          'until': {'code': null, 'datetime': '2019-03-26 06:00:00'}
         }));
   });
 
@@ -65,8 +65,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '3100/3124',
-          'from_': {'code': null, 'datetime': '2019-03-31 00:00:00.000'},
-          'until': {'code': null, 'datetime': '2019-04-01 00:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-03-31 00:00:00'},
+          'until': {'code': null, 'datetime': '2019-04-01 00:00:00'}
         }));
   });
 
@@ -100,8 +100,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '2503/2606',
-          'from_': {'code': null, 'datetime': '2019-03-25 03:00:00.000'},
-          'until': {'code': null, 'datetime': '2019-03-26 06:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-03-25 03:00:00'},
+          'until': {'code': null, 'datetime': '2019-03-26 06:00:00'}
         }));
   });
 
@@ -130,8 +130,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '0218/0306',
-          'from_': {'code': null, 'datetime': '2019-03-02 18:00:00.000'},
-          'until': {'code': null, 'datetime': '2019-03-03 06:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-03-02 18:00:00'},
+          'until': {'code': null, 'datetime': '2019-03-03 06:00:00'}
         }));
   });
 
@@ -160,8 +160,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '0600/0612',
-          'from_': {'code': null, 'datetime': '2019-03-06 00:00:00.000'},
-          'until': {'code': null, 'datetime': '2019-03-06 12:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-03-06 00:00:00'},
+          'until': {'code': null, 'datetime': '2019-03-06 12:00:00'}
         }));
   });
 
@@ -191,8 +191,8 @@ void main() {
         valid.asMap(),
         equals(<String, Object?>{
           'code': '3100/3124',
-          'from_': {'code': null, 'datetime': '2019-12-31 00:00:00.000'},
-          'until': {'code': null, 'datetime': '2020-01-01 00:00:00.000'}
+          'from_': {'code': null, 'datetime': '2019-12-31 00:00:00'},
+          'until': {'code': null, 'datetime': '2020-01-01 00:00:00'}
         }));
   });
 }

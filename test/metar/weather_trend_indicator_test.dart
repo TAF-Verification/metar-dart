@@ -35,11 +35,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-05 04:00:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-05 06:00:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-05 04:00:00'},
+            'end': {'code': null, 'datetime': '2022-02-05 06:00:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-05 04:00:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-05 06:00:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-05 04:00:00'},
+          'until': {'code': null, 'datetime': '2022-02-05 06:00:00'},
           'at': null,
           'code': 'NOSIG',
           'translation': 'no significant changes'
@@ -83,11 +83,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-05 13:47:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-05 15:47:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-05 13:47:00'},
+            'end': {'code': null, 'datetime': '2022-02-05 15:47:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-05 13:47:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-05 15:47:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-05 13:47:00'},
+          'until': {'code': null, 'datetime': '2022-02-05 15:47:00'},
           'at': null,
           'code': 'TEMPO',
           'translation': 'temporary'
@@ -129,11 +129,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-04 09:30:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-04 11:30:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-04 09:30:00'},
+            'end': {'code': null, 'datetime': '2022-02-04 11:30:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-04 09:30:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-04 11:30:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-04 09:30:00'},
+          'until': {'code': null, 'datetime': '2022-02-04 11:30:00'},
           'at': null,
           'code': 'BECMG',
           'translation': 'becoming'
@@ -176,11 +176,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-06 13:50:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-06 15:50:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-06 13:50:00'},
+            'end': {'code': null, 'datetime': '2022-02-06 15:50:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-06 14:10:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-06 15:50:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-06 14:10:00'},
+          'until': {'code': null, 'datetime': '2022-02-06 15:50:00'},
           'at': null,
           'code': 'BECMG FM1410',
           'translation': 'becoming'
@@ -223,11 +223,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-06 23:35:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-07 01:35:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-06 23:35:00'},
+            'end': {'code': null, 'datetime': '2022-02-07 01:35:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-07 01:00:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00'},
+          'until': {'code': null, 'datetime': '2022-02-07 01:00:00'},
           'at': null,
           'code': 'TEMPO FM0000 TL0100',
           'translation': 'temporary'
@@ -274,12 +274,12 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-07 02:00:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-07 00:00:00'},
+            'end': {'code': null, 'datetime': '2022-02-07 02:00:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-07 02:00:00.000'},
-          'at': {'code': null, 'datetime': '2022-02-07 00:30:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-07 00:00:00'},
+          'until': {'code': null, 'datetime': '2022-02-07 02:00:00'},
+          'at': {'code': null, 'datetime': '2022-02-07 00:30:00'},
           'code': 'BECMG AT0030',
           'translation': 'becoming'
         }));
@@ -324,11 +324,11 @@ void main() {
         first.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-15 01:00:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-15 03:00:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-15 01:00:00'},
+            'end': {'code': null, 'datetime': '2022-02-15 03:00:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-15 01:30:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-15 03:00:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-15 01:30:00'},
+          'until': {'code': null, 'datetime': '2022-02-15 03:00:00'},
           'at': null,
           'code': 'BECMG FM0130',
           'translation': 'becoming'
@@ -353,11 +353,11 @@ void main() {
         second.changeIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
-            'init': {'code': null, 'datetime': '2022-02-15 01:00:00.000'},
-            'end': {'code': null, 'datetime': '2022-02-15 03:00:00.000'}
+            'init': {'code': null, 'datetime': '2022-02-15 01:00:00'},
+            'end': {'code': null, 'datetime': '2022-02-15 03:00:00'}
           },
-          'from_': {'code': null, 'datetime': '2022-02-15 02:15:00.000'},
-          'until': {'code': null, 'datetime': '2022-02-15 02:45:00.000'},
+          'from_': {'code': null, 'datetime': '2022-02-15 02:15:00'},
+          'until': {'code': null, 'datetime': '2022-02-15 02:45:00'},
           'at': null,
           'code': 'TEMPO FM0215 TL0245',
           'translation': 'temporary'

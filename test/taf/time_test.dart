@@ -24,7 +24,7 @@ void main() {
         time.asMap(),
         equals(<String, String?>{
           'code': '232000Z',
-          'datetime': '2022-01-23 20:00:00.000',
+          'datetime': '2022-01-23 20:00:00',
         }));
   });
 }

@@ -66,12 +66,14 @@ List<String> parseSection(List<GroupHandler> handlers, String section) {
 
   section.split(' ').forEach((group) {
     unparsedGroups.add(group);
+    var counter = 0;
 
     for (var i = index; i < handlers.length; i++) {
       var handler = handlers[i];
-      index++;
+      counter++;
 
       if (handler.regexp.hasMatch(group)) {
+        index += counter;
         handler.handler(group);
         unparsedGroups.remove(group);
         break;

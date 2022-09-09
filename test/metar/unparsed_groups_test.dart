@@ -1,0 +1,39 @@
+import 'package:test/test.dart';
+
+import 'package:metar_dart/metar_dart.dart';
+
+void main() {
+  final fails = [
+    'METAR MRLM 141200Z 000O0KT 9999 SCT0320 BKN080 22/21 A2990',
+    'METAR MRLM 271500Z 11005KT 9999 FEW025 BKN25O 29/22 A2984 RMK HZY',
+    'METAR MRLM 072200Z 00000KT 9999 TSRA FEW015CV SCT018 BKN130 27/24 A2978',
+    'METAR MRLM 041300Z 23003KT 9999 FEW0230 SCT240 25/22 A2983',
+    'METAR MRLM 101800Z 25005KT 9999 3000 SW TSRA FEW006 SCT15CB BKN035  23/22 A2984 RMK TS SW W',
+    'METAR MRLM 010000Z VRB03KT 9999 FEW018 SCT0130 BKN270 27/23 A2973',
+    'METAR MRLM 111400Z VBR03KT 9999 CAVOK 26/23 A2982',
+    'METAR MRLM 221800Z 08012KT 9999 FEW028 SCT110 BKN270 30/24 A2976 A2976 RMK CB DST SW RN DST ENE',
+    'METAR MRLM 272200Z 31107KT 9999 FEW032 RA BKN140 28/2 A2977 RMK CB RN DST S',
+    'METAR MSSS 081250Z 13003KT 2000 BR SCT010 22/22 Q1015 BECMG 34505KT',
+  ];
+
+  final unparsedGroups = [
+    ['000O0KT', 'SCT0320'],
+    ['BKN25O'],
+    ['FEW015CV'],
+    ['FEW0230'],
+    ['SW', 'SCT15CB'],
+    ['SCT0130'],
+    ['VBR03KT', 'CAVOK'],
+    ['A2976'],
+    ['31107KT', 'RA', '28/2'],
+    ['34505KT'],
+  ];
+
+  test('Test unparsed groups', () {
+    for (var i = 0; i < fails.length; i++) {
+      final metar = Metar(fails[i]);
+
+      expect(metar.unparsedGroups, unparsedGroups[i]);
+    }
+  });
+}

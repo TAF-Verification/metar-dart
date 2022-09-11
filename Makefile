@@ -1,6 +1,7 @@
 DART=dart
 DART_RUN=$(DART) run
 PUB=pub
+PUB_GLOBAL=$(PUB) global
 CIDER=cider
 CIDER_BUMP=$(CIDER) bump
 
@@ -27,6 +28,10 @@ major:
 	$(CIDER_BUMP) major
 	$(DART) .create_tag.dart
 	git push --follow-tags
+
+coverage:
+	$(DART) $(PUB_GLOBAL) activate coverage
+	$(DART) $(PUB_GLOBAL) run coverage:test_with_coverage
 
 tests:
 	$(DART_RUN) test

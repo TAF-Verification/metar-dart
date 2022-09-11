@@ -1,20 +1,32 @@
-name: Test
+name: Push action
 
-on:
-  push:
-    branches: [main, devel-metar, devel-taf, devel-synop]
-  pull_request:
-    branches: [main]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: google/dart:latest
 
     steps:
       - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.3
       - name: Install dependencies
         run: dart pub get
       - name: Run tests
-        run: dart run test
+        run: make tests
+  
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.3
+      - name: Install dependencies
+        run: dart pub get
+      - name: Collect and report coverage
+        run: make coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/lcov.info

@@ -1,8 +1,32 @@
-# METAR Dart
+# Metar-Dart
 
-A library for Dart developers.
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![codecov][coverage-shield]][coverage-url]
+[![MIT License][license-shield]][license-url]
+
+[coverage-shield]: https://codecov.io/gh/TAF-Verification/metar-dart/branch/main/graph/badge.svg?token=3LFEI3SQ0W
+[coverage-url]: https://codecov.io/gh/TAF-Verification/metar-dart
+[contributors-shield]: https://img.shields.io/github/contributors/TAF-Verification/metar-dart.svg
+[contributors-url]: https://github.com/TAF-Verification/metar-dart/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/TAF-Verification/metar-dart.svg
+[forks-url]: https://github.com/TAF-Verification/metar-dart/network/members
+[stars-shield]: https://img.shields.io/github/stars/TAF-Verification/metar-dart.svg
+[stars-url]: https://github.com/TAF-Verification/metar-dart/stargazers
+[issues-shield]: https://img.shields.io/github/issues/TAF-Verification/metar-dart.svg
+[issues-url]: https://github.com/TAF-Verification/metar-dart/issues
+[license-shield]: https://img.shields.io/github/license/TAF-Verification/metar-dart.svg
+[license-url]: https://github.com/TAF-Verification/metar-dart/blob/master/LICENSE
 
 Inspired from python-metar, a library writed in Python language to parse Meteorological Aviation Weather Reports (METAR and SPECI).
+
+This library will parse meteorological information of aeronautical land stations.
+Supported report types:
+* METAR
+* SPECI
+* TAF
 
 ## Current METAR reports
 
@@ -28,21 +52,50 @@ A simple usage example:
 import 'package:metar_dart/metar_dart.dart';
 
 main() {
-  String metarCode = 'METAR MROC 071200Z 10018KT 3000 R07/P2000N BR VV003 17/09 A2994 RESHRA NOSIG';
-  final metar = Metar(metarCode);
+  String code = 'METAR MROC 071200Z 10018KT 3000 R07/P2000N BR VV003 17/09 A2994 RESHRA NOSIG';
+  final metar = Metar(code);
 
-  print('Type: ${metar.type}');
+  // Get the type of the report
+  print('${metar.type}'); // Meteorological Aerodrome Report
 
-  // Get the wind speed in knots
-  print('Wind speed: ${metar.windSpeed?.inKnot}');
+  // Get the wind speed in knots and direction in degrees
+  print('${metar.wind.speedInKnot} kt');       // 18.0 kt 
+  print('${metar.wind.directionInDegrees}°');  // 100.0°
 
   // Get the pressure in hecto pascals
-  print('Pressure: ${metar.pressure?.inHPa}');
+  print('${metar.pressure.inHPa} hPa');  // 1014.0 hPa
 
-  // Get the temperature in fahrenheit
-  print('Temperature: ${metar.temperature?.inFahrenheit}');
+  // Get the temperature in Celsius
+  print('${metar.temperatures.temperatureInCelsius}°C');  // 17.0°C
 }
 ```
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create.
+Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request.
+You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+
+## Roadmap
+
+- [x] Add parsers for TAF and METAR reports
+- [ ] Add functions to verificate the TAF with the observations
+- [ ] Add a CLI API to interact with the verification functions
+- [ ] Add parser for SYNOPTIC reports
+- [ ] Add functions to verificate reports with rules of [Annex 3][annex3]
+- [ ] Multi-language Support
+    - [ ] Portuguese
+    - [ ] Spanish
+
+[annex3]: https://www.icao.int/airnavigation/IMP/Documents/Annex%203%20-%2075.pdf
 
 ## Features and bugs
 
@@ -56,7 +109,7 @@ The most recent version of this package is always available via git, only run th
 command on your terminal:
 
 ```
-git clone https://github.com/diego-garro/metar-dart
+git clone https://github.com/TAF-Verification/metar-dart
 ```
 
 ## Authors
@@ -77,16 +130,6 @@ the following command in your terminal to activate it
 pub global activate cider
 ```
 
-## Special mentions
+## License
 
-Thanks to the work made by [@yeradis][yeradis], who create the package
-`units` for starting point of measurements in Dart. I took the files directly because they
-have an issue in angle.dart that not resolved. Hope they do it soon.
-
-[yeradis]: https://github.com/yeradis
-
-The files are in `lib/src/units/` folder:
-  * angle.dart
-  * length.dart
-  * speed.dart
-  * temperature.dart
+Distributed under the MIT License. See `LICENSE` for more information.

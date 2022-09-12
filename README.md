@@ -101,7 +101,7 @@ Don't forget to give the project a star! Thanks again!
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/diego-garro/metar-dart/issues
+[tracker]: https://github.com/TAF-Verification/metar-dart/issues
 
 ## Current Sources
 

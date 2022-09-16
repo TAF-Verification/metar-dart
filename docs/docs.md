@@ -50,12 +50,13 @@ dependencies:
     - [Raw Code](#raw-code)
     - [Sections](#sections)
     - [Unparsed Groups](#unparsed-groups)
+    - [Type](#type)
 
 </td>
-<td width=33% valign=top>
+<!-- <td width=33% valign=top>
 </td>
 <td valign=top>
-</td>
+</td> -->
 </tr>
 </table>
 
@@ -145,7 +146,7 @@ Where the first element is the body, the second is the trend and the last one is
 
 ### Unparsed Groups
 
-Get the unparsed groups of the report. Type `List[str]`.
+Get the unparsed groups of the report. Type `List<String>`.
 
 ```dart
 // ... snip ...
@@ -158,10 +159,37 @@ Get the unparsed groups of the report. Type `List[str]`.
 // ... snip ...
 
 // prints...
-// ['FEWT030']
+// [FEWT030]
 ```
 
 As you can see, the parser is very strict. This is because we can't take in count every case of bad 
 digitation in land station where the work is completely manual. Human errors are inevitable. Try to
 parse bad groups may incur us to have bad data to make calculations, we don't want this in our
 climatology.
+
+Starting from here, all the properties contains this list of methods:
+
+* toMap() -> `Map<String, Object>`: Returns the object data as a map like `Map<String, Object>`. In some
+  cases the `Object` type is replaced by a especific type.
+* toJson() -> `String`: Returns the object data as a string in JSON format.
+
+Of course, the `Metar` object also containes this same methods.
+
+### Type
+
+Get the type of the Metar. Type `ReportType`.
+
+Fields:
+* code `String`: The code present in the `Metar`. Defaults to `METAR`.
+* type `String`: The report type name, e.g. `Meteorological Aerodrome Report`.
+
+```dart
+// ... snip ...
+  print(metar.type.code);
+  print(metar.type.type);
+// ... snip ...
+
+// prints...
+// METAR
+// Meteorological Aerodrome Report
+```

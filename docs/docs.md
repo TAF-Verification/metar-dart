@@ -51,6 +51,7 @@ dependencies:
     - [Sections](#sections)
     - [Unparsed Groups](#unparsed-groups)
     - [Type](#type)
+    - [Station](#station)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -169,7 +170,7 @@ climatology.
 
 Starting from here, all the properties contains this list of methods:
 
-* toMap() -> `Map<String, Object>`: Returns the object data as a map like `Map<String, Object>`. In some
+* asMap() -> `Map<String, Object>`: Returns the object data as a map like `Map<String, Object>`. In some
   cases the `Object` type is replaced by a especific type.
 * toJson() -> `String`: Returns the object data as a string in JSON format.
 
@@ -192,4 +193,44 @@ Fields:
 // prints...
 // METAR
 // Meteorological Aerodrome Report
+```
+
+### Station
+
+Get the station information of the report. Type `Station`.
+
+Fields:
+* code `String`: The code present in the `Metar`, e.g. `KJFK`.
+* name `String`: The name of the land station.
+* country `String`: The country to which the land station belongs.
+* elevation `String`: The elevation in meters above sea level of the station.
+* longitude `String`: The longitude of the station.
+* latitude `String`: The latitude of the station.
+* icao `String`: The ICAO code of the station.
+* iata `String`: The IATA code of the station.
+* synop `String`: The SYNOP code of the station.
+
+```dart
+// ... snip ...
+  print('Code: ${metar.station.code}');
+  print('Name: ${metar.station.name}');
+  print('Country: ${metar.station.country}');
+  print('Elevation: ${metar.station.elevation}');
+  print('Longitude: ${metar.station.longitude}');
+  print('Latitude: ${metar.station.latitude}');
+  print('ICAO: ${metar.station.icao}');
+  print('IATA: ${metar.station.iata}');
+  print('SYNOP: ${metar.station.synop}');
+// ... snip ...
+
+// prints...
+// Code: KJFK
+// Name: NY NYC/JFK ARPT
+// Country: United States of America (the)
+// Elevation: 9
+// Longitude: 073.46W
+// Latitude: 40.38N
+// ICAO: KJFK
+// IATA: JFK
+// SYNOP: 74486
 ```

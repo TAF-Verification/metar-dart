@@ -61,7 +61,7 @@ class Station extends Group {
   /// Get the elevation of the station.
   String? get elevation => _station[6];
 
-  /// Get the country of the station.
+  /// Get the country to which the land station belongs.
   String? get country => getCountry(_station[7]);
 
   @override

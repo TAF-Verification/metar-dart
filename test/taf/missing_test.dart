@@ -9,7 +9,7 @@ void main() {
     final missing = taf.missing;
 
     expect(missing.code, 'NIL');
-    expect(missing.modifier, 'Missing report');
+    expect(missing.description, 'Missing report');
     expect(missing.isMissing, true);
     expect(missing.toString(), 'missing report');
     expect(
@@ -34,7 +34,7 @@ void main() {
     final missing = taf.missing;
 
     expect(missing.code, null);
-    expect(missing.modifier, null);
+    expect(missing.description, null);
     expect(missing.isMissing, false);
     expect(missing.toString(), '');
     expect(

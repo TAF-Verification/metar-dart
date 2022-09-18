@@ -10,7 +10,7 @@ void main() {
     final modifier = metar.modifier;
 
     expect(modifier.code, 'AUTO');
-    expect(modifier.modifier, 'Automatic report');
+    expect(modifier.description, 'Automatic report');
     expect(modifier.toString(), 'automatic report');
     expect(
         modifier.asMap(),
@@ -26,7 +26,7 @@ void main() {
     final modifier = metar.modifier;
 
     expect(modifier.code, 'NIL');
-    expect(modifier.modifier, 'Missing report');
+    expect(modifier.description, 'Missing report');
     expect(modifier.toString(), 'missing report');
     expect(
         modifier.asMap(),
@@ -43,7 +43,7 @@ void main() {
     final modifier = metar.modifier;
 
     expect(modifier.code, 'COR');
-    expect(modifier.modifier, 'Correction');
+    expect(modifier.description, 'Correction');
     expect(modifier.toString(), 'correction');
     expect(
         modifier.asMap(),
@@ -60,7 +60,7 @@ void main() {
     final modifier = metar.modifier;
 
     expect(modifier.code, null);
-    expect(modifier.modifier, null);
+    expect(modifier.description, null);
     expect(modifier.toString(), '');
     expect(
         modifier.asMap(),

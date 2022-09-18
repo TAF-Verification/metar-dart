@@ -53,6 +53,7 @@ dependencies:
     - [Type](#type)
     - [Station](#station)
     - [Time](#time)
+    - [Modifier](#modifier)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -75,7 +76,7 @@ import 'package:metar_dart/metar_dart.dart';
 
 void main() {
   final code =
-        'KMIA 130053Z 00000KT 10SM FEW030 FEW045 BKN250 29/23 A2994 RMK AO2 SLP140 T02940233';
+        'KMIA 130053Z COR 00000KT 10SM FEW030 FEW045 BKN250 29/23 A2994 RMK AO2 SLP140 T02940233';
   final metar = Metar(code);
 }
 ```
@@ -241,6 +242,7 @@ Fields:
 Get the date and time of the report. Type `Time`.
 
 Fields:
+* code `String?`: The code present in the `Metar`, e.g. `130053Z`.
 * time `DateTime`: The time of the report as a `DateTime` object.
 * year `int`: The year of the report. Defaults to current year if not provided in the
   `Metar` instance.
@@ -252,13 +254,43 @@ Fields:
 
 ```dart
 // ... snip ...
+  print(metar.time.code);
   print(metar.time.day);
   print(metar.time.hour);
   print(metar.time.minute);
 // ... snip ...
 
 // prints...
+// 130053Z
 // 13
 // 0
 // 53
+```
+
+### Modifier
+
+Get the modifier description of the report. Type `Modifier`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `AUTO`.
+* description `String?`: The description of the modifier code.
+
+Supported codes are:
+* COR: Correction
+* CORR: Correction
+* AMD: Amendment
+* NIL: Missing report
+* AUTO: Automatic report
+* TEST: Testing report
+* FINO: Missing report
+
+```dart
+// ... snip ...
+  print(metar.modifier.code);
+  print(metar.modifier.description);
+// ... snip ...
+
+// prints...
+// COR
+// Correction
 ```

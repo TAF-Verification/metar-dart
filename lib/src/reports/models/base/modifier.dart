@@ -12,27 +12,27 @@ final MODIFIERS = <String, String>{
 
 /// Basic structure for modifier groups in reports from land stations.
 class Modifier extends Group {
-  late final String? _modifier;
+  late final String? _description;
 
   Modifier(String? code) : super(code) {
-    _modifier = MODIFIERS[code];
+    _description = MODIFIERS[code];
   }
 
   @override
   String toString() {
-    if (_modifier == null) return '';
+    if (_description == null) return '';
 
-    return _modifier!.toLowerCase();
+    return _description!.toLowerCase();
   }
 
   /// Get the modifier description of the report.
-  String? get modifier => _modifier;
+  String? get description => _description;
 
   @override
   Map<String, Object?> asMap() {
     final map = super.asMap();
     map.addAll({
-      'modifier': modifier,
+      'modifier': description,
     });
     return map.cast<String, String?>();
   }

@@ -15,7 +15,7 @@ void main() {
     final modifier = taf.modifier;
 
     expect(modifier.code, 'AMD');
-    expect(modifier.modifier, 'Amendment');
+    expect(modifier.description, 'Amendment');
     expect(modifier.toString(), 'amendment');
     expect(
         modifier.asMap(),
@@ -37,7 +37,7 @@ void main() {
     final modifier = taf.modifier;
 
     expect(modifier.code, 'COR');
-    expect(modifier.modifier, 'Correction');
+    expect(modifier.description, 'Correction');
     expect(modifier.toString(), 'correction');
     expect(
         modifier.asMap(),
@@ -57,7 +57,7 @@ void main() {
     final modifier = taf.modifier;
 
     expect(modifier.code, null);
-    expect(modifier.modifier, null);
+    expect(modifier.description, null);
     expect(modifier.toString(), '');
     expect(
         modifier.asMap(),

@@ -52,6 +52,7 @@ dependencies:
     - [Unparsed Groups](#unparsed-groups)
     - [Type](#type)
     - [Station](#station)
+    - [Time](#time)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -200,15 +201,15 @@ Fields:
 Get the station information of the report. Type `Station`.
 
 Fields:
-* code `String`: The code present in the `Metar`, e.g. `KJFK`.
-* name `String`: The name of the land station.
-* country `String`: The country to which the land station belongs.
-* elevation `String`: The elevation in meters above sea level of the station.
-* longitude `String`: The longitude of the station.
-* latitude `String`: The latitude of the station.
-* icao `String`: The ICAO code of the station.
-* iata `String`: The IATA code of the station.
-* synop `String`: The SYNOP code of the station.
+* code `String?`: The code present in the `Metar`, e.g. `KJFK`.
+* name `String?`: The name of the land station.
+* country `String?`: The country to which the land station belongs.
+* elevation `String?`: The elevation in meters above sea level of the station.
+* longitude `String?`: The longitude of the station.
+* latitude `String?`: The latitude of the station.
+* icao `String?`: The ICAO code of the station.
+* iata `String?`: The IATA code of the station.
+* synop `String?`: The SYNOP code of the station.
 
 ```dart
 // ... snip ...
@@ -233,4 +234,31 @@ Fields:
 // ICAO: KJFK
 // IATA: JFK
 // SYNOP: 74486
+```
+
+### Time
+
+Get the date and time of the report. Type `Time`.
+
+Fields:
+* time `DateTime`: The time of the report as a `DateTime` object.
+* year `int`: The year of the report. Defaults to current year if not provided in the
+  `Metar` instance.
+* month `int`: The month of the report. Defaults to current month if not provided in the
+  `Metar` instance.
+* day `int`: The day of the report.
+* hour `int`: The hour of the report.
+* minute `int`: The minute of the report.
+
+```dart
+// ... snip ...
+  print(metar.time.day);
+  print(metar.time.hour);
+  print(metar.time.minute);
+// ... snip ...
+
+// prints...
+// 13
+// 0
+// 53
 ```

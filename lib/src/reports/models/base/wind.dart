@@ -184,12 +184,10 @@ class Speed extends Numeric {
 class Wind {
   Direction _direction = Direction(null);
   Speed _speed = Speed(null);
-  Speed _gust = Speed(null);
 
-  Wind({String? direction, String? speed, String? gust}) {
+  Wind({String? direction, String? speed}) {
     _direction = Direction(direction);
     _speed = Speed(speed);
-    _gust = Speed(gust);
   }
 
   @override
@@ -199,9 +197,7 @@ class Wind {
     var direction = _direction.toString();
     direction = _direction.value != null ? '($_direction)' : direction;
 
-    final gust = _gust.value != null ? 'gust of $_gust' : '';
-
-    var s = '$cardinal $direction $_speed $gust';
+    var s = '$cardinal $direction $_speed';
     s = s.replaceAll(RegExp(r'\s{2,}'), ' ');
     s = s.trim();
 
@@ -249,23 +245,10 @@ class Wind {
   /// Get the wind speed in miles per hour.
   double? get speedInMiph => _speed.inMiph;
 
-  /// Get the wind gusts in knots.
-  double? get gustInKnot => _gust.inKnot;
-
-  /// Get the wind gusts in meters per second.
-  double? get gustInMps => _gust.inMps;
-
-  /// Get the wind gusts in kilometers per hour.
-  double? get gustInKph => _gust.inKph;
-
-  // Get the wind gusts in miles per hour.
-  double? get gustInMiph => _gust.inMiph;
-
   Map<String, Object?> asMap() {
     return {
       'direction': _direction.asMap(),
       'speed': _speed.asMap(),
-      'gust': _gust.asMap(),
     };
   }
 

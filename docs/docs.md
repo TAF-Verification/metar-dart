@@ -54,6 +54,7 @@ dependencies:
     - [Station](#station)
     - [Time](#time)
     - [Modifier](#modifier)
+    - [Wind](#wind)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -76,7 +77,7 @@ import 'package:metar_dart/metar_dart.dart';
 
 void main() {
   final code =
-        'KMIA 130053Z COR 00000KT 10SM FEW030 FEW045 BKN250 29/23 A2994 RMK AO2 SLP140 T02940233';
+        'KMIA 130053Z COR 25005KT 10SM FEW030 FEW045 BKN250 29/23 A2994 RMK AO2 SLP140 T02940233';
   final metar = Metar(code);
 }
 ```
@@ -276,13 +277,13 @@ Fields:
 * description `String?`: The description of the modifier code.
 
 Supported codes are:
-* COR: Correction
-* CORR: Correction
-* AMD: Amendment
-* NIL: Missing report
-* AUTO: Automatic report
-* TEST: Testing report
-* FINO: Missing report
+* `COR`: Correction
+* `CORR`: Correction
+* `AMD`: Amendment
+* `NIL`: Missing report
+* `AUTO`: Automatic report
+* `TEST`: Testing report
+* `FINO`: Missing report
 
 ```dart
 // ... snip ...
@@ -293,4 +294,42 @@ Supported codes are:
 // prints...
 // COR
 // Correction
+```
+
+### Wind
+
+Get the wind data of the report. Type `MetarWind`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `25005KT`.
+* cardinalDirection `String?`: The cardinal direction associated to the wind direction,
+  e.g. "NW" (north west).
+* variable `bool`: Represents if the wind direction is variable (VRB).
+* directionInDegrees `double?`: The wind direction in degrees.
+* directionInRadians `double?`: The wind direction in radians.
+* directionInGradians `double?`: The wind direction in gradians.
+* speedInKnot `double?`: The wind speed in knot.
+* speedInMps `double?`: The wind speed in meters per second.
+* speedInKph `double?`: The wind speed in kilometers per hour.
+* speedInMiph `double?`: The wind speed in miles per hour.
+* gustInKnot `double?`: The wind gust in knot.
+* gustInMps `double?`: The wind gust in meters per second.
+* gustInKph `double?`: The wind gust in kilometers per hour.
+* gustInMiph `double?`: The wind gust in miles per hour.
+
+```dart
+// ... snip ...
+  print(metar.wind.code);
+  print(metar.wind.cardinalDirection);
+  print(metar.wind.variable);
+  print(metar.wind.speedInMiph);
+  print(metar.wind.gustInKph);
+// ... snip ...
+
+// prints...
+// 25005KT
+// WSW
+// False
+// 5.7539
+// None
 ```

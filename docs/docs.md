@@ -12,7 +12,7 @@ But, this package is designed to go further in parsing more than METAR reports.
 [tom-pollard]: https://github.com/tomp
 
 Going through this documentation will take you about an hour, and by the end of it you will have pretty much 
-learned the entire API provided to interact with the objects ands its methods and properties.
+learned the entire API provided to interact with the objects and its methods and properties.
 
 ## Installing
 
@@ -55,6 +55,7 @@ dependencies:
     - [Time](#time)
     - [Modifier](#modifier)
     - [Wind](#wind)
+    - [Wind Variation](#wind-variation)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -181,7 +182,7 @@ Of course, the `Metar` object also containes this same methods.
 
 ### Type
 
-Get the type of the Metar. Type `ReportType`.
+Get the type of the report. Type `ReportType`.
 
 Fields:
 * code `String`: The code present in the `Metar`. Defaults to `METAR`.
@@ -322,6 +323,7 @@ Fields:
   print(metar.wind.code);
   print(metar.wind.cardinalDirection);
   print(metar.wind.variable);
+  print(metar.wind.directionInDegrees);
   print(metar.wind.speedInMiph);
   print(metar.wind.gustInKph);
 // ... snip ...
@@ -330,6 +332,39 @@ Fields:
 // 25005KT
 // WSW
 // False
+// 250.0
 // 5.7539
 // None
+```
+
+### Wind Variation
+
+Get the wind variation directions from the report. Type `MetarWindVariation`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `250V140`.
+* from_cardinal_direction `String?`: The `from` cardinal direction, e.g. "NW" (north west).
+* from_in_degrees `double?`: The `from` direction in degrees.
+* from_in_radians `double?`: The `from` direction in radians.
+* from_in_gradians `double?`: The `from` direction in gradians.
+* to_cardinal_direction `String?`: The `to` cardinal direction, e.g. "SE" (south est).
+* to_in_degrees `double?`: The `to` direction in degrees.
+* to_in_radians `double?`: The `to` direction in radians.
+* to_in_gradians `double?`: The `to` direction in gradians.
+
+```dart
+// ... snip ...
+  print(metar.windVariation.code);
+  print(metar.windVariation.fromCardinalDirection);
+  print(metar.windVariation.fromInDegrees);
+  print(metar.windVariation.toCardinalDirection);
+  print(metar.windVariation.toInDegrees);
+// ... snip ...
+
+// prints...
+// 250V140
+// WSW
+// 250.0
+// SE
+// 140.0
 ```

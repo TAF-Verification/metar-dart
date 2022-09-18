@@ -343,14 +343,14 @@ Get the wind variation directions from the report. Type `MetarWindVariation`.
 
 Fields:
 * code `String?`: The code present in the `Metar`, e.g. `250V140`.
-* from_cardinal_direction `String?`: The `from` cardinal direction, e.g. "NW" (north west).
-* from_in_degrees `double?`: The `from` direction in degrees.
-* from_in_radians `double?`: The `from` direction in radians.
-* from_in_gradians `double?`: The `from` direction in gradians.
-* to_cardinal_direction `String?`: The `to` cardinal direction, e.g. "SE" (south est).
-* to_in_degrees `double?`: The `to` direction in degrees.
-* to_in_radians `double?`: The `to` direction in radians.
-* to_in_gradians `double?`: The `to` direction in gradians.
+* fromCardinalDirection `String?`: The `from` cardinal direction, e.g. "NW" (north west).
+* fromInDegrees `double?`: The `from` direction in degrees.
+* fromInRadians `double?`: The `from` direction in radians.
+* fromInGradians `double?`: The `from` direction in gradians.
+* toCardinalDirection `String?`: The `to` cardinal direction, e.g. "SE" (south est).
+* toInDegrees `double?`: The `to` direction in degrees.
+* toInRadians `double?`: The `to` direction in radians.
+* toInGradians `double?`: The `to` direction in gradians.
 
 ```dart
 // ... snip ...

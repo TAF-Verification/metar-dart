@@ -56,6 +56,7 @@ dependencies:
     - [Modifier](#modifier)
     - [Wind](#wind)
     - [Wind Variation](#wind-variation)
+    - [Prevailing Visibility](#prevailing-visibility)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -190,8 +191,10 @@ Fields:
 
 ```dart
 // ... snip ...
+
   print(metar.type.code);
   print(metar.type.type);
+
 // ... snip ...
 
 // prints...
@@ -216,6 +219,7 @@ Fields:
 
 ```dart
 // ... snip ...
+
   print('Code: ${metar.station.code}');
   print('Name: ${metar.station.name}');
   print('Country: ${metar.station.country}');
@@ -225,6 +229,7 @@ Fields:
   print('ICAO: ${metar.station.icao}');
   print('IATA: ${metar.station.iata}');
   print('SYNOP: ${metar.station.synop}');
+
 // ... snip ...
 
 // prints...
@@ -256,10 +261,12 @@ Fields:
 
 ```dart
 // ... snip ...
+
   print(metar.time.code);
   print(metar.time.day);
   print(metar.time.hour);
   print(metar.time.minute);
+
 // ... snip ...
 
 // prints...
@@ -288,8 +295,10 @@ Supported codes are:
 
 ```dart
 // ... snip ...
+
   print(metar.modifier.code);
   print(metar.modifier.description);
+
 // ... snip ...
 
 // prints...
@@ -320,12 +329,14 @@ Fields:
 
 ```dart
 // ... snip ...
+
   print(metar.wind.code);
   print(metar.wind.cardinalDirection);
   print(metar.wind.variable);
   print(metar.wind.directionInDegrees);
   print(metar.wind.speedInMiph);
   print(metar.wind.gustInKph);
+
 // ... snip ...
 
 // prints...
@@ -354,11 +365,13 @@ Fields:
 
 ```dart
 // ... snip ...
+
   print(metar.windVariation.code);
   print(metar.windVariation.fromCardinalDirection);
   print(metar.windVariation.fromInDegrees);
   print(metar.windVariation.toCardinalDirection);
   print(metar.windVariation.toInDegrees);
+
 // ... snip ...
 
 // prints...
@@ -367,4 +380,36 @@ Fields:
 // 250.0
 // SE
 // 140.0
+```
+
+### Prevailing Visibility
+
+Get the prevailing visibility of the report. Type `MetarPrevailingVisibility`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `9999`.
+* inMeters `double?`: The prevailing visibility in meters.
+* inKilometers `double?`: The prevailing visibility in kilometers.
+* inFeet `double?`: The prevailing visibility in feet.
+* inSeaMiles `double?`: The prevailing visibility in sea miles.
+* cardinalDirection `String?`: The cardinal direction associated to the visibility,
+  e.g. "NW" (north west).
+* directionInDegrees `double?`: The wind direction in degrees.
+* directionInRadians `double?`: The wind direction in radians.
+* directionInGradians `double?`: The wind direction in gradians.
+* cavok `bool`: True if CAVOK, False if not.
+
+```dart
+// ... snip ...
+
+  print(metar.prevailing_visibility.code);
+  print(metar.prevailing_visibility.in_meters);
+  print(metar.prevailing_visibility.cavok);
+
+// ... snip ...
+
+// prints...
+// 10SM
+// 18520.0
+// False
 ```

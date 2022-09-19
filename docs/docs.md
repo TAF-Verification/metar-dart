@@ -50,6 +50,7 @@ dependencies:
     - [Raw Code](#raw-code)
     - [Sections](#sections)
     - [Unparsed Groups](#unparsed-groups)
+    - [The `GroupList` object](#the-grouplist-object)
     - [Type](#type)
     - [Station](#station)
     - [Time](#time)
@@ -58,6 +59,8 @@ dependencies:
     - [Wind Variation](#wind-variation)
     - [Prevailing Visibility](#prevailing-visibility)
     - [Minimum Visibility](#minimum-visibility)
+    - [Runway Ranges](#runway-ranges)
+      - [Runway Range](#runway-range)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -181,6 +184,28 @@ Starting from here, all the properties contains this list of methods:
 * toJson() -> `String`: Returns the object data as a string in JSON format.
 
 Of course, the `Metar` object also containes this same methods.
+
+### The `GroupList` object
+
+Some groups may appear several times in the `METAR` report, but representing different data.
+For example, the weather or the cloud layers. So, we can group these in one object to manipulate
+them more easily.
+
+The `GroupList` object is a class that contains other objects of the same type like a list.
+You can iterate using the `items` field in a `for` loop:
+
+```dart
+for (var group in groupListInstance.items) {
+  print(group.some_property);
+}
+```
+
+We will use the `GroupList` object for the first time in [Runway Ranges](#runway-ranges)
+section.
+
+Fields:
+* codes `List<String>`: The codes of every group found in report as a `List<String>`.
+* items `List<T>`: The groups found in report.
 
 ### Type
 
@@ -450,4 +475,51 @@ Fields:
 // 1000.0
 // SW
 // 225.0
+```
+
+### Runway Ranges
+
+Get the runway ranges data of the METAR if provided. Type `GroupList<MetarRunwayRange>`.
+
+#### Runway Range
+
+The individual runway range data by group provided in the METAR. Type `MetarRunwayRange`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `R07L/M0150V0600U`.
+* name `String?`: The runway name.
+* lowRange `String?`: The runway low range as a string.
+* lowInMeters `double?`: The runway low range in meters.
+* lowInKilometers `double?`: The runway low range in kilometers.
+* lowInFeet `double?`: The runway low range in feet.
+* lowInSeaMiles `double?`: The runway low range in sea miles.
+* highRange `String?`: The runway high range as a string.
+* highInMeters `double?`: The runway high range in meters.
+* highInKilometers `double?`: The runway high range in kilometers.
+* highInFeet `double?`: The runway high range in feet.
+* highInSeaMiles `double?`: The runway high range in sea miles.
+* trend `String?`: The trend of the runway range.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final code = 'METAR SCFA 121300Z 21008KT 9999 3000W R07L/M0150V0600U TSRA FEW020 20/13 Q1014 NOSIG';
+  final metar = Metar(code);
+
+  print(metar.runwayRanges.codes);
+
+  for (var runwayRange in metar.runwayRanges.items) {
+    print(runwayRange.name);
+    print(runwayRange.low_range);
+    print(runwayRange.high_in_sea_miles);
+  }
+
+// ... snip ...
+
+// prints...
+// [R07L/M0150V0600U]
+// 07 left
+// below of 150.0 m
+// 0.3239740820734341
 ```

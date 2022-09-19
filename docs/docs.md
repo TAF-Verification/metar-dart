@@ -435,8 +435,8 @@ Fields:
 // ... snip ...
 
   // New METAR code for this example
-  code = "MROC 160700Z 09003KT 3000 1000SW BR SCT005 BKN015 19/19 A3007 NOSIG"
-  metar = Metar(code)
+  final code = 'MROC 160700Z 09003KT 3000 1000SW BR SCT005 BKN015 19/19 A3007 NOSIG';
+  final metar = Metar(code);
 
   print(metar.minimumVisibility.code);
   print(metar.minimumVisibility.inMeters);

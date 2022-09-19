@@ -57,6 +57,7 @@ dependencies:
     - [Wind](#wind)
     - [Wind Variation](#wind-variation)
     - [Prevailing Visibility](#prevailing-visibility)
+    - [Minimum Visibility](#minimum-visibility)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -394,17 +395,17 @@ Fields:
 * inSeaMiles `double?`: The prevailing visibility in sea miles.
 * cardinalDirection `String?`: The cardinal direction associated to the visibility,
   e.g. "NW" (north west).
-* directionInDegrees `double?`: The wind direction in degrees.
-* directionInRadians `double?`: The wind direction in radians.
-* directionInGradians `double?`: The wind direction in gradians.
+* directionInDegrees `double?`: The direction of the prevailing visibility in degrees.
+* directionInRadians `double?`: The direction of the prevailing visibility in radians.
+* directionInGradians `double?`: The direction of the prevailing visibility in gradians.
 * cavok `bool`: True if CAVOK, False if not.
 
 ```dart
 // ... snip ...
 
-  print(metar.prevailing_visibility.code);
-  print(metar.prevailing_visibility.in_meters);
-  print(metar.prevailing_visibility.cavok);
+  print(metar.prevailingVisibility.code);
+  print(metar.prevailingVisibility.inMeters);
+  print(metar.prevailingVisibility.cavok);
 
 // ... snip ...
 
@@ -412,4 +413,41 @@ Fields:
 // 10SM
 // 18520.0
 // False
+```
+
+### Minimum Visibility
+
+Get the minimum visibility of the report. Type `MetarMinimumVisibility`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `3000W`.
+* inMeters `double?`: The minimum visibility in meters.
+* inKilometers `double?`: The minimum visibility in kilometers.
+* inFeet `double?`: The minimum visibility in feet.
+* inSeaMiles `double?`: The minimum visibility in sea miles.
+* cardinalDirection `String?`: The cardinal direction associated to the minimum visibility,
+  e.g. "NW" (north west).
+* directionInDegrees `double?`: The direction of the minimum visibility in degrees.
+* directionInRadians `double?`: The direction of the minimum visibility in radians.
+* directionInGradians `double?`: The direction of the minimum visibility in gradians.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  code = "MROC 160700Z 09003KT 3000 1000SW BR SCT005 BKN015 19/19 A3007 NOSIG"
+  metar = Metar(code)
+
+  print(metar.minimumVisibility.code);
+  print(metar.minimumVisibility.inMeters);
+  print(metar.minimumVisibility.cardinalDirection);
+  print(metar.minimumVisibility.directionInDegrees);
+
+// ... snip ...
+
+// prints...
+// 1000SW
+// 1000.0
+// SW
+// 225.0
 ```

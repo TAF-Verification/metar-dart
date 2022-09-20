@@ -61,6 +61,8 @@ dependencies:
     - [Minimum Visibility](#minimum-visibility)
     - [Runway Ranges](#runway-ranges)
       - [Runway Range](#runway-range)
+    - [Weathers](#weathers)
+      - [Weather](#weather)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -522,4 +524,62 @@ Fields:
 // 07 left
 // below of 150.0 m
 // 0.3239740820734341
+```
+
+### Weathers
+
+Get the weathers data of the METAR if provided. Type `GroupList<MetarWeather>`.
+
+#### Weather
+
+The individual weather data by group provided in the METAR. Type `MetarWeather`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `+TSRA`.
+* intensity `String?`: The intensity translation of the weather, e.g. `+ -> heavy`.
+* description `String?`: The description translation of the weather, e.g. `TS -> thunder storm`.
+* precipitation `String?`: The precipitation translation of the weather, e.g. `RA -> rain`.
+* obscuration `String?`: The obscuration translation of the weather, e.g. `BR -> mist`.
+* other `String?`: The other translation of the weather, e.g. `FC -> funnel cloud`.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final metarCode =
+      'METAR BIBD 191100Z 03002KT 5000 +RA BR VCTS SCT008CB OVC020 04/03 Q1013';
+  final metar = Metar(metarCode);
+
+  var code = 'code'.padLeft(13);
+  var intensity = 'intensity'.padLeft(13);
+  var description = 'description'.padLeft(13);
+  var precipitation = 'precipitation'.padLeft(13);
+  var obscuration = 'obscuration'.padLeft(13);
+  var other = 'other'.padLeft(13);
+
+  for (var weather in metar.weathers.items) {
+    code += '${weather.code}'.padLeft(14);
+    intensity += '${weather.intensity}'.padLeft(14);
+    description += '${weather.description}'.padLeft(14);
+    precipitation += '${weather.precipitation}'.padLeft(14);
+    obscuration += '${weather.obscuration}'.padLeft(14);
+    other += '${weather.other}'.padLeft(14);
+  }
+
+  print(code);
+  print(intensity);
+  print(description);
+  print(precipitation);
+  print(obscuration);
+  print(other);
+
+// ... snip ...
+
+// prints...
+//          code           +RA            BR          VCTS
+//     intensity         heavy          null        nearby
+//   description          null          null  thunderstorm
+// precipitation          rain          null          null
+//   obscuration          null          mist          null
+//         other          null          null          null
 ```

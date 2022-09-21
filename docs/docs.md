@@ -63,6 +63,8 @@ dependencies:
       - [Runway Range](#runway-range)
     - [Weathers](#weathers)
       - [Weather](#weather)
+    - [Clouds](#clouds)
+      - [Cloud](#cloud)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -200,6 +202,10 @@ You can iterate using the `items` field in a `for` loop:
 for (var group in groupListInstance.items) {
   print(group.some_property);
 }
+
+// Can be indexed too
+final group = group_list_instance[0];
+print(group.some_property);
 ```
 
 We will use the `GroupList` object for the first time in [Runway Ranges](#runway-ranges)
@@ -582,4 +588,75 @@ Fields:
 // precipitation          rain          null          null
 //   obscuration          null          mist          null
 //         other          null          null          null
+```
+
+### Clouds
+
+Get the clouds data of the report. Type `CloudList` which extends `GroupList<Cloud>`.
+
+Fields:
+* ceiling `bool`: True if there is ceiling, False if not. If the cover of someone of the
+  cloud layers is broken (BKN) or overcast (OVC) and its height is less or equal than 1500.0
+  feet, there is ceiling; there isn't otherwise.
+
+#### Cloud
+
+The individual cloud data by group provided in the report. Type `Cloud`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `SCT015CB`.
+* cover `String?`: The cover translation of the cloud layer, e.g. `SCT -> scattered`.
+* cloud_type `String?`: The type of cloud translation of the cloud layer, e.g. `CB -> cumulonimbus`.
+* oktas `String`: The oktas amount of the cloud layer, e.g. `SCT -> 3-4`.
+* height_in_meters `double?`: The height of the cloud base in meters.
+* height_in_kilometers `double?`: The height of the cloud base in kilometers.
+* height_in_sea_miles `double?`: The height of the cloud base in sea miles.
+* height_in_feet `double?`: The height of the cloud base in feet.
+
+```dart
+// ... snip ...
+
+  final metarCode =
+      'METAR BIBD 191100Z 03002KT 5000 +RA BR VCTS FEW010CB SCT020 BKN120 04/03 Q1013';
+  final metar = Metar(metarCode);
+
+  print(metar.clouds.codes);
+  print(metar.clouds.ceiling);
+
+// ... snip ...
+
+// prints...
+// [FEW010CB, SCT020, BKN120]
+// false
+
+// ... snip ...
+
+  var code = 'code'.padLeft(12);
+  var cover = 'cover'.padLeft(12);
+  var oktas = 'oktas'.padLeft(12);
+  var cloudType = 'cloudType'.padLeft(12);
+  var height = 'height (ft)'.padLeft(12);
+
+  for (var cloud in metar.clouds.items) {
+    code += '${cloud.code}'.padLeft(14);
+    cover += '${cloud.cover}'.padLeft(14);
+    oktas += '${cloud.oktas}'.padLeft(14);
+    cloudType += '${cloud.cloudType}'.padLeft(14);
+    height += '${"${cloud.heightInFeet!.toStringAsFixed(1)}"}'.padLeft(14);
+  }
+
+  print(code);
+  print(cover);
+  print(oktas);
+  print(cloudType);
+  print(height);
+
+// ... snip ...
+
+// prints...
+//        code      FEW010CB        SCT020        BKN120
+//       cover         a few     scattered        broken
+//       oktas           1-2           3-4           5-7
+//   cloudType  cumulonimbus          null          null
+// height (ft)        1000.0        2000.0       12000.0
 ```

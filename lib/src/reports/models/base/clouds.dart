@@ -132,7 +132,7 @@ class Cloud extends Group {
   /// Get the cover description of the cloud layer.
   String? get cover => _cover;
 
-  /// Get the cloud type of the layer.
+  /// Get the type of cloud translation of the cloud layer.
   String? get cloudType => _type;
 
   /// Get the oktas amount of the cloud layer.
@@ -169,9 +169,9 @@ class CloudList extends GroupList<Cloud> {
 
   /// Get `true` if there is ceiling, `false` if not.
   ///
-  /// If the cover of someone of the cloud layers is broken and its height
-  /// is less or equal than 1500.0 feet, there is ceiling; there isn't
-  /// otherwise.
+  /// If the cover of someone of the cloud layers is broken (BKN) or
+  /// overcast (OVC) and its height is less or equal than 1500.0 feet,
+  /// there is ceiling; there isn't otherwise.
   bool get ceiling {
     for (var group in _list) {
       final _oktas = group.oktas;
@@ -184,19 +184,4 @@ class CloudList extends GroupList<Cloud> {
     }
     return false;
   }
-}
-
-mixin MetarCloudMixin on StringAttributeMixin {
-  final CloudList _clouds = CloudList();
-
-  void _handleCloud(String group) {
-    final match = MetarRegExp.CLOUD.firstMatch(group);
-    final cloud = Cloud.fromMetar(group, match);
-    _clouds.add(cloud);
-
-    _concatenateString(cloud);
-  }
-
-  /// Get the cloud groups data of the METAR.
-  CloudList get clouds => _clouds;
 }

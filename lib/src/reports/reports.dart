@@ -27,6 +27,7 @@ part 'models/base/wind.dart';
 
 // metar
 part 'metar.dart';
+part 'models/metar/cloud.dart';
 part 'models/metar/pressure.dart';
 part 'models/metar/recent_weather.dart';
 part 'models/metar/runway_range.dart';

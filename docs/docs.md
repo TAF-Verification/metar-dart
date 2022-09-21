@@ -596,8 +596,8 @@ Get the clouds data of the report. Type `CloudList` which extends `GroupList<Clo
 
 Fields:
 * ceiling `bool`: True if there is ceiling, False if not. If the cover of someone of the
-  cloud layers is broken (BKN) or overcast (OVC) and its height is less or equal than 1500.0
-  feet, there is ceiling; there isn't otherwise.
+  cloud layers is broken (BKN) or overcast (OVC) and its height is less than or equal to
+  1500.0 feet, there is ceiling; there isn't otherwise.
 
 #### Cloud
 

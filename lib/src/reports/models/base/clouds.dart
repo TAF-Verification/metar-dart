@@ -170,7 +170,7 @@ class CloudList extends GroupList<Cloud> {
   /// Get `true` if there is ceiling, `false` if not.
   ///
   /// If the cover of someone of the cloud layers is broken (BKN) or
-  /// overcast (OVC) and its height is less or equal than 1500.0 feet,
+  /// overcast (OVC) and its height is less than or equal to 1500.0 feet,
   /// there is ceiling; there isn't otherwise.
   bool get ceiling {
     for (var group in _list) {

@@ -65,6 +65,7 @@ dependencies:
       - [Weather](#weather)
     - [Clouds](#clouds)
       - [Cloud](#cloud)
+    - [Temperatures](#temperatures)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -659,4 +660,36 @@ Fields:
 //       oktas           1-2           3-4           5-7
 //   cloudType  cumulonimbus          null          null
 // height (ft)        1000.0        2000.0       12000.0
+```
+
+### Temperatures
+
+Get the temperatures of the report. Type `MetarTemperatures`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `29/23`.
+* temperature_in_celsius `double?`: The temperature in °Celsius.
+* temperature_in_kelvin `double?`: The temperature in °Kelvin.
+* temperature_in_fahrenheit `double?`: The temperature in °Fahrenheit.
+* temperature_in_rankine `double?`: The temperature in Rankine.
+* dewpoint_in_celsius `double?`: The dewpoint in °Celsius.
+* dewpoint_in_kelvin `double?`: The dewpoint in °Kelvin.
+* dewpoint_in_fahrenheit `double?`: The dewpoint in °Fahrenheit.
+* dewpoint_in_rankine `double?`: The dewpoint in Rankine.
+
+```dart
+// ... snip ...
+
+  print(metar.temperatures.temperature_in_celsius);
+  print(metar.temperatures.temperature_in_fahrenheit);
+  print(metar.temperatures.dewpoint_in_celsius);
+  print(metar.temperatures.dewpoint_in_fahrenheit);
+
+// ... snip ...
+
+// prints...
+// 29.0
+// 84.2
+// 23.0
+// 73.4
 ```

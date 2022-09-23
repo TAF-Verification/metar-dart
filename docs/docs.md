@@ -66,6 +66,7 @@ dependencies:
     - [Clouds](#clouds)
       - [Cloud](#cloud)
     - [Temperatures](#temperatures)
+    - [Pressure](#pressure)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -692,4 +693,34 @@ Fields:
 // 84.2
 // 23.0
 // 73.4
+```
+
+### Pressure
+
+Get the pressure of the report. Type `MetarPressure`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `A2994`.
+* inAtm `double?`: The pressure in atmospheres.
+* inBar `double?`: The pressure in bars.
+* inMbar `double?`: The pressure in millibars.
+* inHPa `double?`: The pressure in hecto pascals.
+* inInHg `double?`: The pressure in mercury inches.
+* value `double?`: The default stored value of the pressure in hecto pascals.
+
+```dart
+// ... snip ...
+
+  print(metar.pressure.code);
+  print(metar.pressure.inAtm);
+  print(metar.pressure.inHPa);
+  print(metar.pressure.inInHg);
+
+// ... snip ...
+
+// prints...
+// A2994
+// 1.000626
+// 1013.884186
+// 29.940000
 ```

@@ -23,6 +23,7 @@ abstract class Report with StringAttributeMixin, TimeMixin {
   }
 
   /// Handler to separate the sections of the report.
+  // ignore: unused_element
   void _handleSections();
 
   void _handleType(String group) {
@@ -43,6 +44,7 @@ abstract class Report with StringAttributeMixin, TimeMixin {
   /// Get the station data of the report.
   Station get station => _station;
 
+  // ignore: unused_element
   void _handleTime(String group);
 
   /// Get the time of the report.

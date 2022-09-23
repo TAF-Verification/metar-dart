@@ -89,5 +89,6 @@ class Time extends Group {
 }
 
 mixin TimeMixin {
+  // ignore: prefer_final_fields
   Time _time = Time();
 }

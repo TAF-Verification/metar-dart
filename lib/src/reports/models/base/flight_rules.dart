@@ -48,5 +48,7 @@ mixin FlightRulesMixin on MetarPrevailingMixin, MetarCloudMixin {
         return 'VFR';
       }
     }
+
+    return null;
   }
 }

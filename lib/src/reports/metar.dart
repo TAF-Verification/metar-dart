@@ -244,9 +244,9 @@ class Metar extends Report
       space: 'left',
     );
 
-    String trend = '';
-    String remark = '';
-    String body = '';
+    var trend = '';
+    var remark = '';
+    var body = '';
     for (final section in sections) {
       if (section.startsWith('TEMPO') ||
           section.startsWith('BECMG') ||

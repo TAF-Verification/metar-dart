@@ -65,7 +65,7 @@ class MetarWindshearList extends GroupList<MetarWindshearRunway> {
 
   @override
   String toString() {
-    if (all_runways) {
+    if (allRunways) {
       return 'all runways';
     }
 
@@ -74,7 +74,7 @@ class MetarWindshearList extends GroupList<MetarWindshearRunway> {
 
   /// Get the names of the windshear runway list in METAR.
   List<String?> get names {
-    if (all_runways) {
+    if (allRunways) {
       return <String>[];
     }
 
@@ -82,7 +82,7 @@ class MetarWindshearList extends GroupList<MetarWindshearRunway> {
   }
 
   /// Get if all runways have windshear.
-  bool get all_runways {
+  bool get allRunways {
     if (_list.length == 1 && _list[0].all) {
       return true;
     }

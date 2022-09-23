@@ -19,7 +19,7 @@ class Metar extends Report
   MetarTemperatures _temperatures = MetarTemperatures(null, null);
   MetarPressure _pressure = MetarPressure(null, null);
   MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
-  final _windshear = MetarWindshearList();
+  final _windshears = MetarWindshearList();
   MetarSeaState _seaState = MetarSeaState(null, null);
   MetarRunwayState _runwayState = MetarRunwayState(null, null);
 
@@ -129,13 +129,13 @@ class Metar extends Report
   void _handleWindshear(String group) {
     final match = MetarRegExp.WINDSHEAR.firstMatch(group);
     final windshear = MetarWindshearRunway(group, match);
-    _windshear.add(windshear);
+    _windshears.add(windshear);
 
     _concatenateString(windshear);
   }
 
   /// Get the windshear data of the METAR.
-  MetarWindshearList get windshear => _windshear;
+  MetarWindshearList get windshears => _windshears;
 
   void _handleSeaState(String group) {
     final match = MetarRegExp.SEA_STATE.firstMatch(group);
@@ -279,7 +279,7 @@ class Metar extends Report
       'temperatures': temperatures.asMap(),
       'pressure': pressure.asMap(),
       'recent_weather': recentWeather.asMap(),
-      'windshear': windshear.asMap(),
+      'windshear': windshears.asMap(),
       'sea_state': seaState.asMap(),
       'runway_state': runwayState.asMap(),
       'flight_rules': flightRules,

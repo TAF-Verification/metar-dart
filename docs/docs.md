@@ -68,6 +68,8 @@ dependencies:
     - [Temperatures](#temperatures)
     - [Pressure](#pressure)
     - [Recent Weather](#recent-weather)
+    - [Windshears](#windshears)
+      - [Windshear](#windshear)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -759,4 +761,65 @@ Fields:
 // rain
 // null
 // null
+```
+
+### Windshears
+
+Get the windshear data of the report. Type `MetarWindshearList` which
+extends `GroupList<MetarWindshearRunway>`.
+
+Fields:
+* names `List<String>`: The names of runways with windshear reported.
+* allRunways `bool`: True if all runways have windshear, False if not.
+
+#### Windshear
+
+The individual windshear data by group provided in the report. Type `MetarWindshearRunway`.
+
+Fields:
+* code `str | None`: The code present in the `Metar`, e.g. `WS R07`.
+* all `bool`: True if `ALL` is found in the group, False if not, e.g. `WS ALL RWY`.
+* name `str | None`: The name of the runway that has being reported with windshear.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final metarCode =
+      'METAR MROC 202000Z 12013G23KT 9999 FEW040 SCT100 27/16 A2997 WS R07L WS R25C NOSIG';
+  final metar = Metar(metarCode);
+
+  print(metar.windshears.codes);
+  print(metar.windshears.names);
+  print(metar.windshears.allRunways);
+
+// ... snip ...
+
+// prints...
+// [WS R07L, WS R25C]
+// [07 left, 25 center]
+// false
+
+// ... snip ...
+
+  var code = 'code'.padLeft(5);
+  var all = 'all'.padLeft(5);
+  var name = 'name'.padLeft(5);
+
+  for (var ws in metar.windshears.items) {
+    code += '${ws.code}'.padLeft(11);
+    all += '${ws.all}'.padLeft(11);
+    name += '${ws.name}'.padLeft(11);
+  }
+
+  print(code);
+  print(all);
+  print(name);
+
+// ... snip ...
+
+// prints...
+// code    WS R07L    WS R25C
+//  all      false      false
+// name    07 left  25 center
 ```

@@ -67,6 +67,7 @@ dependencies:
       - [Cloud](#cloud)
     - [Temperatures](#temperatures)
     - [Pressure](#pressure)
+    - [Recent Weather](#recent-weather)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -723,4 +724,39 @@ Fields:
 // 1.000626
 // 1013.884186
 // 29.940000
+```
+
+### Recent Weather
+
+Get the recent weather data of the report. Type `MetarRecentWeather`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `RERA`.
+* description `String?`: The description translation of the recent weather, e.g. `TS -> thunder storm`.
+* precipitation `String?`: The precipitation translation of the recent weather, e.g. `RA -> rain`.
+* obscuration `String?`: The obscuration translation of the recent weather, e.g. `FG -> fog`.
+* other `String?`: The other translation of the recent weather, e.g. `FC -> funnel cloud`.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final metarCode =
+      'METAR BIBD 191100Z 03002KT 9999 VCTS FEW010CB SCT020 BKN120 04/03 Q1013 RETSRA NOSIG';
+  final metar = Metar(metarCode);
+
+  print(metar.recentWeather.code);
+  print(metar.recentWeather.description);
+  print(metar.recentWeather.precipitation);
+  print(metar.recentWeather.obscuration);
+  print(metar.recentWeather.other);
+
+// ... snip ...
+
+// prints...
+// RETSRA
+// thunderstorm
+// rain
+// null
+// null
 ```

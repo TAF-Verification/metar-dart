@@ -70,6 +70,7 @@ dependencies:
     - [Recent Weather](#recent-weather)
     - [Windshears](#windshears)
       - [Windshear](#windshear)
+    - [Sea State](#sea-state)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -777,9 +778,9 @@ Fields:
 The individual windshear data by group provided in the report. Type `MetarWindshearRunway`.
 
 Fields:
-* code `str | None`: The code present in the `Metar`, e.g. `WS R07`.
+* code `String?`: The code present in the `Metar`, e.g. `WS R07`.
 * all `bool`: True if `ALL` is found in the group, False if not, e.g. `WS ALL RWY`.
-* name `str | None`: The name of the runway that has being reported with windshear.
+* name `String?`: The name of the runway that has being reported with windshear.
 
 ```dart
 // ... snip ...
@@ -822,4 +823,47 @@ Fields:
 // code    WS R07L    WS R25C
 //  all      false      false
 // name    07 left  25 center
+```
+
+### Sea State
+
+Get the sea state data of the report. Type `MetarSeaState`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `W20/S5`.
+* state `String?`: The sea state if provided.
+* temperatureInCelsius `double?`: The temperature of the sea in Celsius.
+* temperatureInKelvin `double?`: The temperature of the sea in Kelvin.
+* temperatureInFahrenheit `double?`: The temperature of the sea in Fahrenheit.
+* temperatureInRankine `double?`: The temperature of the sea in Rankine.
+* heightInMeters `double?`: The height of the significant wave in meters.
+* heightInCentimeters `double?`: The height of the significant wave in centimeters.
+* heightInDecimeters `double?`: The height of the significant wave in decimeters.
+* heightInFeet `double?`: The height of the significant wave in feet.
+* heightInInches `double?`: The height of the significant wave in inches.
+
+```dart
+// ... snip ...
+
+// New METAR code for this example
+  final metarCode =
+      'METAR LXGB 201950Z AUTO 09012KT 9999 BKN080/// 14/07 Q1016 RERA W20/S5';
+  final metar = Metar(metarCode);
+
+  print(metar.seaState.code);
+  print(metar.seaState.state);
+  print(metar.seaState.temperatureInCelsius);
+  print(metar.seaState.temperatureInKelvin);
+  print(metar.seaState.temperatureInFahrenheit);
+  print(metar.seaState.heightInInches);
+
+// ... snip ...
+
+// prints...
+// W20/S5
+// rough
+// 20.0
+// 293.15
+// 68.0
+// null
 ```

@@ -71,6 +71,7 @@ dependencies:
     - [Windshears](#windshears)
       - [Windshear](#windshear)
     - [Sea State](#sea-state)
+    - [Runway State](#runway-state)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -866,4 +867,50 @@ Fields:
 // 293.15
 // 68.0
 // null
+```
+
+### Runway State
+
+Get the runway state data of the report. Type `MetarRunwayState`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `R10R/527650`.
+* name `String?`: The name of the runway that has being reported.
+* deposits `String?`: The deposits type on the runway.
+* contamination `String?`: The contamination quantity of the deposits.
+* depositsDepth `String?`: The deposits depth.
+* surfaceFriction `String?`: The surface friction index of the runway.
+* snoclo `bool`: True: aerodrome is closed due to extreme deposit of snow.
+  False: aerodrome is open.
+* clrd `String?`: Get if contamination have ceased to exists in some runway.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final metarCode =
+      'METAR PANC 210353Z 01006KT 10SM FEW045 BKN070 OVC100 M05/M17 A2965 R10R/527650';
+  final metar = Metar(metarCode);
+
+  print('${"Code:".padLeft(18)} ${metar.runwayState.code}');
+  print('${"Name:".padLeft(18)} ${metar.runwayState.name}');
+  print('${"Deposits:".padLeft(18)} ${metar.runwayState.deposits}');
+  print('${"Deposits depth:".padLeft(18)} ${metar.runwayState.depositsDepth}');
+  print('${"Contamination:".padLeft(18)} ${metar.runwayState.contamination}');
+  print(
+      '${"Surface friction:".padLeft(18)} ${metar.runwayState.surfaceFriction}');
+  print('${"SNOCLO:".padLeft(18)} ${metar.runwayState.snoclo}');
+  print('${"CLRD:".padLeft(18)} ${metar.runwayState.clrd}');
+
+// ... snip ...
+
+// prints...
+//             Code: R10R/527650
+//             Name: 10 right
+//         Deposits: wet snow
+//   Deposits depth: 76 mm
+//    Contamination: 11%-25% of runway
+// Surface friction: 0.50
+//           SNOCLO: false
+//             CLRD: null
 ```

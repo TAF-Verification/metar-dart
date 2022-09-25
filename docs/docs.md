@@ -72,6 +72,8 @@ dependencies:
       - [Windshear](#windshear)
     - [Sea State](#sea-state)
     - [Runway State](#runway-state)
+  - [Weather Trend](#weather-trend)
+    - [Change Period](#change-period)
 
 </td>
 <!-- <td width=33% valign=top>
@@ -913,4 +915,63 @@ Fields:
 // Surface friction: 0.50
 //           SNOCLO: false
 //             CLRD: null
+```
+
+## Weather Trend
+
+Get the weather trends of the report if provided. Type `MetarWeatherTrends`
+which extends `GroupList<ChangePeriods>`.
+
+The weather trends are change periods forecasted for the next two hours from the
+report. May be one or two, and they can have wind, prevailing visibility, weather and
+clouds, but not all are strictly required. All of this fields are the same
+as in the [Metar](#metar) object, so, you can access them as in the previous examples
+for every change period.
+
+### Change Period
+
+The change period forecasted for the next two hours. Type `ChangePeriod`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `BECMG 25005KT 5000 RA`.
+* wind `MetarWind`: The wind forecasted, see [Wind](#wind) for more details.
+* prevailing_visibility `MetarPrevailingVisibility`: The prevailing visibility
+  forecasted, see [Prevailing Visibility](#prevailing-visibility) for more details.
+* weathers `GroupList[MetarWeather]`: the weather forecasted, see [Weathers](#weathers)
+  for more details.
+* clouds `CloudList`: the clouds forecasted, see [Clouds](#clouds) for more details.
+
+```dart
+// ... snip ...
+
+  // New METAR code for this example
+  final metarCode =
+      'METAR BIAR 190800Z 20015KT 9999 FEW049 BKN056 10/03 Q1016 BECMG 5000 RA SCT010 BKN015';
+  final metar = Metar(metarCode);
+  final weatherTrends = metar.weatherTrends;
+
+  print(weatherTrends.codes);
+
+// ... snip ...
+
+// prints...
+// [BECMG 5000 RA SCT010 BKN015]
+
+// ... snip ...
+
+  for (var changePeriod in weatherTrends.items) {
+    print("Wind's code: ${changePeriod.wind.code}");
+    print(
+        "Prevailing visibility's code: ${changePeriod.prevailingVisibility.code}");
+    print("Weather's codes: ${changePeriod.weathers.codes}");
+    print("Clouds' codes: ${changePeriod.clouds.codes}");
+  }
+
+// ... snip ...
+
+// prints...
+// Wind's code: null
+// Prevailing visibility's code: 5000
+// Weather's codes: [RA]
+// Clouds' codes: [SCT010, BKN015]
 ```

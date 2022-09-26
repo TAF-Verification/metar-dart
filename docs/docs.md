@@ -1065,3 +1065,31 @@ Fields:
   [Prevailing Visibility](#prevailing-visibility) for more details.
 * weathers `GroupList<MetarWeather>`: See [Weathers](#weathers) for more details.
 * clouds `CloudList`: See [Clouds](#clouds) for more details.
+
+## Missing
+
+Get the missing information of the report if provided. Type `Missing`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, which is `NIL`.
+* description `String?`: The description of the missing code.
+* isMissing `bool`: True if `NIL` group is found, False if not.
+
+```dart
+// ... snip ...
+
+  // New TAF code for this example
+  final code = 'TAF SKBO 261630Z NIL';
+  final taf = Taf(code);
+
+  print(taf.missing.code);
+  print(taf.missing.description);
+  print(taf.missing.isMissing);
+
+// ... snip ...
+
+// prints...
+// NIL
+// Missing report
+// true
+```

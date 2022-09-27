@@ -82,6 +82,7 @@ dependencies:
 - [Taf](#taf)
   - [Missing](#missing)
   - [Valid](#valid)
+  - [Cancelled](#cancelled)
 
 </td>
 <!-- <td valign=top>
@@ -1124,4 +1125,29 @@ Fields:
 // 2022-03-25 20:00:00
 // 2022-03-27 00:00:00
 // Hours of validity: 28
+```
+
+## Cancelled
+
+Get the cancelled group data of the report. Type `Cancelled`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, e.g. `CNL`.
+* is_cancelled `bool`: true if `TAF` is cancelled, false if not.
+
+```dart
+// ... snip ...
+
+  // New TAF for this example
+  final code = 'KATL 251958Z 2520/2624 CNL';
+  final taf = Taf(code);
+
+  print(taf.cancelled.code);
+  print(taf.cancelled.isCancelled);
+
+// ... snip ...
+
+// prints...
+// CNL
+// true
 ```

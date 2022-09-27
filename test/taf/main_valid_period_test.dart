@@ -19,6 +19,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '2506/2606');
+    expect(valid.duration.inHours, 24);
     expect(
         valid.toString(), 'from 2019-03-25 06:00:00 until 2019-03-26 06:00:00');
     expect(valid.periodFrom.year, 2019);
@@ -49,6 +50,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '3100/3124');
+    expect(valid.duration.inHours, 24);
     expect(
         valid.toString(), 'from 2019-03-31 00:00:00 until 2019-04-01 00:00:00');
     expect(valid.periodFrom.year, 2019);
@@ -84,6 +86,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '2503/2606');
+    expect(valid.duration.inHours, 27);
     expect(
         valid.toString(), 'from 2019-03-25 03:00:00 until 2019-03-26 06:00:00');
     expect(valid.periodFrom.year, 2019);
@@ -114,6 +117,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '0218/0306');
+    expect(valid.duration.inHours, 12);
     expect(
         valid.toString(), 'from 2019-03-02 18:00:00 until 2019-03-03 06:00:00');
     expect(valid.periodFrom.year, 2019);
@@ -144,6 +148,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '0600/0612');
+    expect(valid.duration.inHours, 12);
     expect(
         valid.toString(), 'from 2019-03-06 00:00:00 until 2019-03-06 12:00:00');
     expect(valid.periodFrom.year, 2019);
@@ -175,6 +180,7 @@ void main() {
     final valid = taf.valid;
 
     expect(valid.code, '3100/3124');
+    expect(valid.duration.inHours, 24);
     expect(
         valid.toString(), 'from 2019-12-31 00:00:00 until 2020-01-01 00:00:00');
     expect(valid.periodFrom.year, 2019);

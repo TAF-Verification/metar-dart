@@ -93,6 +93,11 @@ class Valid extends Group {
   /// Get the time period `until` of the forecast.
   Time get periodUntil => _until;
 
+  /// Get the validity of the forecast.
+  Duration get duration {
+    return _until.time.difference(_from.time);
+  }
+
   @override
   Map<String, Object?> asMap() {
     final map = super.asMap();

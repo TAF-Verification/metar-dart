@@ -80,6 +80,8 @@ dependencies:
 <td width=33% valign=top>
 
 - [Taf](#taf)
+  - [Missing](#missing)
+  - [Valid](#valid)
 
 </td>
 <!-- <td valign=top>
@@ -1080,7 +1082,7 @@ Fields:
 
   // New TAF code for this example
   final code = 'TAF SKBO 261630Z NIL';
-  final taf = Taf(code);
+  final taf = Taf(code, year: 2022, mo);
 
   print(taf.missing.code);
   print(taf.missing.description);
@@ -1092,4 +1094,34 @@ Fields:
 // NIL
 // Missing report
 // true
+```
+
+## Valid
+
+Get the dates of valid period of the report. Type `Valid`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, e.g. `2518/2618`.
+* period_from `Time`: The time period `from` of the forecast. If group is not found, defaults to
+  current machine date at 00:00Z. See [Time](#time) for more details.
+* period_until `Time`: The time period `until` of the forecast. If group is not found, defaults to
+  current machine date at 00:00Z + 24 hours. See [Time](#time) for more details.
+* duration `Duration`: The validity of the forecast.
+
+```dart
+// ... snip ...
+
+  // Use this Taf instance for this example
+  final taf = Taf(code, year: 2022, month: 3);
+
+  print(taf.valid.periodFrom);
+  print(taf.valid.periodUntil);
+  print('Hours of validity: ${taf.valid.duration.inHours}');
+
+// ... snip ...
+
+// prints...
+// 2022-03-25 20:00:00
+// 2022-03-27 00:00:00
+// Hours of validity: 28
 ```

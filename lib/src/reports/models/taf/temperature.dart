@@ -43,7 +43,7 @@ class TafTemperature extends Temperature with GroupMixin {
     return super.toString() + ' at $_time';
   }
 
-  /// Get the date and time the temperature is expected to happen.
+  /// Get the datetime the temperature is expected to happen.
   Time? get time => _time;
 
   @override

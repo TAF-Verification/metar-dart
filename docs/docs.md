@@ -83,6 +83,8 @@ dependencies:
   - [Missing](#missing)
   - [Valid](#valid)
   - [Cancelled](#cancelled)
+  - [Max and Min Temperatures](#max-and-min-temperatures)
+    - [TAF Temperature](#taf-temperature)
 
 </td>
 <!-- <td valign=top>
@@ -1150,4 +1152,75 @@ Fields:
 // prints...
 // CNL
 // true
+```
+
+## Max and Min Temperatures
+
+Get the maximum and minimum temperatures expected to happen if provided. Remember you can
+add two maximum and two minimum temperatures in the TAF body. Type `TafTemperatureList`
+which extends `GroupList<TafTemperature>`.
+
+### TAF Temperature
+
+The temperature data provided in the report. Type `TafTemperature`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, e.g. `TX07/0305Z`.
+* inCelsius `double?`: The temperature in Celsius.
+* inKelvin `double?`: The temperature in Kelvin.
+* inFahrenheit `double?`: The temperature in Fahrenheit.
+* inRankine `double?`: The temperature in Rankine.
+* time `Time`: The datetime the temperature is expected to happen.
+
+```dart
+// ... snip ...
+
+  // New TAF code for this example
+  final code =
+      '''TAF AMD RKNY 021725Z 0218/0324 26017G35KT CAVOK TX07/0305Z TNM03/0321Z
+        BECMG 0223/0224 27010KT
+        BECMG 0302/0303 03006KT
+        BECMG 0308/0309 23006KT''';
+  final taf = Taf(code, year: 2022, month: 9);
+
+  print(taf.maxTemperatures.codes);
+  print(taf.minTemperatures.codes);
+
+// ... snip ...
+
+// prints...
+// [TX07/0305Z]
+// [TNM03/0321Z]
+
+// ... snip ...
+
+  final maxTemp = taf.maxTemperatures[0];
+  print(maxTemp.code);
+  print(maxTemp.inCelsius);
+  print(maxTemp.inKelvin);
+  print(maxTemp.time);
+
+// ... snip ...
+
+// prints...
+// TX07/0305Z
+// 7.0
+// 280.15
+// 2022-09-03 05:00:00
+
+// ... snip ...
+
+  final minTemp = taf.minTemperatures[0];
+  print(minTemp.code);
+  print(minTemp.inCelsius);
+  print(minTemp.inKelvin);
+  print(minTemp.time);
+
+// ... snip ...
+
+// prints...
+// TNM03/0321Z
+// -3.0
+// 270.15
+// 2022-09-03 21:00:00
 ```

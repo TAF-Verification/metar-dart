@@ -74,6 +74,7 @@ dependencies:
     - [Runway State](#runway-state)
   - [Weather Trend](#weather-trend)
     - [Change Period](#change-period)
+      - [Trend Indicator](#trend-indicator)
   - [Remark](#remark)
 
 </td>
@@ -952,12 +953,24 @@ Fields:
   for more details.
 * clouds `CloudList`: the clouds forecasted, see [Clouds](#clouds) for more details.
 
+#### Trend Indicator
+
+Get the trend indicator features of the report. Type `MetarTrendIndicator`.
+
+Fields:
+* code `String?`: The code present in the `Metar`, e.g. `BECMG FM0500 TL0700`.
+* forecast_period `Tuple2<Time, Time>`: The forcast period, i.e. the initial forecast
+  time and the end forecast time.
+* period_from `Time`: The `from` forecast period.
+* period_until `Time`: The `until` forecast period.
+* period_at `Time?`: The `at` forecast period.
+
 ```dart
 // ... snip ...
 
   // New METAR code for this example
   final metarCode =
-      'METAR BIAR 190800Z 20015KT 9999 FEW049 BKN056 10/03 Q1016 BECMG 5000 RA SCT010 BKN015';
+      'METAR BIAR 190800Z 20015KT 9999 FEW049 BKN056 10/03 Q1016 BECMG 25010G20KT 5000 RA SCT010 BKN015';
   final metar = Metar(metarCode);
   final weatherTrends = metar.weatherTrends;
 
@@ -966,25 +979,26 @@ Fields:
 // ... snip ...
 
 // prints...
-// [BECMG 5000 RA SCT010 BKN015]
+// [BECMG 25010G20KT 5000 RA SCT010 BKN015]
 
 // ... snip ...
 
   for (var changePeriod in weatherTrends.items) {
-    print("Wind's code: ${changePeriod.wind.code}");
-    print(
-        "Prevailing visibility's code: ${changePeriod.prevailingVisibility.code}");
-    print("Weather's codes: ${changePeriod.weathers.codes}");
-    print("Clouds' codes: ${changePeriod.clouds.codes}");
+    print('Trend indicator: ${changePeriod.trendIndicator}');
+    print('Wind: ${changePeriod.wind}');
+    print('Prevailing visibility: ${changePeriod.prevailingVisibility}');
+    print('Weather: ${changePeriod.weathers}');
+    print('Clouds: ${changePeriod.clouds}');
   }
 
 // ... snip ...
 
 // prints...
-// Wind's code: null
-// Prevailing visibility's code: 5000
-// Weather's codes: [RA]
-// Clouds' codes: [SCT010, BKN015]
+// Trend indicator: becoming from 2022-09-19 08:00:00 until 2022-09-19 10:00:00
+// Wind: WSW (250.0°) 10.0 kt gust of 20.0 kt
+// Prevailing visibility: 5.0 km
+// Weather: rain
+// Clouds: scattered at 1000.0 feet | broken at 1500.0 feet
 ```
 
 ## Remark

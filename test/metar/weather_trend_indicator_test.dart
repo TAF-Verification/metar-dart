@@ -18,21 +18,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'NOSIG');
-    expect(first.changeIndicator.code, 'NOSIG');
-    expect(first.changeIndicator.translation, 'no significant changes');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 5);
-    expect(first.changeIndicator.periodFrom.hour, 4);
-    expect(first.changeIndicator.periodFrom.minute, 0);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 5);
-    expect(first.changeIndicator.periodUntil.hour, 6);
-    expect(first.changeIndicator.periodUntil.minute, 0);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'NOSIG');
+    expect(first.trendIndicator.translation, 'no significant changes');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 5);
+    expect(first.trendIndicator.periodFrom.hour, 4);
+    expect(first.trendIndicator.periodFrom.minute, 0);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 5);
+    expect(first.trendIndicator.periodUntil.hour, 6);
+    expect(first.trendIndicator.periodUntil.minute, 0);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-05 04:00:00'},
@@ -66,21 +66,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'TEMPO 3SM HZ');
-    expect(first.changeIndicator.code, 'TEMPO');
-    expect(first.changeIndicator.translation, 'temporary');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 5);
-    expect(first.changeIndicator.periodFrom.hour, 13);
-    expect(first.changeIndicator.periodFrom.minute, 47);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 5);
-    expect(first.changeIndicator.periodUntil.hour, 15);
-    expect(first.changeIndicator.periodUntil.minute, 47);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'TEMPO');
+    expect(first.trendIndicator.translation, 'temporary');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 5);
+    expect(first.trendIndicator.periodFrom.hour, 13);
+    expect(first.trendIndicator.periodFrom.minute, 47);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 5);
+    expect(first.trendIndicator.periodUntil.hour, 15);
+    expect(first.trendIndicator.periodUntil.minute, 47);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-05 13:47:00'},
@@ -112,21 +112,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'BECMG 14005KT');
-    expect(first.changeIndicator.code, 'BECMG');
-    expect(first.changeIndicator.translation, 'becoming');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 4);
-    expect(first.changeIndicator.periodFrom.hour, 9);
-    expect(first.changeIndicator.periodFrom.minute, 30);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 4);
-    expect(first.changeIndicator.periodUntil.hour, 11);
-    expect(first.changeIndicator.periodUntil.minute, 30);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'BECMG');
+    expect(first.trendIndicator.translation, 'becoming');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 4);
+    expect(first.trendIndicator.periodFrom.hour, 9);
+    expect(first.trendIndicator.periodFrom.minute, 30);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 4);
+    expect(first.trendIndicator.periodUntil.hour, 11);
+    expect(first.trendIndicator.periodUntil.minute, 30);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-04 09:30:00'},
@@ -159,21 +159,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'BECMG FM1410 22005KT');
-    expect(first.changeIndicator.code, 'BECMG FM1410');
-    expect(first.changeIndicator.translation, 'becoming');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 6);
-    expect(first.changeIndicator.periodFrom.hour, 14);
-    expect(first.changeIndicator.periodFrom.minute, 10);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 6);
-    expect(first.changeIndicator.periodUntil.hour, 15);
-    expect(first.changeIndicator.periodUntil.minute, 50);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'BECMG FM1410');
+    expect(first.trendIndicator.translation, 'becoming');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 6);
+    expect(first.trendIndicator.periodFrom.hour, 14);
+    expect(first.trendIndicator.periodFrom.minute, 10);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 6);
+    expect(first.trendIndicator.periodUntil.hour, 15);
+    expect(first.trendIndicator.periodUntil.minute, 50);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-06 13:50:00'},
@@ -206,21 +206,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'TEMPO FM0000 TL0100 BKN015');
-    expect(first.changeIndicator.code, 'TEMPO FM0000 TL0100');
-    expect(first.changeIndicator.translation, 'temporary');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 7);
-    expect(first.changeIndicator.periodFrom.hour, 0);
-    expect(first.changeIndicator.periodFrom.minute, 0);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 7);
-    expect(first.changeIndicator.periodUntil.hour, 1);
-    expect(first.changeIndicator.periodUntil.minute, 0);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'TEMPO FM0000 TL0100');
+    expect(first.trendIndicator.translation, 'temporary');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 7);
+    expect(first.trendIndicator.periodFrom.hour, 0);
+    expect(first.trendIndicator.periodFrom.minute, 0);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 7);
+    expect(first.trendIndicator.periodUntil.hour, 1);
+    expect(first.trendIndicator.periodUntil.minute, 0);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-06 23:35:00'},
@@ -253,25 +253,25 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'BECMG AT0030 25020G30KT');
-    expect(first.changeIndicator.code, 'BECMG AT0030');
-    expect(first.changeIndicator.translation, 'becoming');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 7);
-    expect(first.changeIndicator.periodFrom.hour, 0);
-    expect(first.changeIndicator.periodFrom.minute, 0);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 7);
-    expect(first.changeIndicator.periodUntil.hour, 2);
-    expect(first.changeIndicator.periodUntil.minute, 0);
-    expect(first.changeIndicator.periodAt?.year, 2022);
-    expect(first.changeIndicator.periodAt?.month, 2);
-    expect(first.changeIndicator.periodAt?.day, 7);
-    expect(first.changeIndicator.periodAt?.hour, 0);
-    expect(first.changeIndicator.periodAt?.minute, 30);
+    expect(first.trendIndicator.code, 'BECMG AT0030');
+    expect(first.trendIndicator.translation, 'becoming');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 7);
+    expect(first.trendIndicator.periodFrom.hour, 0);
+    expect(first.trendIndicator.periodFrom.minute, 0);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 7);
+    expect(first.trendIndicator.periodUntil.hour, 2);
+    expect(first.trendIndicator.periodUntil.minute, 0);
+    expect(first.trendIndicator.periodAt?.year, 2022);
+    expect(first.trendIndicator.periodAt?.month, 2);
+    expect(first.trendIndicator.periodAt?.day, 7);
+    expect(first.trendIndicator.periodAt?.hour, 0);
+    expect(first.trendIndicator.periodAt?.minute, 30);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-07 00:00:00'},
@@ -307,21 +307,21 @@ void main() {
 
     final first = trends[0];
     expect(first.code, 'BECMG FM0130 5000');
-    expect(first.changeIndicator.code, 'BECMG FM0130');
-    expect(first.changeIndicator.translation, 'becoming');
-    expect(first.changeIndicator.periodFrom.year, 2022);
-    expect(first.changeIndicator.periodFrom.month, 2);
-    expect(first.changeIndicator.periodFrom.day, 15);
-    expect(first.changeIndicator.periodFrom.hour, 1);
-    expect(first.changeIndicator.periodFrom.minute, 30);
-    expect(first.changeIndicator.periodUntil.year, 2022);
-    expect(first.changeIndicator.periodUntil.month, 2);
-    expect(first.changeIndicator.periodUntil.day, 15);
-    expect(first.changeIndicator.periodUntil.hour, 3);
-    expect(first.changeIndicator.periodUntil.minute, 0);
-    expect(first.changeIndicator.periodAt, null);
+    expect(first.trendIndicator.code, 'BECMG FM0130');
+    expect(first.trendIndicator.translation, 'becoming');
+    expect(first.trendIndicator.periodFrom.year, 2022);
+    expect(first.trendIndicator.periodFrom.month, 2);
+    expect(first.trendIndicator.periodFrom.day, 15);
+    expect(first.trendIndicator.periodFrom.hour, 1);
+    expect(first.trendIndicator.periodFrom.minute, 30);
+    expect(first.trendIndicator.periodUntil.year, 2022);
+    expect(first.trendIndicator.periodUntil.month, 2);
+    expect(first.trendIndicator.periodUntil.day, 15);
+    expect(first.trendIndicator.periodUntil.hour, 3);
+    expect(first.trendIndicator.periodUntil.minute, 0);
+    expect(first.trendIndicator.periodAt, null);
     expect(
-        first.changeIndicator.asMap(),
+        first.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-15 01:00:00'},
@@ -336,21 +336,21 @@ void main() {
 
     final second = trends[1];
     expect(second.code, 'TEMPO FM0215 TL0245 BKN010');
-    expect(second.changeIndicator.code, 'TEMPO FM0215 TL0245');
-    expect(second.changeIndicator.translation, 'temporary');
-    expect(second.changeIndicator.periodFrom.year, 2022);
-    expect(second.changeIndicator.periodFrom.month, 2);
-    expect(second.changeIndicator.periodFrom.day, 15);
-    expect(second.changeIndicator.periodFrom.hour, 2);
-    expect(second.changeIndicator.periodFrom.minute, 15);
-    expect(second.changeIndicator.periodUntil.year, 2022);
-    expect(second.changeIndicator.periodUntil.month, 2);
-    expect(second.changeIndicator.periodUntil.day, 15);
-    expect(second.changeIndicator.periodUntil.hour, 2);
-    expect(second.changeIndicator.periodUntil.minute, 45);
-    expect(second.changeIndicator.periodAt, null);
+    expect(second.trendIndicator.code, 'TEMPO FM0215 TL0245');
+    expect(second.trendIndicator.translation, 'temporary');
+    expect(second.trendIndicator.periodFrom.year, 2022);
+    expect(second.trendIndicator.periodFrom.month, 2);
+    expect(second.trendIndicator.periodFrom.day, 15);
+    expect(second.trendIndicator.periodFrom.hour, 2);
+    expect(second.trendIndicator.periodFrom.minute, 15);
+    expect(second.trendIndicator.periodUntil.year, 2022);
+    expect(second.trendIndicator.periodUntil.month, 2);
+    expect(second.trendIndicator.periodUntil.day, 15);
+    expect(second.trendIndicator.periodUntil.hour, 2);
+    expect(second.trendIndicator.periodUntil.minute, 45);
+    expect(second.trendIndicator.periodAt, null);
     expect(
-        second.changeIndicator.asMap(),
+        second.trendIndicator.asMap(),
         equals(<String, Object?>{
           'forecast_period': {
             'init': {'code': null, 'datetime': '2022-02-15 01:00:00'},

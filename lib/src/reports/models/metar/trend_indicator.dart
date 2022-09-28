@@ -68,7 +68,8 @@ class MetarTrendIndicator extends ChangeIndicator {
     }
   }
 
-  /// Get the forcast period, i.e. initial forecast time and end forecast time.
+  /// Get the forcast period, i.e. the initial forecast time and the end
+  /// forecast time.
   Tuple2<Time, Time> get forecastPeriod => Tuple2(_initPeriod, _endPeriod);
 
   /// Get the `from` forecast period.

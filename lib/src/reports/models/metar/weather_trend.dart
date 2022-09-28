@@ -43,7 +43,7 @@ class ChangePeriod extends Forecast {
     _parse();
   }
 
-  void _handleChangeIndicator(String group) {
+  void _handleTrendIndicator(String group) {
     final match = MetarRegExp.CHANGE_INDICATOR.firstMatch(group);
     _changeIndicator = MetarTrendIndicator(group, match, _time.time);
 
@@ -51,7 +51,7 @@ class ChangePeriod extends Forecast {
   }
 
   /// Get the trend data of the METAR.
-  MetarTrendIndicator get changeIndicator => _changeIndicator;
+  MetarTrendIndicator get trendIndicator => _changeIndicator;
 
   void _handleTimePeriod(String group) {
     final oldChangeIndicator = _changeIndicator.toString();
@@ -64,7 +64,7 @@ class ChangePeriod extends Forecast {
 
   void _parse() {
     final handlers = <GroupHandler>[
-      GroupHandler(MetarRegExp.CHANGE_INDICATOR, _handleChangeIndicator),
+      GroupHandler(MetarRegExp.CHANGE_INDICATOR, _handleTrendIndicator),
       GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTimePeriod),
       GroupHandler(MetarRegExp.TREND_TIME_PERIOD, _handleTimePeriod),
       GroupHandler(MetarRegExp.WIND, _handleWind),

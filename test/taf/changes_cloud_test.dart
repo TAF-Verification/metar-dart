@@ -13,7 +13,7 @@ void main() {
         BECMG 2922/2924 RA BKN010
     ''';
     final taf = Taf(code);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     final clouds0 = changes[0].clouds;
     expect(clouds0.codes, ['SCT020TCU', 'BKN030']);

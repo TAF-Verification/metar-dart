@@ -11,7 +11,7 @@ void main() {
         BECMG 2916/2918 18005KT
     ''';
     final taf = Taf(code);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     final weathers0 = changes[0].weathers;
     expect(weathers0.codes, ['DS']);

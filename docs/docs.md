@@ -86,6 +86,9 @@ dependencies:
   - [Cancelled](#cancelled)
   - [Max and Min Temperatures](#max-and-min-temperatures)
     - [TAF Temperature](#taf-temperature)
+  - [Changes Forecasted](#changes-forecasted)
+    - [Change Forecasted](#change-forecasted)
+      - [Change Indicator](#change-indicator)
 
 </td>
 <!-- <td valign=top>
@@ -947,7 +950,7 @@ The change period forecasted for the next two hours. Type `ChangePeriod`.
 Fields:
 * code `String?`: The code present in the `Metar`, e.g. `BECMG 25005KT 5000 RA`.
 * wind `MetarWind`: The wind forecasted, see [Wind](#wind) for more details.
-* prevailing_visibility `MetarPrevailingVisibility`: The prevailing visibility
+* prevailingVisibility `MetarPrevailingVisibility`: The prevailing visibility
   forecasted, see [Prevailing Visibility](#prevailing-visibility) for more details.
 * weathers `GroupList[MetarWeather]`: the weather forecasted, see [Weathers](#weathers)
   for more details.
@@ -959,11 +962,11 @@ Get the trend indicator features of the report. Type `MetarTrendIndicator`.
 
 Fields:
 * code `String?`: The code present in the `Metar`, e.g. `BECMG FM0500 TL0700`.
-* forecast_period `Tuple2<Time, Time>`: The forcast period, i.e. the initial forecast
+* forecastPeriod `Tuple2<Time, Time>`: The forcast period, i.e. the initial forecast
   time and the end forecast time.
-* period_from `Time`: The `from` forecast period.
-* period_until `Time`: The `until` forecast period.
-* period_at `Time?`: The `at` forecast period.
+* periodFrom `Time`: The `from` forecast period.
+* periodUntil `Time`: The `until` forecast period.
+* periodAt `Time?`: The `at` forecast period.
 
 ```dart
 // ... snip ...
@@ -1237,4 +1240,75 @@ Fields:
 // -3.0
 // 270.15
 // 2022-09-03 21:00:00
+```
+
+## Changes Forecasted
+
+Get the weather changes forecasted for the valid period of the report. Type `TafChangesForecasted`
+which extends `GroupList<ChangeForecasted>`.
+
+The changes forecasted are weather forecasts for the next hours. May be more than one, and by
+recomendation must be less than or equal to five, and they can have wind, prevailing visibility,
+weather and clouds, but not all are strictly required. All of this fields are the same
+as in the [Metar](#metar) object, so, you can access them as in the previous examples
+for every change forecasted.
+
+### Change Forecasted
+
+The weather change forecasted for the specified period. Type `ChangeForecasted`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, e.g. `BECMG 0515/0517 19005KT 3000 BR`.
+* wind `MetarWind`: The wind forecasted, see [Wind](#wind) for more details.
+* prevailingVisibility `MetarPrevailingVisibility`: The prevailing visibility
+  forecasted, see [Prevailing Visibility](#prevailing-visibility) for more details.
+* weathers `GroupList<MetarWeather>`: the weather forecasted, see [Weathers](#weathers)
+  for more details.
+* clouds `CloudList`: the clouds forecasted, see [Clouds](#clouds) for more details.
+
+#### Change Indicator
+
+Get the trend indicator features of the report. Type `TafChangeIndicator`.
+
+Fields:
+* code `String?`: The code present in the `Taf`, e.g. `BECMG 1010/1012`.
+* valid `Valid`: The valid period of the change indicator, e.g. `1010/1012`. See [Valid](#valid)
+  for more details.
+
+```dart
+  // Use this TAF instance for this example
+  final taf = Taf(code, year: 2022, month: 10);
+
+  for (var cf in taf.changesForecasted.items) {
+    print(cf.code);
+    print(cf.changeIndicator);
+    print(cf.wind);
+    print(cf.prevailingVisibility);
+    print(cf.weathers);
+    print(cf.clouds);
+    print('-' * 50);
+  }
+
+// prints...
+// FM260100 28005KT P6SM SCT060 SCT120
+// from 2022-10-26 01:00:00 until 2022-10-26 07:00:00
+// W (280.0°) 5.0 kt
+// 11.1 km
+// 
+// scattered at 6000.0 feet | scattered at 12000.0 feet
+// --------------------------------------------------
+// FM260800 32004KT P6SM FEW150
+// from 2022-10-26 08:00:00 until 2022-10-26 14:00:00
+// NW (320.0°) 4.0 kt
+// 11.1 km
+// 
+// a few at 15000.0 feet
+// --------------------------------------------------
+// FM261500 32011G18KT P6SM SKC
+// from 2022-10-26 15:00:00 until 2022-10-27 00:00:00
+// NW (320.0°) 11.0 kt gust of 18.0 kt
+// 11.1 km
+// 
+// 
+// --------------------------------------------------
 ```

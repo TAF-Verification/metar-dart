@@ -21,7 +21,7 @@ class Taf extends Report
   final _minTemperatures = TafTemperatureList();
 
   // Change periods
-  final _changePeriods = TafChangePeriods();
+  final _changesForecasted = TafChangesForecasted();
 
   Taf(String code, {int? year, int? month, bool truncate = false})
       : super(code, truncate, type: 'TAF') {
@@ -36,7 +36,7 @@ class Taf extends Report
     _parseBody();
 
     // Parse the change periods
-    _parseChangePeriods();
+    _parseChangesForecasted();
   }
 
   /// Get the body part of the TAF.
@@ -91,21 +91,21 @@ class Taf extends Report
   /// Get the minimum temperature expected to happen.
   TafTemperatureList get minTemperatures => _minTemperatures;
 
-  void _handleChangePeriod(String code) {
-    final cf = ChangeForecast(code, _valid);
-    if (_changePeriods.length > 0) {
+  void _handleChangeForecasted(String code) {
+    final cf = ChangeForecasted(code, _valid);
+    if (_changesForecasted.length > 0) {
       if (cf.code!.startsWith('FM') || cf.code!.startsWith('BECMG')) {
-        _changePeriods.last.changeIndicator
+        _changesForecasted.last.changeIndicator
             .resetUntilPeriod(cf.changeIndicator.valid.periodUntil);
       }
     }
-    _changePeriods.add(cf);
+    _changesForecasted.add(cf);
 
     _concatenateString(cf);
   }
 
   /// Get the weather change periods data of the TAF if provided.
-  TafChangePeriods get changePeriods => _changePeriods;
+  TafChangesForecasted get changesForecasted => _changesForecasted;
 
   /// Parse the body section.
   void _parseBody() {
@@ -136,14 +136,14 @@ class Taf extends Report
     _unparsedGroups.addAll(unparsed);
   }
 
-  void _parseChangePeriods() {
+  void _parseChangesForecasted() {
     for (final change in _changesCodes) {
       if (change != '') {
-        _handleChangePeriod(change);
+        _handleChangeForecasted(change);
       }
     }
 
-    for (final cp in _changePeriods.items) {
+    for (final cp in _changesForecasted.items) {
       _unparsedGroups.addAll(cp.unparsedGroups);
     }
 
@@ -195,7 +195,7 @@ class Taf extends Report
       'clouds': clouds.asMap(),
       'max_temperatures': maxTemperatures.asMap(),
       'min_temperatures': minTemperatures.asMap(),
-      'change_periods': changePeriods.asMap(),
+      'changes_forecasted': changesForecasted.asMap(),
     });
     return map;
   }

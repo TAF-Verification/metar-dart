@@ -15,7 +15,7 @@ void main() {
 
     expect(taf.flightRules, 'VFR');
 
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
     expect(changes[0].flightRules, equals('MVFR'));
     expect(changes[1].flightRules, 'VLIFR');
     expect(changes[2].flightRules, 'IFR');

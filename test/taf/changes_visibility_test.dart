@@ -11,7 +11,7 @@ void main() {
         BECMG 0117/0119 29005KT 1/2SM SN BKN010
     ''';
     final taf = Taf(code);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     final visibility0 = changes[0].prevailingVisibility;
     expect(visibility0.code, 'P6SM');

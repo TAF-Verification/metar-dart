@@ -1,10 +1,10 @@
 part of reports;
 
 /// Basic structure for significant change periods in TAF.
-class ChangeForecast extends Forecast {
+class ChangeForecasted extends Forecast {
   late final Valid _valid;
   late TafChangeIndicator _changeIndicator;
-  ChangeForecast(String code, Valid valid) : super(code) {
+  ChangeForecasted(String code, Valid valid) : super(code) {
     // Initialize valid period of the forecasts
     _valid = valid;
 
@@ -59,8 +59,8 @@ class ChangeForecast extends Forecast {
 }
 
 /// Basic structure for weather change periods in TAF.
-class TafChangePeriods extends GroupList<ChangeForecast> {
-  TafChangePeriods() : super(8);
+class TafChangesForecasted extends GroupList<ChangeForecasted> {
+  TafChangesForecasted() : super(8);
 
   @override
   String toString() {
@@ -69,11 +69,11 @@ class TafChangePeriods extends GroupList<ChangeForecast> {
 
   /// Adds weather changes to the list.
   @override
-  void add(ChangeForecast newChange) {
+  void add(ChangeForecasted newChange) {
     if (_list.isNotEmpty) {
       if (newChange.code!.startsWith('FM') ||
           newChange.code!.startsWith('BECMG')) {
-        final tempChanges = <ChangeForecast>[];
+        final tempChanges = <ChangeForecasted>[];
 
         var lastChange = _list.removeLast();
         while (true) {

@@ -14,7 +14,7 @@ void main() {
         BECMG 0708/0710 27007G13MPS
     ''';
     final taf = Taf(code, year: 2022, month: 3);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     expect(changes.length, 3);
     expect(changes.codes, <String>[
@@ -58,7 +58,7 @@ void main() {
         PROB30 TEMPO 0722/0724 4SM TSRA BR OVC025CB
     ''';
     final taf = Taf(code, year: _year, month: _month);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     expect(changes.length, 6);
     expect(changes.codes, <String>[
@@ -115,7 +115,7 @@ void main() {
   test('Test no changes', () {
     final code = 'TAF KPHX 062100Z 0621/0724 27007KT P6SM FEW070';
     final taf = Taf(code);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     expect(changes.length, 0);
     expect(changes.codes, <String>[]);

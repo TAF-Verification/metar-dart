@@ -11,7 +11,7 @@ void main() {
         PROB30 RA
     ''';
     final taf = Taf(code);
-    final changes = taf.changePeriods;
+    final changes = taf.changesForecasted;
 
     final wind0 = changes[0].wind;
     expect(wind0.code, '23010KT');

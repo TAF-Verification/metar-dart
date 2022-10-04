@@ -3,6 +3,8 @@ import 'package:test/test.dart';
 import 'package:metar_dart/metar_dart.dart';
 
 void main() {
+  final delta = 1e-5;
+
   group('Test the wind of the report', () {
     test('Test the wind of METAR with gust', () {
       final code =
@@ -85,8 +87,8 @@ void main() {
       expect(wind.speedInKph, 3.704);
       expect(wind.speedInMps, 1.02888888);
       expect(wind.gustInKnot, null);
-      expect(wind.gustInKnot, null);
       expect(wind.gustInMps, null);
+      expect(wind.gustInMiph, null);
       expect(wind.toString(), 'variable wind 2.0 kt');
       expect(
           wind.asMap(),
@@ -100,6 +102,39 @@ void main() {
             'speed': {'units': 'knot', 'speed': 2.0},
             'gust': {'units': 'knot', 'speed': null},
             'code': 'VRB02KT'
+          }));
+    });
+
+    test('Test more than 100 mps wind speed', () {
+      final code =
+          'SPECI KMIA 281410Z 170P149GP159MPS 10SM BKN022 BKN039 BKN055 OVC250 29/25 A2970 RMK AO2 PK WND 17031/1409 T02940250';
+      final metar = Metar(code);
+      final wind = metar.wind;
+
+      expect(wind.code, '170P149GP159MPS');
+      expect(wind.cardinalDirection, 'S');
+      expect(wind.directionInDegrees, 170.0);
+      expect(wind.directionInRadians, closeTo(2.96706, delta));
+      expect(wind.variable, false);
+      expect(wind.speedInKnot, closeTo(289.63283, delta));
+      expect(wind.speedInMps, closeTo(149.0, delta));
+      expect(wind.speedInKph, closeTo(536.4, delta));
+      expect(wind.gustInKnot, closeTo(309.07128, delta));
+      expect(wind.gustInMps, 159.0);
+      expect(wind.gustInMiph, closeTo(355.67304, delta));
+      expect(wind.toString(), 'S (170.0°) 289.6 kt gust of 309.1 kt');
+      expect(
+          wind.asMap(),
+          equals(<String, Object?>{
+            'direction': {
+              'cardinal': 'S',
+              'variable': false,
+              'units': 'degrees',
+              'direction': 170.0,
+            },
+            'speed': {'units': 'knot', 'speed': 289.6328318758776},
+            'gust': {'units': 'knot', 'speed': 309.0712769682184},
+            'code': '170P149GP159MPS'
           }));
     });
 
@@ -132,7 +167,7 @@ void main() {
             },
             'speed': {'units': 'knot', 'speed': null},
             'gust': {'units': 'knot', 'speed': null},
-            'code': '/////KT'
+            'code': '///\//KT'
           }));
     });
   });

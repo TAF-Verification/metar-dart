@@ -72,7 +72,7 @@ class MetarRunwayRange extends Group {
 
     return 'runway $_name '
         '$lowRange'
-        '${_highRange.value != null ? " varying to $_highRange" : ""}'
+        '${_highRange.value != null ? " varying to $highRange" : ""}'
         '${_trend != null ? ", $_trend" : ""}';
   }
 

@@ -3,6 +3,8 @@ import 'package:test/test.dart';
 import 'package:metar_dart/metar_dart.dart';
 
 void main() {
+  final delta = 1e-6;
+
   test('Test the METAR with one runway range', () {
     final code =
         'METAR SCFA 121300Z 21008KT 9999 3000W R07L/M0150V0600U TSRA FEW020 20/13 Q1014 NOSIG';
@@ -79,6 +81,48 @@ void main() {
           'high_range': {'units': 'meters', 'distance': null},
           'trend': 'decreasing',
           'code': 'R25C/P0150D',
+        }));
+
+    expect(
+      () => ranges[1].code,
+      throwsA(isA<RangeError>()),
+    );
+  });
+
+  test('Test the METAR with one runway range in feet', () {
+    final code =
+        'SPECI KMIA 280558Z 16010G20KT 5SM R09/5000VP6000FT -RA BR SCT020 BKN035CB OVC060 26/24 A2973 RMK AO2 WSHFT 0544 LTG DSNT NW CB W-N MOV NW P0009 T02610244';
+    final metar = Metar(code);
+    final ranges = metar.runwayRanges;
+
+    expect(ranges.codes, ['R09/5000VP6000FT']);
+
+    expect(ranges[0].code, 'R09/5000VP6000FT');
+    expect(ranges[0].lowInMeters, 1524.0);
+    expect(ranges[0].lowInKilometers, 1.524);
+    expect(ranges[0].lowInSeaMiles, closeTo(0.822894, delta));
+    expect(ranges[0].lowInFeet, closeTo(5000.0, delta));
+    expect(ranges[0].highInMeters, closeTo(1828.8, delta));
+    expect(ranges[0].highInKilometers, closeTo(1.8288, delta));
+    expect(ranges[0].highInSeaMiles, closeTo(0.987473, delta));
+    expect(ranges[0].highInFeet, closeTo(6000.0, delta));
+    expect(ranges[0].name, '09');
+    expect(ranges[0].lowRange, '1524.0 m');
+    expect(ranges[0].highRange, 'above of 1828.8 m');
+    expect(
+      ranges.toString(),
+      'runway 09 1524.0 m varying to above of 1828.8 m',
+    );
+    expect(
+        ranges[0].asMap(),
+        equals(<String, Object?>{
+          'name': '09',
+          'rvr_low': null,
+          'low_range': {'units': 'meters', 'distance': 1524.0},
+          'rvr_high': 'above of',
+          'high_range': {'units': 'meters', 'distance': 1828.8000000000002},
+          'trend': null,
+          'code': 'R09/5000VP6000FT',
         }));
 
     expect(

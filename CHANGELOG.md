@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Fix folder structure errors to publish
+
 ## 0.3.0
 
 - Modify the entire API

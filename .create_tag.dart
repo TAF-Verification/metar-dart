@@ -4,7 +4,7 @@ void main() {
   Process.run('grep', ['-i', 'version', 'pubspec.yaml']).then((grep) {
     final regex = RegExp(r'(?<match>\d+\.\d+\.\d+)');
     final match = regex.firstMatch(grep.stdout);
-    final version = match.namedGroup('match');
+    final version = match!.namedGroup('match');
 
     Process.run('git', ['add', '.']).then((add) {
       Process.run('git', ['commit', '-m', 'Release $version']).then((commit) {

@@ -50,6 +50,7 @@ dependencies:
     - [Raw Code](#raw-code)
     - [Sections](#sections)
     - [Unparsed Groups](#unparsed-groups)
+    - [Methods](#methods)
     - [The `GroupList` object](#the-grouplist-object)
     - [Type](#type)
     - [Station](#station)
@@ -203,15 +204,18 @@ digitation in land station where the work is completely manual. Human errors are
 parse bad groups may incur us to have bad data to make calculations, we don't want this in our
 climatology.
 
-## Methods asMap() and toJson()
+## Methods
 
-Starting from here, all the properties contains this list of methods:
+The `Metar` object contains this list of methods:
 
-* asMap() -> `Map<String, Object>`: Returns the object data as a map like `Map<String, Object>`. In some
-  cases the `Object` type is replaced by a especific type.
+* asMap() -> `Map<String, Object>`: Returns the object data as a dictionary like `Map<String, Object>`.
+  In some cases the `Object` type is replaced by a especific type.
 * toJson() -> `String`: Returns the object data as a string in JSON format.
+* shouldBeCavok() -> `bool`: Analyses the conditions for CAVOK in the report. Returns `true` if CAVOK
+  should be reported, `false` if not or if there is no data to make a complete analysis.
 
-Of course, the `Metar` object also containes this same methods.
+Starting from here  all the properties containes `asMap()` and `toJson()` methods. All the forecasts
+also contains the `shouldBeCavok()` method.
 
 ### The `GroupList` object
 
@@ -1076,8 +1080,7 @@ Fields:
   `sections` field returns a list of two elements, the first one is the body and the second one
   the change periods if provided.
 * unparsedGroups `List<String>`: See [Unparsed Groups](#unparsed-groups) for more details.
-* asMap() and toJson(): See [Methods asMap() and toJson()](#methods-asmap-and-tojson) for
-  more details.
+* methods: See [Methods](#methods) for more details.
 * type `ReportType`: See [Type](#type) for more details.
 * station `Station`: See [Station](#station) for more details.
 * time `Time`: See [Time](#time) for more details.

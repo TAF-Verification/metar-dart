@@ -9,7 +9,8 @@ class Taf extends Report
         MetarPrevailingMixin,
         MetarWeatherMixin,
         MetarCloudMixin,
-        FlightRulesMixin {
+        FlightRulesMixin,
+        ShouldBeCavokMixin {
   late final String _body;
   final List<String> _changesCodes = <String>[];
   int? _year, _month;

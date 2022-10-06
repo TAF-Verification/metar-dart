@@ -35,6 +35,7 @@ part 'models/metar/runway_state.dart';
 part 'models/metar/sea_state.dart';
 part 'models/metar/temperatures.dart';
 part 'models/metar/trend_indicator.dart';
+part 'models/metar/should_be_cavok.dart';
 part 'models/metar/visibility.dart';
 part 'models/metar/weather_trend.dart';
 part 'models/metar/weather.dart';

@@ -49,7 +49,7 @@ class SKY_TRANSLATIONS {
     'BC': 'patches of',
     'DR': 'low drifting',
     'BL': 'blowing',
-    'SH': 'showers',
+    'SH': 'showers of',
     'TS': 'thunderstorm',
     'FZ': 'freezing',
   };

@@ -8,16 +8,16 @@ class Metar extends Report
         MetarWindMixin,
         MetarPrevailingMixin,
         MetarWeatherMixin,
-        MetarCloudMixin {
+        MetarCloudMixin,
+        PressureMixin,
+        MetarTemperatureMixin,
+        MetarWindVariationMixin {
   late final int? _year, _month;
 
-  // Body groups
-  MetarWindVariation _windVariation = MetarWindVariation(null, null);
+  // Body group
   MetarMinimumVisibility _minimumVisibility =
       MetarMinimumVisibility(null, null);
   final _runwayRanges = GroupList<MetarRunwayRange>(3);
-  MetarTemperatures _temperatures = MetarTemperatures(null, null);
-  MetarPressure _pressure = MetarPressure(null, null);
   MetarRecentWeather _recentWeather = MetarRecentWeather(null, null);
   final _windshear = MetarWindshearList();
   MetarSeaState _seaState = MetarSeaState(null, null);
@@ -26,11 +26,14 @@ class Metar extends Report
   // Trend groups
   final MetarWeatherTrends _weatherTrends = MetarWeatherTrends();
 
+  final DateTime? observedAt;
+
   Metar(
     String code, {
     int? year,
     int? month,
     bool truncate = false,
+    this.observedAt,
   }) : super(code, truncate) {
     _handleSections();
 
@@ -64,16 +67,6 @@ class Metar extends Report
   /// Get the time of the METAR.
   MetarTime get time => _time;
 
-  void _handleWindVariation(String group) {
-    final match = MetarRegExp.WIND_VARIATION.firstMatch(group);
-    _windVariation = MetarWindVariation(group, match);
-
-    _concatenateString(_windVariation);
-  }
-
-  /// Get the wind variation directions of the METAR.
-  MetarWindVariation get windVariation => _windVariation;
-
   void _handleMinimumVisibility(String group) {
     final match = MetarRegExp.VISIBILITY.firstMatch(group);
     _minimumVisibility = MetarMinimumVisibility(group, match);
@@ -95,26 +88,6 @@ class Metar extends Report
   /// Get the runway ranges data of the METAR if provided.
   GroupList<MetarRunwayRange> get runwayRanges => _runwayRanges;
 
-  void _handleTemperatures(String group) {
-    final match = MetarRegExp.TEMPERATURES.firstMatch(group);
-    _temperatures = MetarTemperatures(group, match);
-
-    _concatenateString(_temperatures);
-  }
-
-  /// Get the temperatures data of the METAR.
-  MetarTemperatures get temperatures => _temperatures;
-
-  void _handlePressure(String group) {
-    final match = MetarRegExp.PRESSURE.firstMatch(group);
-    _pressure = MetarPressure(group, match);
-
-    _concatenateString(_pressure);
-  }
-
-  /// Get the pressure of the METAR.
-  MetarPressure get pressure => _pressure;
-
   void _handleRecentWeather(String group) {
     final match = MetarRegExp.RECENT_WEATHER.firstMatch(group);
     _recentWeather = MetarRecentWeather(group, match);
@@ -125,8 +98,8 @@ class Metar extends Report
   /// Get the recent weather data of the METAR.
   MetarRecentWeather get recentWeather => _recentWeather;
 
-  void _handleWindshear(String group) {
-    final match = MetarRegExp.WINDSHEAR.firstMatch(group);
+  void _handleWindshearRunway(String group) {
+    final match = MetarRegExp.WINDSHEAR_RUNWAY.firstMatch(group);
     final windshear = MetarWindshearRunway(group, match);
     _windshear.add(windshear);
 
@@ -190,9 +163,9 @@ class Metar extends Report
       GroupHandler(MetarRegExp.TEMPERATURES, _handleTemperatures),
       GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
       GroupHandler(MetarRegExp.RECENT_WEATHER, _handleRecentWeather),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
-      GroupHandler(MetarRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
+      GroupHandler(MetarRegExp.WINDSHEAR_RUNWAY, _handleWindshearRunway),
       GroupHandler(MetarRegExp.SEA_STATE, _handleSeaState),
       GroupHandler(MetarRegExp.RUNWAY_STATE, _handleRunwayState),
     ];
@@ -242,9 +215,9 @@ class Metar extends Report
       space: 'left',
     );
 
-    String trend = '';
-    String remark = '';
-    String body = '';
+    var trend = '';
+    var remark = '';
+    var body = '';
     for (final section in sections) {
       if (section.startsWith('TEMPO') ||
           section.startsWith('BECMG') ||
@@ -261,4 +234,8 @@ class Metar extends Report
     _sections.add(trend.trim());
     _sections.add(remark);
   }
+}
+
+String sanitizeWindToken(String code) {
+  return code.replaceAll(' WND ', ' WND_');
 }

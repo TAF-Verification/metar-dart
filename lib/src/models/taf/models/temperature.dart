@@ -51,3 +51,33 @@ class TafTemperature extends Temperature with GroupMixin {
 class TafTemperatureList extends GroupList<TafTemperature> {
   TafTemperatureList() : super(2);
 }
+
+mixin TafTemperatureMixin on StringAttributeMixin {
+  final _maxTemperatures = TafTemperatureList();
+  final _minTemperatures = TafTemperatureList();
+  final _temperatures = TafTemperatureList();
+
+  void _handleTemperature(String group, {required DateTime time}) {
+    final match = TafRegExp.TEMPERATURE.firstMatch(group);
+    final temperature = TafTemperature(group, match, time);
+
+    if (match!.namedGroup('type') == 'X') {
+      _maxTemperatures.add(temperature);
+    } else if (match.namedGroup('type') == 'N') {
+      _minTemperatures.add(temperature);
+    } else {
+      _temperatures.add(temperature);
+    }
+
+    _concatenateString(temperature);
+  }
+
+  /// Get the maximum temperature expected to happen.
+  TafTemperatureList get maxTemperatures => _maxTemperatures;
+
+  /// Get the minimum temperature expected to happen.
+  TafTemperatureList get minTemperatures => _minTemperatures;
+
+  // Get the temperatures expected to happen.
+  TafTemperatureList get temperatures => _temperatures;
+}

@@ -45,14 +45,39 @@ class ChangeForecast extends Forecast {
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
       GroupHandler(MetarRegExp.WEATHER, _handleWeather),
+      GroupHandler(MetarRegExp.VISIBILITY, _handlePrevailing),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
       GroupHandler(MetarRegExp.CLOUD, _handleCloud),
+      GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
+      GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(TafRegExp.ICING, _handleIcing),
+      GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(TafRegExp.ICING, _handleIcing),
+      GroupHandler(TafRegExp.TURBULENCE, _handleTurbulence),
+      GroupHandler(TafRegExp.ICING, _handleIcing),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(MetarRegExp.PRESSURE, _handlePressure),
+      GroupHandler(TafRegExp.WIND, _handleWind),
+      GroupHandler(MetarRegExp.WIND_VARIATION, _handleWindVariation),
+      GroupHandler(TafRegExp.AMENDMENTS, _handleAmendment),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.TEMPERATURE,
+          (e) => _handleTemperature(e, time: _valid.periodFrom.time)),
+      GroupHandler(TafRegExp.AMENDMENTS, _handleAmendment),
+      GroupHandler(TafRegExp.WINDSHEAR, _handleWindshear),
     ];
 
     var sanitizedCode = sanitizeChangeIndicator(_code!);
     sanitizedCode = sanitizeVisibility(sanitizedCode);
+    sanitizedCode = sanitizeWindToken(sanitizedCode);
+    sanitizedCode = sanitizeAmendments(sanitizedCode);
     final unparsed = parseSection(handlers, sanitizedCode);
     _unparsedGroups.addAll(unparsed);
   }
@@ -60,7 +85,7 @@ class ChangeForecast extends Forecast {
 
 /// Basic structure for weather change periods in TAF.
 class TafChangePeriods extends GroupList<ChangeForecast> {
-  TafChangePeriods() : super(8);
+  TafChangePeriods() : super(20);
 
   @override
   String toString() {

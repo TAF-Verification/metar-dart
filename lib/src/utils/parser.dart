@@ -59,12 +59,22 @@ String sanitizeWindshear(String code) {
 /// Returns:
 ///     String: the sanitized report or section.
 String sanitizeChangeIndicator(String code) {
-  final regex = RegExp(r'PROB(?<percent>[34]0)\sTEMPO');
+  var regex = RegExp(r'PROB(?<percent>[34]0)\sTEMPO');
   for (var i = 0; i < 5; i++) {
     if (regex.hasMatch(code)) {
       final match = regex.firstMatch(code);
       code =
           code.replaceFirst(regex, 'PROB${match!.namedGroup("percent")}_TEMPO');
+    } else {
+      break;
+    }
+  }
+
+  regex = RegExp(r' FM (?<day>0[1-9]|[12][0-9]|3[01])');
+  for (var i = 0; i < 5; i++) {
+    if (regex.hasMatch(code)) {
+      final match = regex.firstMatch(code);
+      code = code.replaceFirst(regex, ' FM${match!.namedGroup("day")}');
     } else {
       break;
     }

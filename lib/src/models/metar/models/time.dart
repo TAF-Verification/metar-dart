@@ -17,5 +17,6 @@ class MetarTime extends Time with GroupMixin {
 }
 
 mixin MetarTimeMixin on Report {
+  // ignore: prefer_final_fields
   MetarTime _time = MetarTime(null, null);
 }

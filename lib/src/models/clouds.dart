@@ -10,6 +10,7 @@ Map<String, String> SKY_COVER = {
   'BKN': 'broken',
   'OVC': 'overcast',
   '///': 'undefined',
+  '//': 'undefined',
   'VV': 'indefinite ceiling',
 };
 

@@ -53,3 +53,16 @@ class MetarWindVariation extends Group {
   double? get toInGradians =>
       _to.converted(conversionDouble: Conversions.DEGREES_TO_GRADIANS);
 }
+
+mixin MetarWindVariationMixin on StringAttributeMixin {
+  MetarWindVariation _windVariation = MetarWindVariation(null, null);
+  void _handleWindVariation(String group) {
+    final match = MetarRegExp.WIND_VARIATION.firstMatch(group);
+    _windVariation = MetarWindVariation(group, match);
+
+    _concatenateString(_windVariation);
+  }
+
+  /// Get the wind variation directions of the METAR.
+  MetarWindVariation get windVariation => _windVariation;
+}

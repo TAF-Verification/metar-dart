@@ -20,15 +20,15 @@ class MetarRegExp {
       r'(?<units>KT|MPS)$');
 
   static final RegExp WIND_VARIATION =
-      RegExp(r'^(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
+      RegExp(r'^(WND_)?(?<from>(0[1-9]|[12][0-9]|3[0-6])0)'
           r'V(?<to>(0[1-9]|[12][0-9]|3[0-6])0)$');
 
-  static final RegExp VISIBILITY = RegExp(r'^(?<vis>\d{4}|//\//)'
+  static final RegExp VISIBILITY = RegExp(r'^((?<vis>\d{4}|//\//)'
       r'(?<dir>[NSEW]([EW])?)?|'
       r'(M|P)?(?<integer>\d{1,2})?_?'
       r'(?<fraction>\d/\d)?'
       r'(?<units>SM|KM|M|U)|'
-      r'(?<cavok>CAVOK)$');
+      r'(?<cavok>CAVOK))$');
 
   static final RegExp RUNWAY_RANGE = RegExp(r'^R(?<name>\d{2}[RLC]?)/'
       r'(?<rvrlow>[MP])?'
@@ -40,13 +40,14 @@ class MetarRegExp {
 
   static final RegExp WEATHER = RegExp(r'^((?<int>(-|\+|VC))?'
       r'(?<desc>MI|PR|BC|DR|BL|SH|TS|FZ)?'
-      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)|'
+      r'((?<prec>DZ|RA|SN|SG|IC|PL|GR|GS|UP)(?<prec2>DZ|RA|SN|SG|IC|PL|GR|GS|UP)?|'
       r'(?<obsc>BR|FG|FU|VA|DU|SA|HZ|PY)|'
       r'(?<other>PO|SQ|FC|SS|DS|NSW|/))?)$');
 
   static final RegExp CLOUD =
-      RegExp(r'^(?<cover>VV|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///)'
+      RegExp(r'^(?<cover>VV|SKC|CLR|SCK|SCK|NSC|NCD|BKN|SCT|FEW|OVC|///|//)'
           r'(?<height>\d{3}|///)?'
+          r'([0-9])?'
           r'(?<type>TCU|CB|///)?$');
 
   static final RegExp TEMPERATURES = RegExp(r'^(?<tsign>M|-)?'
@@ -64,7 +65,7 @@ class MetarRegExp {
           r'(?<obsc>BR|FG|VA|DU|SA|HZ|PY)?'
           r'(?<other>PO|SQ|FC|SS|DS)?$');
 
-  static final RegExp WINDSHEAR = RegExp(r'^WS(?<all>_ALL)?'
+  static final RegExp WINDSHEAR_RUNWAY = RegExp(r'^WS(?<all>_ALL)?'
       r'_(RWY|R(?<name>\d{2}[RCL]?))$');
 
   static final RegExp SEA_STATE = RegExp(r'^W(?<sign>M)?'

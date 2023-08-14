@@ -4,6 +4,7 @@ final CHANGE_TRANSLATIONS = <String, String>{
   'NOSIG': 'no significant changes',
   'BECMG': 'becoming',
   'TEMPO': 'temporary',
+  'FCST': 'forecast',
   'PROB30': 'probability 30%',
   'PROB40': 'probability 40%',
 };

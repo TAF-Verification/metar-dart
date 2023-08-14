@@ -23,23 +23,26 @@ void main() {
       'BECMG 0708/0710 27007G13MPS',
     ]);
 
+    final leadingZero = (int value) => value < 10 ? '0$value' : '$value';
+    final month = leadingZero(DateTime.now().month);
+
     final change0 = changes[0];
     expect(change0.code, 'TEMPO 0618/0706 1000 SHSN BLSN VV004');
     expect(change0.changeIndicator.code, 'TEMPO 0618/0706');
     expect(change0.changeIndicator.translation,
-        'temporary from 2022-03-06 18:00:00 until 2022-03-07 06:00:00');
+        'temporary from 2022-$month-06 18:00:00 until 2022-$month-07 06:00:00');
 
     final change1 = changes[1];
     expect(change1.code, 'BECMG 0700/0702 26006G12MPS');
     expect(change1.changeIndicator.code, 'BECMG 0700/0702');
     expect(change1.changeIndicator.translation,
-        'becoming from 2022-03-07 00:00:00 until 2022-03-07 02:00:00');
+        'becoming from 2022-$month-07 00:00:00 until 2022-$month-07 02:00:00');
 
     final change2 = changes[2];
     expect(change2.code, 'BECMG 0708/0710 27007G13MPS');
     expect(change2.changeIndicator.code, 'BECMG 0708/0710');
     expect(change2.changeIndicator.translation,
-        'becoming from 2022-03-07 08:00:00 until 2022-03-07 10:00:00');
+        'becoming from 2022-$month-07 08:00:00 until 2022-$month-07 10:00:00');
 
     expect(
       () => changes[3].code,

@@ -1,5 +1,6 @@
 library models;
 
+import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 import '../utils/utils.dart';
@@ -46,4 +47,9 @@ part 'taf/models/change_indicator.dart';
 part 'taf/models/missing.dart';
 part 'taf/models/temperature.dart';
 part 'taf/models/valid.dart';
+part 'taf/models/windshear.dart';
+part 'taf/models/turbulence.dart';
+part 'taf/models/icing.dart';
+part 'taf/models/amendments.dart';
+part 'taf/models/automated_sensor_metwatch.dart';
 part 'taf/taf.dart';

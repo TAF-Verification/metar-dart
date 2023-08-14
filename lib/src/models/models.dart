@@ -1,5 +1,6 @@
 library models;
 
+import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 import '../utils/utils.dart';

@@ -37,7 +37,7 @@ abstract class Report with StringAttributeMixin {
   void _handleStation(String group) {
     _station = Station(group, 'ICAO');
 
-    _concatenateString(_station);
+    // _concatenateString(_station);
   }
 
   /// Get the station data of the report.

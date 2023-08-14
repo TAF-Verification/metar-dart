@@ -31,7 +31,7 @@ class Time {
 
   @override
   String toString() {
-    return _time.toString().replaceFirst('.000', '');
+    return DateFormat('dd/MM/yyyy HH:mm').format((this).time);
   }
 
   /// Get the time of the report.
